@@ -4,6 +4,9 @@
         "tslint:recommended"
     ],
     "jsRules": {},
-    "rules": {},
+    "rules": {
+        "ordered-imports": false,
+        "trailing-comma": false
+    },
     "rulesDirectory": []
 }

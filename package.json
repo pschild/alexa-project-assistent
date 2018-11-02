@@ -6,7 +6,10 @@
   "scripts": {
     "compile": "tsc",
     "prepare-package-json": "node prepare-package-json.js",
-    "deploy": "npm run compile && npm run prepare-package-json && npm --prefix ./lambda/dist install ./lambda/dist && ask deploy",
+    "deploy:lambda": "npm run compile && npm run prepare-package-json && npm --prefix ./lambda/dist install ./lambda/dist && ask deploy lambda",
+    "deploy:skill": "ask deploy -t skill",
+    "deploy:model": "ask deploy -t model",
+    "deploy": "npm run deploy:skill && npm run deploy:model && npm run deploy:lambda",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Philippe Schild",

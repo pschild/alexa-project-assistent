@@ -1,0 +1,24 @@
+{
+  "name": "pm-info-aggregator",
+  "version": "0.0.1",
+  "description": "Alexa Skill for my master thesis",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc",
+    "prepare-package-json": "node prepare-package-json.js",
+    "deploy": "npm run compile && npm run prepare-package-json && npm --prefix ./lambda/dist install ./lambda/dist && ask deploy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Philippe Schild",
+  "license": "MIT",
+  "dependencies": {
+    "ask-sdk-core": "^2.2.0",
+    "ask-sdk-model": "^1.8.0"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.1.0",
+    "edit-json-file": "^1.1.0",
+    "tslint": "5.11.0",
+    "typescript": "^3.1.6"
+  }
+}

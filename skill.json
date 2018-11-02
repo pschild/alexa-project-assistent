@@ -22,7 +22,12 @@
       "custom": {
         "endpoint": {
           "sourceDir": "lambda/dist"
-        }
+        },
+        "interfaces": [
+          {
+            "type":"RENDER_TEMPLATE"
+          }
+        ]
       }
     },
     "manifestVersion": "1.0"

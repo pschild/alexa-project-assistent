@@ -15,10 +15,11 @@
   "author": "Philippe Schild",
   "license": "MIT",
   "dependencies": {
-    "ask-sdk-core": "^2.2.0",
-    "ask-sdk-model": "^1.8.0"
+    "ask-sdk": "^2.2.0",
+    "ask-sdk-v1adapter": "^2.2.0"
   },
   "devDependencies": {
+    "@types/node": "^10.12.2",
     "copyfiles": "^2.1.0",
     "edit-json-file": "^1.1.0",
     "tslint": "5.11.0",

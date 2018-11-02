@@ -1,17 +1,23 @@
-import { ErrorHandler, HandlerInput, RequestHandler, SkillBuilders } from "ask-sdk-core";
-import { Response, SessionEndedRequest } from "ask-sdk-model";
+import { ErrorHandler, RequestHandler, SkillBuilders, ImageHelper, HandlerInput } from "ask-sdk-core";
+import { interfaces, Response, SessionEndedRequest } from "ask-sdk-model";
+import * as v1adapter from "ask-sdk-v1adapter";
+
+import Image = interfaces.display.Image;
+
+const templateBuilders = v1adapter.templateBuilders;
+const makePlainText = v1adapter.utils.TextUtils.makePlainText;
 
 const LaunchRequestHandler: RequestHandler = {
     canHandle(handlerInput: HandlerInput): boolean {
         return handlerInput.requestEnvelope.request.type === "LaunchRequest";
     },
     handle(handlerInput: HandlerInput): Response {
-        const speechText = "Welcome to the Alexa Skills Kit, you can say hello!";
+        const speechText = "Willkommen!";
 
         return handlerInput.responseBuilder
             .speak(speechText)
             .reprompt(speechText)
-            .withSimpleCard("Hello World", speechText)
+            .withSimpleCard(speechText, speechText)
             .getResponse();
     },
 };
@@ -22,11 +28,36 @@ const HelloWorldIntentHandler: RequestHandler = {
             && handlerInput.requestEnvelope.request.intent.name === "HelloWorldIntent";
     },
     handle(handlerInput: HandlerInput): Response {
-        const speechText = "Hello World!";
+        const speechText = "Hallo Welt";
 
         return handlerInput.responseBuilder
             .speak(speechText)
-            .withSimpleCard("Hello World", speechText)
+            .withSimpleCard(speechText, speechText)
+            .getResponse();
+    },
+};
+
+const DisplayTestIntent: RequestHandler = {
+    canHandle(handlerInput: HandlerInput): boolean {
+        return handlerInput.requestEnvelope.request.type === "IntentRequest"
+            && handlerInput.requestEnvelope.request.intent.name === "DisplayTestIntent";
+    },
+    handle(handlerInput: HandlerInput): Response {
+        const backgroundImage: Image = new ImageHelper()
+            .withDescription("Description")
+            .addImageInstance("https://www.pschild.de/full_single-57396b5bcb04847914e4c0dc0b2a4cb4.png")
+            .getImage();
+
+        const builder = new templateBuilders.BodyTemplate1Builder();
+        const template = builder
+            .setTitle("Title")
+            .setTextContent(makePlainText("primary"), makePlainText("secondary"), makePlainText("tertiary"))
+            .setBackgroundImage(backgroundImage)
+            .build();
+
+        return handlerInput.responseBuilder
+            .speak("schau mal")
+            .addRenderTemplateDirective(template)
             .getResponse();
     },
 };
@@ -37,12 +68,12 @@ const HelpIntentHandler: RequestHandler = {
             && handlerInput.requestEnvelope.request.intent.name === "AMAZON.HelpIntent";
     },
     handle(handlerInput: HandlerInput): Response {
-        const speechText = "You can say hello to me!";
+        const speechText = "Hilfe";
 
         return handlerInput.responseBuilder
             .speak(speechText)
             .reprompt(speechText)
-            .withSimpleCard("Hello World", speechText)
+            .withSimpleCard(speechText, speechText)
             .getResponse();
     },
 };
@@ -54,11 +85,11 @@ const CancelAndStopIntentHandler: RequestHandler = {
                 || handlerInput.requestEnvelope.request.intent.name === "AMAZON.StopIntent");
     },
     handle(handlerInput: HandlerInput): Response {
-        const speechText = "Goodbye!";
+        const speechText = "Tschüss!";
 
         return handlerInput.responseBuilder
             .speak(speechText)
-            .withSimpleCard("Hello World", speechText)
+            .withSimpleCard(speechText, speechText)
             .getResponse();
     },
 };
@@ -82,8 +113,8 @@ const ErrorHandler: ErrorHandler = {
         console.log(`Error handled: ${error.message}`);
 
         return handlerInput.responseBuilder
-            .speak("Sorry, I can't understand the command. Please say again.")
-            .reprompt("Sorry, I can't understand the command. Please say again.")
+            .speak("Das habe ich nicht verstanden")
+            .reprompt("Das habe ich nicht verstanden")
             .getResponse();
     },
 };
@@ -96,6 +127,7 @@ export const handler = async (event, context) => {
             .addRequestHandlers(
                 LaunchRequestHandler,
                 HelloWorldIntentHandler,
+                DisplayTestIntent,
                 HelpIntentHandler,
                 CancelAndStopIntentHandler,
                 SessionEndedRequestHandler,

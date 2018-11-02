@@ -30,9 +30,13 @@
 
           ],
           "samples": [
-            "hello",
-            "say hello",
-            "say hello world"
+            "hallo"
+          ]
+        },
+        {
+          "name": "DisplayTestIntent",
+          "samples": [
+            "zeigen"
           ]
         }
       ]

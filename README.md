@@ -3,6 +3,9 @@
 2. Renamed en-US.json to de-DE.json and changed `invocationName`
 3. Changed `locales` to de-DE in `skill.json`
 
+# Development
+* `npm run dev` starts the express server and watches for changes
+
 # Deployment
 1. Deploy with lambda function: `npm run deploy`
     * Compiles TypeScript to JavaScript (`lambda/dist`)

@@ -10,9 +10,10 @@
     "deploy:skill": "ask deploy -t skill",
     "deploy:model": "ask deploy -t model",
     "deploy": "npm run deploy:skill && npm run deploy:model && npm run deploy:lambda",
-    "start-ngrok-deploy": "node ngrok-deploy.js",
-    "start-server": "npm run compile && node dist/alexa-app/app.js",
-    "start": "concurrently -n \"ngrok-deploy,server\" \"npm run start-ngrok-deploy\" \"npm run start-server\"",
+    "deploy:ngrok": "node ngrok-deploy.js",
+    "server:start": "npm run compile && node dist/alexa-app/app.js",
+    "dev": "nodemon",
+    "start": "concurrently -n \"ngrok-deploy,server\" \"npm run deploy:ngrok\" \"npm run server:start\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Philippe Schild",
@@ -32,6 +33,7 @@
     "copyfiles": "^2.1.0",
     "edit-json-file": "^1.1.0",
     "ngrok": "^3.1.0",
+    "nodemon": "^1.18.6",
     "tslint": "5.11.0",
     "typescript": "^3.1.6"
   }

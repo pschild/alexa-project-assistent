@@ -21,11 +21,12 @@
     "apis": {
       "custom": {
         "endpoint": {
-          "sourceDir": "lambda/dist"
+          "sslCertificateType": "Wildcard",
+          "uri": "https://0c10605f.ngrok.io/wetter-niederrhein"
         },
         "interfaces": [
           {
-            "type":"RENDER_TEMPLATE"
+            "type": "RENDER_TEMPLATE"
           }
         ]
       }

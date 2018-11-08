@@ -38,6 +38,18 @@ const deploySkill = async () => {
     console.log('Done!');
 }
 
+const deployModel = async () => {
+    console.log('Deploying model...');
+    const { stdout, stderr } = await exec(`ask api update-model -s ${process.env.ALEXA_SKILL_ID} -f models/de-DE.json -l de-DE`);
+    if (stdout) {
+        console.log(stdout);
+    }
+    if (stderr) {
+        console.log('ERROR', stderr);
+    }
+    console.log('Done!');
+}
+
 const cleanTempFiles = async () => {
     console.log('Cleaning temporary files...');
     fs.unlinkSync(`${__dirname}/${tempSkillFileName}`);
@@ -48,6 +60,7 @@ const cleanTempFiles = async () => {
     const url = await runNgrok();
     await createTempSkillJson(url);
     await deploySkill();
+    await deployModel();
     await cleanTempFiles();
     console.log('Press CTRL+C to stop ngrok.');
 })();

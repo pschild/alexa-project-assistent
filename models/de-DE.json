@@ -72,6 +72,13 @@
           "samples": [
             "zeigen"
           ]
+        },
+        {
+          "name": "JiraIssueIntent",
+          "slots": [],
+          "samples": [
+            "öffne jira ticket"
+          ]
         }
       ],
       "types": []

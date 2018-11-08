@@ -5,6 +5,7 @@
 
 # Development
 * `npm run dev` starts the express server and watches for changes
+    * Easiest way to develop is to start `npm run dev` in a shell and `deploy:ngrok` in _another_ shell.
 
 # Deployment
 1. Deploy with lambda function: `npm run deploy`

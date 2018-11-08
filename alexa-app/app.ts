@@ -60,7 +60,7 @@ alexaApp.intent("DisplayTestIntent", (request, response) => {
         .say("Triggered DisplayTestIntent");
 });
 
-// starte informationsaggregator und öffne jira ticket
+// "starte informationsaggregator und öffne jira ticket"
 alexaApp.intent("JiraIssueIntent", async (request, response) => {
     const result = await get({
         // url: "https://jsonplaceholder.typicode.com/todos/2",

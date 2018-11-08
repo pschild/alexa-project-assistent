@@ -1,7 +1,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-      "outDir": "./lambda/dist",
+      "outDir": "./dist",
       "sourceMap": true,
       "declaration": false,
       "moduleResolution": "node",
@@ -19,7 +19,8 @@
       ]
     },
     "include": [
-      "lambda/**/*"
+      "lambda/**/*",
+      "alexa-app/**/*"
     ],
     "exclude": [
       "node_modules"

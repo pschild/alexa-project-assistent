@@ -11,7 +11,7 @@
     "deploy:model": "ask deploy -t model",
     "deploy": "npm run deploy:skill && npm run deploy:model && npm run deploy:lambda",
     "start-ngrok-deploy": "node ngrok-deploy.js",
-    "start-server": "node alexa-app/alexaApp.js",
+    "start-server": "npm run compile && node dist/alexa-app/app.js",
     "start": "concurrently -n \"ngrok-deploy,server\" \"npm run start-ngrok-deploy\" \"npm run start-server\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,6 +25,8 @@
     "express": "^4.16.4"
   },
   "devDependencies": {
+    "@types/dotenv": "^6.1.0",
+    "@types/express": "^4.16.0",
     "@types/node": "^10.12.3",
     "concurrently": "^4.0.1",
     "copyfiles": "^2.1.0",

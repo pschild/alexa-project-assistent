@@ -1,8 +1,11 @@
 require('dotenv').config();
+const fs = require('fs');
 const ngrok = require('ngrok');
 const editJsonFile = require("edit-json-file");
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
+
+const tempSkillFileName = '.temp-skill.json';
 
 const runNgrok = async () => {
     console.log('Starting ngrok...');
@@ -14,9 +17,10 @@ const runNgrok = async () => {
     return url;
 }
 
-const updateSkillJson = async (ngrokUrl) => {
-    console.log('Updating skill.json...');
-    let file = editJsonFile(`${__dirname}/skill.json`);
+const createTempSkillJson = async (ngrokUrl) => {
+    console.log(`Generating ${tempSkillFileName}...`);
+    fs.copyFileSync(`${__dirname}/skill.json`, `${__dirname}/${tempSkillFileName}`);
+    let file = editJsonFile(`${__dirname}/${tempSkillFileName}`);
     file.set('manifest.apis.custom.endpoint.uri', `${ngrokUrl}/${process.env.ALEXA_SKILL_NAME}`);
     file.save();
     console.log('Done!');
@@ -24,7 +28,7 @@ const updateSkillJson = async (ngrokUrl) => {
 
 const deploySkill = async () => {
     console.log('Deploying skill...');
-    const { stdout, stderr } = await exec('npm run deploy:skill');
+    const { stdout, stderr } = await exec(`ask api update-skill -s ${process.env.ALEXA_SKILL_ID} -f ${tempSkillFileName}`);
     if (stdout) {
         console.log(stdout);
     }
@@ -34,9 +38,16 @@ const deploySkill = async () => {
     console.log('Done!');
 }
 
+const cleanTempFiles = async () => {
+    console.log('Cleaning temporary files...');
+    fs.unlinkSync(`${__dirname}/${tempSkillFileName}`);
+    console.log('Done!');
+}
+
 (async function () {
     const url = await runNgrok();
-    await updateSkillJson(url);
+    await createTempSkillJson(url);
     await deploySkill();
+    await cleanTempFiles();
     console.log('Press CTRL+C to stop ngrok.');
 })();

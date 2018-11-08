@@ -22,7 +22,7 @@
       "custom": {
         "endpoint": {
           "sslCertificateType": "Wildcard",
-          "uri": "https://0c10605f.ngrok.io/wetter-niederrhein"
+          "uri": "<DYNAMIC>"
         },
         "interfaces": [
           {

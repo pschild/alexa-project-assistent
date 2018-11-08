@@ -10,5 +10,6 @@
     * Installs the npm packages in `dist` folder based on newly created `package.json`
     * Deploys to AWS with ASK CLI (model, skill and lambda)
 2. Deploy local `alexa-app` using `ngrok`: `npm start`
-    * Runs ngrok, updates `skill.json` with accoring URL, deploys the skill (using `concurrently`)
-    * Starts the `express` server (using `concurrently`)
+    * using `concurrently`:
+        * Runs ngrok, receives its URL and deploys the skill with a temporary JSON file, containing the ngrok URL
+        * Starts the `express` server

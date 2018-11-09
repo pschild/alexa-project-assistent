@@ -19,8 +19,7 @@
       ]
     },
     "include": [
-      "lambda/**/*",
-      "alexa-app/**/*"
+      "src/**/*"
     ],
     "exclude": [
       "node_modules"

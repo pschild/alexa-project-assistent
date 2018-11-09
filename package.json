@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "tsc",
     "prepare-package-json": "node prepare-package-json.js",
-    "deploy:lambda": "npm run compile && npm run prepare-package-json && npm --prefix ./lambda/dist install ./lambda/dist && ask deploy -t lambda",
+    "deploy:lambda": "npm run compile && npm run prepare-package-json && npm --prefix ./src/lambda/dist install ./src/lambda/dist && ask deploy -t lambda",
     "deploy:skill": "ask deploy -t skill",
     "deploy:model": "ask deploy -t model",
     "deploy": "npm run deploy:skill && npm run deploy:model && npm run deploy:lambda",

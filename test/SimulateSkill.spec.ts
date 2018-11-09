@@ -56,6 +56,7 @@ describe('skill simulation', () => {
         expect(getSimulationResult.id).toMatch(/[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/);
         expect(getSimulationResult.status).toBe('SUCCESSFUL');
         expect(getSimulationResult.result).toBeDefined();
+        expect(getSimulationResult.result.error).toBeUndefined();
         expect(getSimulationResult.result.alexaExecutionInfo.alexaResponses).toBeDefined();
         expect(getSimulationResult.result.alexaExecutionInfo.alexaResponses.length).toBeGreaterThan(0);
         expect(getSimulationResult.result.alexaExecutionInfo.alexaResponses[0].content.caption).toBeDefined();

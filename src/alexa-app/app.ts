@@ -99,4 +99,17 @@ alexaApp.intent('JiraIssueIntent', async (request, response) => {
         .say(`Das Ticket ${process.env.TEST_ISSUE_ID} ist ${assignee.name} zugewiesen.`);
 });
 
+// 'starte informationsaggregator und zeige jenkins status'
+alexaApp.intent('JenkinsBuildsIntent', async (request, response) => {
+    const result = await get({
+        url: `${process.env.JENKINS_URL}/job/${process.env.JENKINS_PROJECT}/api/${process.env.JENKINS_FORMAT}`,
+        auth: {
+            username: process.env.JENKINS_USERNAME,
+            password: process.env.JENKINS_API_TOKEN
+        },
+        json: true
+    });
+    response.say(`Das Projekt ${result.name} wurde ${result.builds.length} mal gebaut. Der aktuelle Status ist ${result.color}`);
+});
+
 app.listen(process.env.ALEXA_APP_PORT, () => console.log('Listening on port ' + process.env.ALEXA_APP_PORT + '.'));

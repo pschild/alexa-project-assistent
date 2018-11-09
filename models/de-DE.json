@@ -79,6 +79,13 @@
           "samples": [
             "öffne jira ticket"
           ]
+        },
+        {
+          "name": "JenkinsBuildsIntent",
+          "slots": [],
+          "samples": [
+            "zeige jenkins status"
+          ]
         }
       ],
       "types": []

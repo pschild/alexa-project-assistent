@@ -1,7 +1,7 @@
 require('dotenv').config();
 const fs = require('fs');
 const ngrok = require('ngrok');
-const editJsonFile = require("edit-json-file");
+const editJsonFile = require('edit-json-file');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 

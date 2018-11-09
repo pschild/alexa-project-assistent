@@ -1,5 +1,5 @@
 const copyfiles = require('copyfiles');
-const editJsonFile = require("edit-json-file");
+const editJsonFile = require('edit-json-file');
 
 copyfiles(['./package.json', './src/lambda/dist/'], {}, () => {
     console.log('Copied package.json');

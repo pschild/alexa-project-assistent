@@ -1,6 +1,6 @@
-import { ErrorHandler, RequestHandler, SkillBuilders, ImageHelper, HandlerInput } from "ask-sdk-core";
-import { interfaces, Response, SessionEndedRequest } from "ask-sdk-model";
-import * as v1adapter from "ask-sdk-v1adapter";
+import { ErrorHandler, RequestHandler, SkillBuilders, ImageHelper, HandlerInput } from 'ask-sdk-core';
+import { interfaces, Response, SessionEndedRequest } from 'ask-sdk-model';
+import * as v1adapter from 'ask-sdk-v1adapter';
 
 import Image = interfaces.display.Image;
 
@@ -9,10 +9,10 @@ const makePlainText = v1adapter.utils.TextUtils.makePlainText;
 
 const LaunchRequestHandler: RequestHandler = {
     canHandle(handlerInput: HandlerInput): boolean {
-        return handlerInput.requestEnvelope.request.type === "LaunchRequest";
+        return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput: HandlerInput): Response {
-        const speechText = "Willkommen!";
+        const speechText = 'Willkommen!';
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -24,11 +24,11 @@ const LaunchRequestHandler: RequestHandler = {
 
 const HelloWorldIntentHandler: RequestHandler = {
     canHandle(handlerInput: HandlerInput): boolean {
-        return handlerInput.requestEnvelope.request.type === "IntentRequest"
-            && handlerInput.requestEnvelope.request.intent.name === "HelloWorldIntent";
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'HelloWorldIntent';
     },
     handle(handlerInput: HandlerInput): Response {
-        const speechText = "Hallo Welt";
+        const speechText = 'Hallo Welt';
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -39,24 +39,24 @@ const HelloWorldIntentHandler: RequestHandler = {
 
 const DisplayTestIntent: RequestHandler = {
     canHandle(handlerInput: HandlerInput): boolean {
-        return handlerInput.requestEnvelope.request.type === "IntentRequest"
-            && handlerInput.requestEnvelope.request.intent.name === "DisplayTestIntent";
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'DisplayTestIntent';
     },
     handle(handlerInput: HandlerInput): Response {
         const backgroundImage: Image = new ImageHelper()
-            .withDescription("Description")
-            .addImageInstance("https://www.pschild.de/full_single-57396b5bcb04847914e4c0dc0b2a4cb4.png")
+            .withDescription('Description')
+            .addImageInstance('https://www.pschild.de/full_single-57396b5bcb04847914e4c0dc0b2a4cb4.png')
             .getImage();
 
         const builder = new templateBuilders.BodyTemplate1Builder();
         const template = builder
-            .setTitle("Title")
-            .setTextContent(makePlainText("primary"), makePlainText("secondary"), makePlainText("tertiary"))
+            .setTitle('Title')
+            .setTextContent(makePlainText('primary'), makePlainText('secondary'), makePlainText('tertiary'))
             .setBackgroundImage(backgroundImage)
             .build();
 
         return handlerInput.responseBuilder
-            .speak("schau mal")
+            .speak('schau mal')
             .addRenderTemplateDirective(template)
             .getResponse();
     },
@@ -64,11 +64,11 @@ const DisplayTestIntent: RequestHandler = {
 
 const HelpIntentHandler: RequestHandler = {
     canHandle(handlerInput: HandlerInput): boolean {
-        return handlerInput.requestEnvelope.request.type === "IntentRequest"
-            && handlerInput.requestEnvelope.request.intent.name === "AMAZON.HelpIntent";
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
     },
     handle(handlerInput: HandlerInput): Response {
-        const speechText = "Hilfe";
+        const speechText = 'Hilfe';
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -80,12 +80,12 @@ const HelpIntentHandler: RequestHandler = {
 
 const CancelAndStopIntentHandler: RequestHandler = {
     canHandle(handlerInput: HandlerInput): boolean {
-        return handlerInput.requestEnvelope.request.type === "IntentRequest"
-            && (handlerInput.requestEnvelope.request.intent.name === "AMAZON.CancelIntent"
-                || handlerInput.requestEnvelope.request.intent.name === "AMAZON.StopIntent");
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+            && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent'
+                || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
     },
     handle(handlerInput: HandlerInput): Response {
-        const speechText = "Tschüss!";
+        const speechText = 'Tschüss!';
 
         return handlerInput.responseBuilder
             .speak(speechText)
@@ -96,7 +96,7 @@ const CancelAndStopIntentHandler: RequestHandler = {
 
 const SessionEndedRequestHandler: RequestHandler = {
     canHandle(handlerInput: HandlerInput): boolean {
-        return handlerInput.requestEnvelope.request.type === "SessionEndedRequest";
+        return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
     },
     handle(handlerInput: HandlerInput): Response {
         console.log(`Session ended with reason: ${(handlerInput.requestEnvelope.request as SessionEndedRequest).reason}`);
@@ -113,8 +113,8 @@ const ErrorHandler: ErrorHandler = {
         console.log(`Error handled: ${error.message}`);
 
         return handlerInput.responseBuilder
-            .speak("Das habe ich nicht verstanden")
-            .reprompt("Das habe ich nicht verstanden")
+            .speak('Das habe ich nicht verstanden')
+            .reprompt('Das habe ich nicht verstanden')
             .getResponse();
     },
 };

@@ -6,7 +6,7 @@
         "node_modules"
     ],
     "watch": [
-        "src/alexa-app"
+        "src/app"
     ],
     "exec": "npm run server:start",
     "ext": "ts"

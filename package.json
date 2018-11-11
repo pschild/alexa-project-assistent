@@ -11,7 +11,7 @@
     "deploy:model": "ask deploy -t model",
     "deploy": "npm run deploy:skill && npm run deploy:model && npm run deploy:lambda",
     "deploy:ngrok": "node ngrok-deploy.js",
-    "server:start": "npm run compile && node dist/alexa-app/app.js",
+    "server:start": "npm run compile && node dist/app/app.js",
     "dev": "nodemon",
     "start": "concurrently -n \"ngrok-deploy,server\" \"npm run deploy:ngrok\" \"npm run server:start\"",
     "test": "jasmine-ts --config=test/support/jasmine.json"

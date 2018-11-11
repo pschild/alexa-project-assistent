@@ -1,16 +1,9 @@
 import * as alexa from 'alexa-app';
-import { get } from 'request-promise';
+import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
 
 export default async (request: alexa.request, response: alexa.response): Promise<void> => {
-    const result = await get({
-        // url: 'https://jsonplaceholder.typicode.com/todos/2',
-        url: `${process.env.JIRA_URL}/rest/api/2/issue/${process.env.TEST_ISSUE_ID}`,
-        auth: {
-            username: process.env.JIRA_USERNAME,
-            password: process.env.JIRA_PASSWORD
-        },
-        json: true
-    });
+    const controller = new JiraEndpointController();
+    const result = await controller.getIssue(process.env.TEST_ISSUE_ID);
     const assignee = {
         name: result.fields.assignee.displayName,
         avatar: result.fields.assignee.avatarUrls['48x48']

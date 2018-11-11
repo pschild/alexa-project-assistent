@@ -17,3 +17,9 @@
     * using `concurrently`:
         * Runs ngrok, receives its URL and deploys the skill with a temporary JSON file, containing the ngrok URL
         * Starts the `express` server
+
+# Important used libraries
+* https://github.com/alexa-js/alexa-app
+* https://github.com/typestack/class-transformer
+* https://github.com/motdotla/dotenv
+* https://github.com/bubenshchykov/ngrok

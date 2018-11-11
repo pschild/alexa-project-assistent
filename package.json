@@ -22,8 +22,10 @@
     "alexa-app": "^4.2.3",
     "ask-sdk": "^2.3.0",
     "ask-sdk-v1adapter": "^2.3.0",
+    "class-transformer": "^0.2.0",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
+    "reflect-metadata": "^0.1.12",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
   },

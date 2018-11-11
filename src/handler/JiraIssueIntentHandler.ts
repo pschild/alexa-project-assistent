@@ -1,13 +1,11 @@
 import * as alexa from 'alexa-app';
 import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
+import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
 
 export default async (request: alexa.request, response: alexa.response): Promise<void> => {
     const controller = new JiraEndpointController();
-    const result = await controller.getIssue(process.env.TEST_ISSUE_ID);
-    const assignee = {
-        name: result.fields.assignee.displayName,
-        avatar: result.fields.assignee.avatarUrls['48x48']
-    };
+    const issue: JiraIssue = await controller.getIssue(process.env.TEST_ISSUE_ID);
+
     response
         .directive({
             type: 'Display.RenderTemplate',
@@ -17,17 +15,17 @@ export default async (request: alexa.request, response: alexa.response): Promise
                 backgroundImage: {
                     contentDescription: '',
                     sources: [{
-                        url: assignee.avatar,
+                        url: issue.getAssignee().avatarUrls['48x48'],
                         size: 'LARGE'
                     }]
                 },
                 textContent: {
                     primaryText: {
-                        text: `<div align='center'>${assignee.name}</div>`,
+                        text: `<div align='center'>${issue.getAssignee().displayName}</div>`,
                         type: 'RichText'
                     }
                 }
             }
         })
-        .say(`Das Ticket ${process.env.TEST_ISSUE_ID} ist ${assignee.name} zugewiesen.`);
+        .say(`Das Ticket ${process.env.TEST_ISSUE_ID} ist ${issue.getAssignee().displayName} zugewiesen.`);
 };

@@ -16,7 +16,8 @@
         "max-line-length": [
             true,
             140
-        ]
+        ],
+        "member-access": false
     },
     "rulesDirectory": []
 }

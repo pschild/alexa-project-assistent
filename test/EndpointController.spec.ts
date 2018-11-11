@@ -6,7 +6,7 @@ dotenv.config();
 describe('EndpointController', () => {
     it('can be initialized with and without parameters', () => {
         const controller = new JiraEndpointController();
-        expect(controller.getBaseUrl()).toBe(process.env.JIRA_URL);
+        expect(controller.getBaseUrl()).toBe(process.env.JIRA_BASE_URL);
         expect(controller.getUsername()).toBe(process.env.JIRA_USERNAME);
         expect(controller.getPassword()).toBe(process.env.JIRA_PASSWORD);
 

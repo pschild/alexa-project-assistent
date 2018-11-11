@@ -1,5 +1,7 @@
 import { EndpointController } from '../EndpointController';
 import { get } from 'request-promise';
+import { plainToClass } from 'class-transformer';
+import { JiraIssue } from './domain/JiraIssue';
 
 export class JiraEndpointController extends EndpointController {
 
@@ -13,8 +15,8 @@ export class JiraEndpointController extends EndpointController {
         );
     }
 
-    public async getIssue(identifier: string) {
-        return await get({
+    public async getIssue(identifier: string): Promise<JiraIssue> {
+        const jsonResult: JiraIssue = await get({
             // url: 'https://jsonplaceholder.typicode.com/todos/2',
             url: `${this.baseUrl}/rest/api/${JiraEndpointController.API_VERSION}/issue/${identifier}`,
             auth: {
@@ -23,5 +25,6 @@ export class JiraEndpointController extends EndpointController {
             },
             json: true
         });
+        return plainToClass(JiraIssue, jsonResult);
     }
 }

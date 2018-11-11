@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as alexa from 'alexa-app';

@@ -6,7 +6,7 @@ import { timeout } from './utils/testUtils';
 
 dotenv.config();
 
-describe('skill simulation', () => {
+xdescribe('skill simulation', () => {
     let originalTimeout;
 
     beforeAll(() => {

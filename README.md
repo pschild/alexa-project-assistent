@@ -21,5 +21,6 @@
 # Important used libraries
 * https://github.com/alexa-js/alexa-app
 * https://github.com/typestack/class-transformer
+* https://github.com/thiagobustamante/typescript-ioc
 * https://github.com/motdotla/dotenv
 * https://github.com/bubenshchykov/ngrok

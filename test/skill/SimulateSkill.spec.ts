@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import { promisify } from 'util';
 import { exec } from 'child_process';
 const execAsync = promisify(exec);
-import { timeout } from './utils/testUtils';
+import { timeout } from '../utils/testUtils';
 
 dotenv.config();
 

@@ -1,5 +1,5 @@
 import { Container } from 'typescript-ioc';
-import { TestAggregator } from '../src/aggregator/TestAggregator';
+import { TestAggregator } from '../../src/aggregator/TestAggregator';
 
 describe('TestAggregator', () => {
 

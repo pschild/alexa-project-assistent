@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { JiraEndpointController } from '../src/endpoint/jira/JiraEndpointController';
+import { JiraEndpointController } from '../../src/endpoint/jira/JiraEndpointController';
 import { Container } from 'typescript-ioc';
 
 dotenv.config();

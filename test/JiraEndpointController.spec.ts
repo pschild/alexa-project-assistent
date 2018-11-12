@@ -8,7 +8,6 @@ dotenv.config();
 describe('JiraEndpointController', () => {
     beforeAll(() => {
         this.controller = Container.get(JiraEndpointController);
-        this.controller.config();
     });
 
     it('can load an issue', async () => {

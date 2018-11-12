@@ -6,9 +6,12 @@ dotenv.config();
 
 describe('EndpointController', () => {
 
+    afterEach(() => {
+        Container.get(JiraEndpointController).config();
+    });
+
     it('can be initialized without parameters', () => {
         const controller = Container.get(JiraEndpointController);
-        controller.config();
 
         expect(controller.getBaseUrl()).toBe(process.env.JIRA_BASE_URL);
         expect(controller.getUsername()).toBe(process.env.JIRA_USERNAME);

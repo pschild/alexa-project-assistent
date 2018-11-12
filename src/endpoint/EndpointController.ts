@@ -4,6 +4,10 @@ export class EndpointController {
     protected username: string;
     protected password: string;
 
+    constructor() {
+        this.config();
+    }
+
     public config(baseUrl?: string, username?: string, password?: string) {
         this.baseUrl = baseUrl || process.env.JIRA_BASE_URL;
         this.username = username || process.env.JIRA_USERNAME;

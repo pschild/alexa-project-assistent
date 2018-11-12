@@ -1,10 +1,7 @@
-import * as dotenv from 'dotenv';
 import { Container } from 'typescript-ioc';
 import { JiraEndpointController } from '../../src/endpoint/jira/JiraEndpointController';
 import { JiraIssue } from '../../src/endpoint/jira/domain/JiraIssue';
 import { IssueType } from '../../src/endpoint/jira/domain/JiraIssueFields';
-
-dotenv.config();
 
 describe('JiraEndpointController', () => {
     beforeAll(() => {

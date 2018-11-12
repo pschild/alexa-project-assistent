@@ -4,7 +4,7 @@ import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
 import { Container } from 'typescript-ioc';
 
 export default async (request: alexa.request, response: alexa.response): Promise<void> => {
-    const controller = Container.get(JiraEndpointController);
+    const controller: JiraEndpointController = Container.get(JiraEndpointController);
     const issue: JiraIssue = await controller.getIssue(process.env.TEST_ISSUE_ID);
 
     response

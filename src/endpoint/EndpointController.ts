@@ -9,9 +9,9 @@ export class EndpointController {
     }
 
     public config(baseUrl?: string, username?: string, password?: string) {
-        this.baseUrl = baseUrl || process.env.JIRA_BASE_URL;
-        this.username = username || process.env.JIRA_USERNAME;
-        this.password = password || process.env.JIRA_PASSWORD;
+        this.baseUrl = baseUrl;
+        this.username = username;
+        this.password = password;
         return this;
     }
 

@@ -10,6 +10,14 @@ export class JiraEndpointController extends EndpointController {
 
     public static API_VERSION: number = 2;
 
+    public config(baseUrl?: string, username?: string, password?: string) {
+        return super.config(
+            baseUrl || process.env.JIRA_BASE_URL,
+            username || process.env.JIRA_USERNAME,
+            password || process.env.JIRA_PASSWORD
+        );
+    }
+
     public async getIssue(identifier: string): Promise<JiraIssue> {
         const jsonResult: JiraIssue = await get({
             // url: 'https://jsonplaceholder.typicode.com/todos/2',

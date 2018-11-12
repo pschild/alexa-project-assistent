@@ -1,6 +1,7 @@
 import { JiraIssueAssignee } from './JiraIssueAssignee';
 import { Type } from 'class-transformer';
 
+// TODO: move to separate file
 export enum IssueType {
     BUG = 'Bug'
 }

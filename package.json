@@ -27,7 +27,8 @@
     "express": "^4.16.4",
     "reflect-metadata": "^0.1.12",
     "request": "^2.88.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "typescript-ioc": "^1.2.4"
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.0",

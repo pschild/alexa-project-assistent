@@ -1,4 +1,4 @@
-export abstract class EndpointController {
+export class EndpointController {
 
     protected baseUrl: string;
     protected username: string;

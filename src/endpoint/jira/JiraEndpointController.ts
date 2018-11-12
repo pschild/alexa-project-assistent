@@ -2,7 +2,10 @@ import { EndpointController } from '../EndpointController';
 import { get } from 'request-promise';
 import { plainToClass } from 'class-transformer';
 import { JiraIssue } from './domain/JiraIssue';
+import { AutoWired, Singleton } from 'typescript-ioc';
 
+@AutoWired
+@Singleton
 export class JiraEndpointController extends EndpointController {
 
     public static API_VERSION: number = 2;

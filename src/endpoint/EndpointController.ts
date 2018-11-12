@@ -1,3 +1,6 @@
+import { get } from 'request-promise';
+import { CoreOptions, UriOptions } from 'request';
+
 export class EndpointController {
 
     protected baseUrl: string;
@@ -25,5 +28,21 @@ export class EndpointController {
 
     public getPassword() {
         return this.password;
+    }
+
+    public async get(givenOptions: Partial<CoreOptions & UriOptions>) {
+        const options = Object.assign(this.getDefaultOptions(), givenOptions);
+        return await get(options);
+    }
+
+    private getDefaultOptions(): CoreOptions & UriOptions {
+        return {
+            uri: this.baseUrl,
+            auth: {
+                username: this.username,
+                password: this.password
+            },
+            json: true
+        };
     }
 }

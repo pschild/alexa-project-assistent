@@ -1,5 +1,4 @@
 import { EndpointController } from '../EndpointController';
-import { get } from 'request-promise';
 import { plainToClass } from 'class-transformer';
 import { AutoWired, Singleton } from 'typescript-ioc';
 import { JenkinsProject } from './domain/JenkinsProject';
@@ -17,14 +16,9 @@ export class JenkinsEndpointController extends EndpointController {
     }
 
     public async getProject(name: string): Promise<JenkinsProject> {
-        const jsonResult: JenkinsProject = await get({
-            url: `${this.baseUrl}/job/${name}/api/${process.env.JENKINS_FORMAT}`,
-            auth: {
-                username: this.username,
-                password: this.password
-            },
-            json: true
+        const result = await this.get({
+            uri: `${this.baseUrl}/job/${name}/api/${process.env.JENKINS_FORMAT}`
         });
-        return plainToClass(JenkinsProject, jsonResult);
+        return plainToClass(JenkinsProject, result as JenkinsProject);
     }
 }

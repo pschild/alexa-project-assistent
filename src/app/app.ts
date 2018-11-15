@@ -9,6 +9,7 @@ import JiraIssueIntentHandler from '../handler/JiraIssueIntentHandler';
 import JenkinsBuildsIntentHandler from '../handler/JenkinsBuildsIntentHandler';
 import StopIntentHandler from '../handler/StopIntentHandler';
 import HelpIntentHandler from '../handler/HelpIntentHandler';
+import SendMailIntentHandler from '../handler/SendMailIntentHandler';
 
 dotenv.config();
 
@@ -30,5 +31,6 @@ alexaApp.intent('HelloWorldIntent', HelloWorldIntentHandler);
 alexaApp.intent('DisplayTestIntent', DisplayTestIntentHandler);
 alexaApp.intent('JiraIssueIntent', JiraIssueIntentHandler); // 'starte informationsaggregator und öffne jira ticket'
 alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler); // 'starte informationsaggregator und zeige jenkins status'
+alexaApp.intent('SendMailIntent', SendMailIntentHandler); // 'starte informationsaggregator und sende eine mail'
 
 app.listen(process.env.ALEXA_APP_PORT, () => console.log(`Listening on port ${process.env.ALEXA_APP_PORT}`));

@@ -86,6 +86,13 @@
           "samples": [
             "zeige jenkins status"
           ]
+        },
+        {
+          "name": "SendMailIntent",
+          "slots": [],
+          "samples": [
+            "sende eine mail"
+          ]
         }
       ],
       "types": []

@@ -10,6 +10,8 @@ import JenkinsBuildsIntentHandler from '../handler/JenkinsBuildsIntentHandler';
 import StopIntentHandler from '../handler/StopIntentHandler';
 import HelpIntentHandler from '../handler/HelpIntentHandler';
 import SendMailIntentHandler from '../handler/SendMailIntentHandler';
+import AppState from './state/AppState';
+import { Container } from 'typescript-ioc';
 
 dotenv.config();
 
@@ -22,6 +24,9 @@ alexaApp.express({
     checkCert: true,
     debug: true
 });
+
+const appState: AppState = Container.get(AppState);
+appState.getEmployeeState().setActive('Doe, John');
 
 alexaApp.launch(LaunchIntentHandler);
 alexaApp.intent('AMAZON.HelpIntent', HelpIntentHandler);

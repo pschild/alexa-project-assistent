@@ -19,11 +19,11 @@ export default class MailController {
         });
     }
 
-    async send(): Promise<any> {
+    async send(recipientName: string): Promise<any> {
         const mailOptions: SendMailOptions = {
             from: `"Alexa 🤖" <${process.env.MAIL_PROVIDER_USERNAME}>`,
             to: process.env.MAIL_RECIPIENT,
-            subject: 'Hello ✔',
+            subject: `Hello ${recipientName}`,
             text: 'Hello world',
             html: '<b>Hello world</b>'
         };

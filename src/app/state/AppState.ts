@@ -1,5 +1,5 @@
 import { AutoWired, Singleton, Inject } from 'typescript-ioc';
-import EmployeeState from './EmployeeState.';
+import EmployeeState from './EmployeeState';
 import DeviceState from './DeviceState';
 
 @AutoWired

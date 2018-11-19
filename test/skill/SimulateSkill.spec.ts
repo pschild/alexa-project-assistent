@@ -3,21 +3,10 @@ import { exec } from 'child_process';
 const execAsync = promisify(exec);
 import { timeout } from '../utils/testUtils';
 
-xdescribe('skill simulation', () => {
-    let originalTimeout;
-
+describe('skill simulation', () => {
     beforeAll(() => {
         this.skillId = process.env.ALEXA_SKILL_ID;
         this.locale = 'de-DE';
-    });
-
-    beforeEach(() => {
-        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-    });
-
-    afterEach(() => {
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     });
 
     it('can trigger JiraIssueIntent', async () => {
@@ -58,5 +47,5 @@ xdescribe('skill simulation', () => {
         expect(getSimulationResult.result.alexaExecutionInfo.alexaResponses.length).toBeGreaterThan(0);
         expect(getSimulationResult.result.alexaExecutionInfo.alexaResponses[0].content.caption).toBeDefined();
         expect(getSimulationResult.result.skillExecutionInfo.invocationRequest.body.request.intent.name).toBe('JiraIssueIntent');
-    });
+    }, 10000);
 });

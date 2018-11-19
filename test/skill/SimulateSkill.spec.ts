@@ -3,7 +3,7 @@ import { exec } from 'child_process';
 const execAsync = promisify(exec);
 import { timeout } from '../utils/testUtils';
 
-describe('skill simulation', () => {
+xdescribe('skill simulation', () => {
     beforeAll(() => {
         this.skillId = process.env.ALEXA_SKILL_ID;
         this.locale = 'de-DE';

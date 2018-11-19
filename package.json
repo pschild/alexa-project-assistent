@@ -14,7 +14,7 @@
     "server:start": "npm run compile && node dist/app/app.js",
     "dev": "nodemon",
     "start": "concurrently -n \"ngrok-deploy,server\" \"npm run deploy:ngrok\" \"npm run server:start\"",
-    "test": "jasmine-ts --config=test/support/jasmine.json"
+    "test": "ts-node node_modules/jasmine/bin/jasmine --config=test/support/jasmine.json"
   },
   "author": "Philippe Schild",
   "license": "MIT",
@@ -45,7 +45,6 @@
     "edit-json-file": "^1.1.0",
     "jasmine": "^3.3.0",
     "jasmine-spec-reporter": "^4.2.1",
-    "jasmine-ts": "^0.3.0",
     "ngrok": "^3.1.0",
     "nodemon": "^1.18.6",
     "ts-node": "^7.0.1",

@@ -59,8 +59,14 @@ const cleanTempFiles = async () => {
 (async function () {
     const url = await runNgrok();
     await createTempSkillJson(url);
-    await deploySkill();
-    await deployModel();
-    await cleanTempFiles();
+    try {
+        await deploySkill();
+        await deployModel();
+    } catch (error) {
+        await ngrok.kill();
+        throw new Error(error.message);
+    } finally {
+        await cleanTempFiles();
+    }
     console.log('Press CTRL+C to stop ngrok.');
 })();

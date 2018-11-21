@@ -93,9 +93,80 @@
           "samples": [
             "sende eine mail"
           ]
+        },
+        {
+          "name": "SlotTestIntent",
+          "slots": [
+            {
+              "name": "Animal",
+              "type": "AMAZON.Animal",
+              "samples": [
+                "Das Tier heißt {Animal}",
+                "Das Tier ist {Animal}",
+                "{Animal}"
+              ]
+            }
+          ],
+          "samples": [
+            "teste slots",
+            "teste slots mit {Animal}"
+          ]
         }
       ],
-      "types": []
-    }
+      "types": [
+        
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "SlotTestIntent",
+          "slots": [
+            {
+              "name": "Animal",
+              "type": "AMAZON.Animal",
+              "confirmationRequired": true,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Animal.Elicit.1",
+                "confirmation": "Animal.Confirm.1"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "prompts": [
+      {
+        "id": "Animal.Elicit.1",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Du musst mir ein Tier nennen."
+          },
+          {
+            "type": "PlainText",
+            "value": "Bitte nenne mir ein Tier."
+          }
+        ]
+      },
+      {
+        "id": "Animal.Confirm.1",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Ist {Animal} korrekt?"
+          },
+          {
+            "type": "PlainText",
+            "value": "{Animal}, habe ich das richtig verstanden?"
+          },
+          {
+            "type": "PlainText",
+            "value": "{Animal}?"
+          }
+        ]
+      }
+    ]
   }
 }

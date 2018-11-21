@@ -10,6 +10,7 @@ import JenkinsBuildsIntentHandler from '../handler/JenkinsBuildsIntentHandler';
 import StopIntentHandler from '../handler/StopIntentHandler';
 import HelpIntentHandler from '../handler/HelpIntentHandler';
 import SendMailIntentHandler from '../handler/SendMailIntentHandler';
+import SlotTestIntentHandler from '../handler/SlotTestIntentHandler';
 import AppState from './state/AppState';
 import { Container } from 'typescript-ioc';
 
@@ -37,5 +38,6 @@ alexaApp.intent('DisplayTestIntent', DisplayTestIntentHandler);
 alexaApp.intent('JiraIssueIntent', JiraIssueIntentHandler); // 'starte informationsaggregator und öffne jira ticket'
 alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler); // 'starte informationsaggregator und zeige jenkins status'
 alexaApp.intent('SendMailIntent', SendMailIntentHandler); // 'starte informationsaggregator und sende eine mail'
+alexaApp.intent('SlotTestIntent', SlotTestIntentHandler); // 'starte informationsaggregator und teste slots'
 
 app.listen(process.env.ALEXA_APP_PORT, () => console.log(`Listening on port ${process.env.ALEXA_APP_PORT}`));

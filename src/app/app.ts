@@ -28,7 +28,7 @@ alexaApp.express({
 });
 
 alexaApp.post = (request, response, type, exception) => {
-    if (hasDisplaySupport(request)) {
+    if (!hasDisplaySupport(request)) {
         const directivesOfRequest = response.response.response.directives;
         response.response.response.directives = directivesOfRequest.filter((directive) => directive.type !== 'Display.RenderTemplate');
     }

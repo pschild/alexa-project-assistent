@@ -18,6 +18,12 @@ describe('JiraEndpointController', () => {
                 },
                 assignee: {
                     displayName: 'Doe, John'
+                },
+                timetracking: {
+                    originalEstimate: '1d',
+                    remainingEstimate: '4h',
+                    originalEstimateSeconds: 29000,
+                    remainingEstimateSeconds: 14400
                 }
             }
         });
@@ -30,5 +36,7 @@ describe('JiraEndpointController', () => {
         expect(issue.fields.issuetype.name).toBe(IssueType.BUG);
         expect(issue.fields.assignee.displayName).toBeDefined();
         expect(issue.getAssignee()).toEqual(issue.fields.assignee);
+        expect(issue.getOriginalEstimatedTimeAsString()).toEqual('8 Stunden, 3 Minuten und 20 Sekunden');
+        expect(issue.getRemainingEstimateTimeAsString()).toEqual('4 Stunden');
     });
 });

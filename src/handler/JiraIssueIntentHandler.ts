@@ -39,12 +39,23 @@ export default async (request: alexa.request, response: alexa.response): Promise
         });
 
     // TODO: cleaner error handling
-    if (!issue || !issue.getAssignee() || !issue.getAssignee().displayName) {
+    if (!issue) {
         errorSpeechOutput = `Ich habe Probleme, das Ticket ${ticketIdentifierValue}-${ticketNumberValue} auszuwerten.`;
     }
 
     if (errorSpeechOutput) {
         return response.say(errorSpeechOutput);
+    }
+
+    const output = [];
+    const assignee = issue.getAssignee() ? issue.getAssignee().getFullName() : 'keinem Mitarbeiter';
+    output.push(`Das Ticket ${ticketIdentifierValue}-${ticketNumberValue} ist ${assignee} zugewiesen.`);
+
+    if (issue.getRemainingEstimateTimeAsString()) {
+        output.push(`Der Restaufwand beträgt ${issue.getRemainingEstimateTimeAsString()}.`);
+    }
+    if (issue.getOriginalEstimatedTimeAsString()) {
+        output.push(`Ursprünglich geschätzt waren ${issue.getOriginalEstimatedTimeAsString()}.`);
     }
 
     response
@@ -56,17 +67,17 @@ export default async (request: alexa.request, response: alexa.response): Promise
                 backgroundImage: {
                     contentDescription: '',
                     sources: [{
-                        url: issue.getAssignee().avatarUrls['48x48'],
+                        url: issue.getAssignee() ? issue.getAssignee().avatarUrls['48x48'] : '',
                         size: 'LARGE'
                     }]
                 },
                 textContent: {
                     primaryText: {
-                        text: `<div align='center'>${issue.getAssignee().displayName}</div>`,
+                        text: `<div align='center'>${assignee}</div>`,
                         type: 'RichText'
                     }
                 }
             }
         })
-        .say(`Das Ticket ${ticketIdentifierValue}-${ticketNumberValue} ist ${issue.getAssignee().displayName} zugewiesen.`);
+        .say(output.join(' '));
 };

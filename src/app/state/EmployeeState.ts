@@ -1,6 +1,6 @@
 import { AutoWired, Singleton } from 'typescript-ioc';
 
-interface IEmployee {
+export interface IEmployee {
     id?: number;
     name: string;
     email: string;

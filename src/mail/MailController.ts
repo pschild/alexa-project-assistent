@@ -1,5 +1,6 @@
 import { createTransport, SendMailOptions, Transporter } from 'nodemailer';
 import { AutoWired, Singleton } from 'typescript-ioc';
+import { IEmployee } from '../app/state/EmployeeState';
 
 @AutoWired
 @Singleton
@@ -19,13 +20,13 @@ export default class MailController {
         });
     }
 
-    async send(recipientName: string): Promise<any> {
+    async send(recipient: IEmployee, content: string): Promise<any> {
         const mailOptions: SendMailOptions = {
             from: `"Alexa 🤖" <${process.env.MAIL_PROVIDER_USERNAME}>`,
-            to: process.env.MAIL_RECIPIENT,
-            subject: `Hello ${recipientName}`,
-            text: 'Hello world',
-            html: '<b>Hello world</b>'
+            to: recipient.email,
+            subject: `Notiz für ${recipient.name}`,
+            text: content,
+            html: content
         };
 
         return new Promise((resolve, reject) => {

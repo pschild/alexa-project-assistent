@@ -1,6 +1,6 @@
 import * as alexa from 'alexa-app';
 
-export default async (request: alexa.request, response: alexa.response): Promise<any> => {
+export default async (request: alexa.request, response: alexa.response): Promise<alexa.response> => {
     if (request.getDialog().isStarted()) {
         const updatedIntent = request.data.request.intent;
         return response

@@ -3,7 +3,7 @@ import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController'
 import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
 import { Container } from 'typescript-ioc';
 
-export default async (request: alexa.request, response: alexa.response): Promise<any> => {
+export default async (request: alexa.request, response: alexa.response): Promise<alexa.response> => {
     let errorSpeechOutput;
 
     if (request.getDialog().isStarted()) {

@@ -108,9 +108,21 @@
         },
         {
           "name": "SendMailIntent",
-          "slots": [],
+          "slots": [
+            {
+              "name": "MailContent",
+              "type": "AMAZON.SearchQuery",
+              "samples": [
+                "{MailContent}"
+              ]
+            }
+          ],
           "samples": [
-            "sende eine mail"
+            "sende eine Mail",
+            "schicke eine Mail",
+            "sende eine Mail mit dem Inhalt {MailContent}",
+            "schicke eine Mail mit dem Inhalt {MailContent}",
+            "sende mir eine Erinnerung"
           ]
         },
         {
@@ -195,10 +207,32 @@
               }
             }
           ]
+        },
+        {
+          "name": "SendMailIntent",
+          "slots": [
+            {
+              "name": "MailContent",
+              "type": "AMAZON.SearchQuery",
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "MailContent.Elicit.1"
+              }
+            }
+          ]
         }
       ]
     },
     "prompts": [
+      {
+        "id": "MailContent.Elicit.1",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Diktiere mir, was ich schreiben soll."
+          }
+        ]
+      },
       {
         "id": "JiraTicketIdentifier.Elicit.1",
         "variations": [

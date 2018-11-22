@@ -19,10 +19,10 @@ export default async (request: alexa.request, response: alexa.response): Promise
             })
             .shouldEndSession(false);
 
-    } else {
-        const animalValue = request.slot('Animal');
-        return response.say(`Du hast das Tier ${animalValue} gewählt.`);
     }
+
+    const animalValue = request.slot('Animal');
+    return response.say(`Du hast das Tier ${animalValue} gewählt.`);
 
     // use this instead of Dialog.Delegate to elicit a slot
     // replaces interactionModel.prompts!

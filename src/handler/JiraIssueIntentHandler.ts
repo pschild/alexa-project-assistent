@@ -24,49 +24,49 @@ export default async (request: alexa.request, response: alexa.response): Promise
             })
             .shouldEndSession(false);
 
-    } else {
-        const ticketIdentifierValue = request.slot('JiraTicketIdentifier');
-        const ticketNumberValue = request.slot('JiraTicketNumber');
-        console.log(ticketIdentifierValue, ticketNumberValue);
+    }
 
-        const controller: JiraEndpointController = Container.get(JiraEndpointController);
-        const issue: JiraIssue = await controller
-            .getIssue(`${ticketIdentifierValue}-${ticketNumberValue}`)
-            .catch((error) => {
-                errorSpeechOutput = `Ich konnte das Ticket ${ticketIdentifierValue}-${ticketNumberValue} nicht finden.`;
-                return null;
-            });
+    const ticketIdentifierValue = request.slot('JiraTicketIdentifier');
+    const ticketNumberValue = request.slot('JiraTicketNumber');
+    console.log(ticketIdentifierValue, ticketNumberValue);
 
-        // TODO: cleaner error handling
-        if (!issue || !issue.getAssignee() || !issue.getAssignee().displayName) {
-            errorSpeechOutput = `Ich habe Probleme, das Ticket ${ticketIdentifierValue}-${ticketNumberValue} auszuwerten.`;
-        }
+    const controller: JiraEndpointController = Container.get(JiraEndpointController);
+    const issue: JiraIssue = await controller
+        .getIssue(`${ticketIdentifierValue}-${ticketNumberValue}`)
+        .catch((error) => {
+            errorSpeechOutput = `Ich konnte das Ticket ${ticketIdentifierValue}-${ticketNumberValue} nicht finden.`;
+            return null;
+        });
 
-        if (errorSpeechOutput) {
-            return response.say(errorSpeechOutput);
-        }
+    // TODO: cleaner error handling
+    if (!issue || !issue.getAssignee() || !issue.getAssignee().displayName) {
+        errorSpeechOutput = `Ich habe Probleme, das Ticket ${ticketIdentifierValue}-${ticketNumberValue} auszuwerten.`;
+    }
 
-        response
-            .directive({
-                type: 'Display.RenderTemplate',
-                template: {
-                    type: 'BodyTemplate1',
-                    backButton: 'HIDDEN',
-                    backgroundImage: {
-                        contentDescription: '',
-                        sources: [{
-                            url: issue.getAssignee().avatarUrls['48x48'],
-                            size: 'LARGE'
-                        }]
-                    },
-                    textContent: {
-                        primaryText: {
-                            text: `<div align='center'>${issue.getAssignee().displayName}</div>`,
-                            type: 'RichText'
-                        }
+    if (errorSpeechOutput) {
+        return response.say(errorSpeechOutput);
+    }
+
+    response
+        .directive({
+            type: 'Display.RenderTemplate',
+            template: {
+                type: 'BodyTemplate1',
+                backButton: 'HIDDEN',
+                backgroundImage: {
+                    contentDescription: '',
+                    sources: [{
+                        url: issue.getAssignee().avatarUrls['48x48'],
+                        size: 'LARGE'
+                    }]
+                },
+                textContent: {
+                    primaryText: {
+                        text: `<div align='center'>${issue.getAssignee().displayName}</div>`,
+                        type: 'RichText'
                     }
                 }
-            })
-            .say(`Das Ticket ${ticketIdentifierValue}-${ticketNumberValue} ist ${issue.getAssignee().displayName} zugewiesen.`);
-    }
+            }
+        })
+        .say(`Das Ticket ${ticketIdentifierValue}-${ticketNumberValue} ist ${issue.getAssignee().displayName} zugewiesen.`);
 };

@@ -24,3 +24,4 @@
 * https://github.com/thiagobustamante/typescript-ioc
 * https://github.com/motdotla/dotenv
 * https://github.com/bubenshchykov/ngrok
+* https://github.com/EvanHahn/HumanizeDuration.js

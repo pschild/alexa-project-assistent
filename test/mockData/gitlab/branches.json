@@ -1,0 +1,48 @@
+[
+    {
+        "name": "feature/FOO-271",
+        "commit": {
+            "id": "93071cd0103e7a0ae19f6b34b41b26d683b91001",
+            "short_id": "93071cd0",
+            "title": "Fixed some bugs",
+            "created_at": "2018-11-21T11:27:56.000+01:00",
+            "parent_ids": [
+                "40aa8e3759d737fad6b84d31eef3e8f01ca7babc"
+            ],
+            "message": "Fixed some bugs\n",
+            "author_name": "John Doe",
+            "author_email": "john.doe@company.com",
+            "authored_date": "2018-11-21T11:27:56.000+01:00",
+            "committer_name": "John Doe",
+            "committer_email": "john.doe@company.com",
+            "committed_date": "2018-11-21T11:27:56.000+01:00"
+        },
+        "merged": true,
+        "protected": true,
+        "developers_can_push": true,
+        "developers_can_merge": true
+    },
+    {
+        "name": "master",
+        "commit": {
+            "id": "a620d738d23b78d55929a6bc67de82bbb9aed025",
+            "short_id": "a620d738",
+            "title": "[FOO-271] Implemented some feature",
+            "created_at": "2018-11-21T15:20:36.000+01:00",
+            "parent_ids": [
+                "323d2aa9d16251d2e458cd60349cf600d2c2c388"
+            ],
+            "message": "[FOO-271] Implemented some feature\n",
+            "author_name": "Max Power",
+            "author_email": "max.power@company.com",
+            "authored_date": "2018-11-21T15:20:36.000+01:00",
+            "committer_name": "Max Power",
+            "committer_email": "max.power@company.com",
+            "committed_date": "2018-11-21T15:20:36.000+01:00"
+        },
+        "merged": false,
+        "protected": true,
+        "developers_can_push": false,
+        "developers_can_merge": true
+    }
+]

@@ -4,6 +4,8 @@ import { AutoWired, Singleton } from 'typescript-ioc';
 import { GitlabProject } from './domain/GitlabProject';
 import { GitlabMergeRequest } from './domain/GitlabMergeRequest';
 import { MergeRequestState, MergeRequestScope } from './domain/GitlabEnums';
+import { GitlabBranch } from './domain/GitlabBranch';
+import { GitlabCommit } from './domain/GitlabCommit';
 
 @AutoWired
 @Singleton
@@ -35,12 +37,26 @@ export class GitlabEndpointController extends EndpointController {
 
     public async getAllOpenMergeRequests(): Promise<GitlabMergeRequest[]> {
         const result = await this.get({
-            uri: `
-            ${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/merge_requests
-            ?scope=${MergeRequestScope.ALL}
-            &state=${MergeRequestState.OPENED}
-            `
+            uri: [
+                `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/merge_requests`,
+                `?scope=${MergeRequestScope.ALL}`,
+                `&state=${MergeRequestState.OPENED}`
+            ].join('')
         });
         return (result as GitlabMergeRequest[]).map((mergeRequest) => plainToClass(GitlabMergeRequest, mergeRequest));
+    }
+
+    public async getBranchesOfProject(id: number): Promise<GitlabBranch[]> {
+        const result = await this.get({
+            uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${id}/repository/branches`
+        });
+        return (result as GitlabBranch[]).map((branch) => plainToClass(GitlabBranch, branch));
+    }
+
+    public async getCommitsOfProject(id: number): Promise<GitlabCommit[]> {
+        const result = await this.get({
+            uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${id}/repository/commits`
+        });
+        return (result as GitlabCommit[]).map((commit) => plainToClass(GitlabCommit, commit));
     }
 }

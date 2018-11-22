@@ -13,6 +13,7 @@ import SendMailIntentHandler from '../handler/SendMailIntentHandler';
 import SlotTestIntentHandler from '../handler/SlotTestIntentHandler';
 import AppState from './state/AppState';
 import { Container } from 'typescript-ioc';
+import { hasDisplaySupport } from './appUtils';
 
 dotenv.config();
 
@@ -32,10 +33,6 @@ alexaApp.post = (request, response, type, exception) => {
         response.response.response.directives = directivesOfRequest.filter((directive) => directive.type !== 'Display.RenderTemplate');
     }
 };
-
-// TODO: utils?
-// tslint:disable-next-line:no-string-literal
-const hasDisplaySupport = (request) => request.data.context.System.device['supportedInterfaces'].hasOwnProperty('Display');
 
 const appState: AppState = Container.get(AppState);
 appState.getEmployeeState().setActive('Doe, John');

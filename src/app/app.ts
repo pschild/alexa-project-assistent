@@ -26,6 +26,17 @@ alexaApp.express({
     debug: true
 });
 
+alexaApp.post = (request, response, type, exception) => {
+    if (hasDisplaySupport(request)) {
+        const directivesOfRequest = response.response.response.directives;
+        response.response.response.directives = directivesOfRequest.filter((directive) => directive.type !== 'Display.RenderTemplate');
+    }
+};
+
+// TODO: utils?
+// tslint:disable-next-line:no-string-literal
+const hasDisplaySupport = (request) => request.data.context.System.device['supportedInterfaces'].hasOwnProperty('Display');
+
 const appState: AppState = Container.get(AppState);
 appState.getEmployeeState().setActive('Doe, John');
 

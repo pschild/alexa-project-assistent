@@ -75,9 +75,28 @@
         },
         {
           "name": "JiraIssueIntent",
-          "slots": [],
+          "slots": [
+            {
+              "name": "JiraTicketIdentifier",
+              "type": "JiraTicketIdentifier",
+              "samples": [
+                "öffne ticket {JiraTicketIdentifier}",
+                "ticket {JiraTicketIdentifier}",
+                "{JiraTicketIdentifier}"
+              ]
+            },
+            {
+              "name": "JiraTicketNumber",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "{JiraTicketNumber}"
+              ]
+            }
+          ],
           "samples": [
-            "öffne jira ticket"
+            "öffne jira ticket",
+            "öffne jira ticket {JiraTicketIdentifier}",
+            "öffne jira ticket {JiraTicketIdentifier} {JiraTicketNumber}"
           ]
         },
         {
@@ -114,7 +133,21 @@
         }
       ],
       "types": [
-        
+        {
+          "name": "JiraTicketIdentifier",
+          "values": [
+            {
+              "name": {
+                "value": "MDK"
+              }
+            },
+            {
+              "name": {
+                "value": "EV"
+              }
+            }
+          ]
+        }
       ]
     },
     "dialog": {
@@ -133,10 +166,66 @@
               }
             }
           ]
+        },
+        {
+          "name": "JiraIssueIntent",
+          "slots": [
+            {
+              "name": "JiraTicketIdentifier",
+              "type": "JiraTicketIdentifier",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "JiraTicketIdentifier.Elicit.1"
+              },
+              "validations": [
+                {
+                  "type": "hasEntityResolutionMatch",
+                  "prompt": "JiraTicketIdentifier.Validation.1"
+                }
+              ]
+            },
+            {
+              "name": "JiraTicketNumber",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "JiraTicketNumber.Elicit.1"
+              }
+            }
+          ]
         }
       ]
     },
     "prompts": [
+      {
+        "id": "JiraTicketIdentifier.Elicit.1",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Sage mir die Ticket Bezeichnung"
+          }
+        ]
+      },
+      {
+        "id": "JiraTicketNumber.Elicit.1",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Sage mir noch die Ticket Nummer"
+          }
+        ]
+      },
+      {
+        "id": "JiraTicketIdentifier.Validation.1",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Den Bezeichner {JiraTicketIdentifier} kenne ich nicht."
+          }
+        ]
+      },
       {
         "id": "Animal.Elicit.1",
         "variations": [

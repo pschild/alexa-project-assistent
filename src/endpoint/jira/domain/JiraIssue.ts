@@ -6,7 +6,6 @@ import { JiraIssueAssignee } from './JiraIssueAssignee';
 export class JiraIssue {
     id: string;
     key: string;
-    summary: string;
 
     @Type(() => JiraIssueFields)
     fields: JiraIssueFields;

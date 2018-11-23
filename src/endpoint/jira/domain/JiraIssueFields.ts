@@ -10,6 +10,7 @@ export enum IssueType {
 
 export class JiraIssueFields {
     issuetype: {id: string, name: IssueType};
+    summary: string;
 
     @Type(() => JiraIssueAssignee)
     assignee: JiraIssueAssignee;

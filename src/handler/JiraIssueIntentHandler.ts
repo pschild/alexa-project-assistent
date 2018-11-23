@@ -4,31 +4,25 @@ import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
 import { Container } from 'typescript-ioc';
 
 export default async (request: alexa.request, response: alexa.response): Promise<alexa.response> => {
+    const session = request.getSession();
     let errorSpeechOutput;
 
-    if (request.getDialog().isStarted()) {
+    if (!request.getDialog().isCompleted()) {
         const updatedIntent = request.data.request.intent;
-        return response
-            .directive({
-                type: 'Dialog.Delegate',
-                updatedIntent
-            })
-            .shouldEndSession(false);
-
-    } else if (!request.getDialog().isCompleted()) {
-        const updatedIntent = request.data.request.intent;
-        return response
-            .directive({
-                type: 'Dialog.Delegate',
-                updatedIntent
-            })
-            .shouldEndSession(false);
-
+        if (!session.get('jiraTicketId') || !session.get('jiraTicketNo')) {
+            return response
+                .directive({
+                    type: 'Dialog.Delegate',
+                    updatedIntent
+                })
+                .shouldEndSession(false);
+        }
     }
 
-    const ticketIdentifierValue = request.slot('JiraTicketIdentifier');
-    const ticketNumberValue = request.slot('JiraTicketNumber');
-    console.log(ticketIdentifierValue, ticketNumberValue);
+    const ticketActionValue = request.slot('JiraTicketAction');
+    const ticketIdentifierValue = request.slot('JiraTicketIdentifier') || session.get('jiraTicketId');
+    const ticketNumberValue = request.slot('JiraTicketNumber') || session.get('jiraTicketNo');
+    console.log(ticketActionValue, ticketIdentifierValue, ticketNumberValue);
 
     const controller: JiraEndpointController = Container.get(JiraEndpointController);
     const issue: JiraIssue = await controller
@@ -47,37 +41,77 @@ export default async (request: alexa.request, response: alexa.response): Promise
         return response.say(errorSpeechOutput);
     }
 
-    const output = [];
-    const assignee = issue.getAssignee() ? issue.getAssignee().getFullName() : 'keinem Mitarbeiter';
-    output.push(`Das Ticket ${ticketIdentifierValue}-${ticketNumberValue} ist ${assignee} zugewiesen.`);
+    session.set('jiraTicketId', ticketIdentifierValue);
+    session.set('jiraTicketNo', ticketNumberValue);
 
-    if (issue.getRemainingEstimateTimeAsString()) {
-        output.push(`Der Restaufwand beträgt ${issue.getRemainingEstimateTimeAsString()}.`);
-    }
-    if (issue.getOriginalEstimatedTimeAsString()) {
-        output.push(`Ursprünglich geschätzt waren ${issue.getOriginalEstimatedTimeAsString()}.`);
+    let outputSayings = [];
+    let outputDirectives = [];
+
+    outputSayings = [...outputSayings, `Ticket ${ticketIdentifierValue}-${ticketNumberValue}.`];
+
+    if (ticketActionValue === 'bearbeiter') {
+        outputSayings = [...outputSayings, addAssigneeSpeech(issue)];
+        outputDirectives = [...outputDirectives, addAssigneeDisplay(issue)];
+    } else if (ticketActionValue === 'titel') {
+        outputSayings = [...outputSayings, addTitleSpeech(issue)];
+    } else if (ticketActionValue === 'zeit') {
+        outputSayings = [...outputSayings, addEstimationSpeech(issue)];
+    } else if (ticketActionValue === 'zusammenfassung') {
+        outputSayings = [
+            ...outputSayings,
+            addAssigneeSpeech(issue),
+            addTitleSpeech(issue),
+            addEstimationSpeech(issue)
+        ];
     }
 
-    response
-        .directive({
-            type: 'Display.RenderTemplate',
-            template: {
-                type: 'BodyTemplate1',
-                backButton: 'HIDDEN',
-                backgroundImage: {
-                    contentDescription: '',
-                    sources: [{
-                        url: issue.getAssignee() ? issue.getAssignee().avatarUrls['48x48'] : '',
-                        size: 'LARGE'
-                    }]
-                },
-                textContent: {
-                    primaryText: {
-                        text: `<div align='center'>${assignee}</div>`,
-                        type: 'RichText'
-                    }
+    outputDirectives.map((d) => response.directive(d));
+    response.say(outputSayings.join(' ')).shouldEndSession(false);
+};
+
+const addAssigneeSpeech = (issue): string|string[] => {
+    const assigneeName = issue.getAssignee() ? issue.getAssignee().getFullName() : 'keinem Mitarbeiter';
+    return `Das Ticket ist ${assigneeName} zugewiesen.`;
+};
+
+const addAssigneeDisplay = (issue): {type: string, template: any} => {
+    if (!issue.getAssignee()) {
+        return;
+    }
+    return {
+        type: 'Display.RenderTemplate',
+        template: {
+            type: 'BodyTemplate1',
+            backButton: 'HIDDEN',
+            backgroundImage: {
+                contentDescription: '',
+                sources: [{
+                    url: issue.getAssignee().avatarUrls['48x48'] || '',
+                    size: 'LARGE'
+                }]
+            },
+            textContent: {
+                primaryText: {
+                    text: `<div align='center'>${issue.getAssignee().displayName || 'N/A'}</div>`,
+                    type: 'RichText'
                 }
             }
-        })
-        .say(output.join(' '));
+        }
+    };
+};
+
+const addTitleSpeech = (issue): string|string[] => `Die Bezeichnung lautet ${issue.fields.summary}.`;
+
+const addEstimationSpeech = (issue): string|string[] => {
+    let output = [];
+    if (issue.getRemainingEstimateTimeAsString()) {
+        output = [...output, `Der Restaufwand beträgt ${issue.getRemainingEstimateTimeAsString()}.`];
+    }
+    if (issue.getOriginalEstimatedTimeAsString()) {
+        output = [...output, `Ursprünglich geschätzt waren ${issue.getOriginalEstimatedTimeAsString()}.`];
+    }
+    if (!output.length) {
+        output = [`Keine Informationen über den Aufwand verfügbar.`];
+    }
+    return output;
 };

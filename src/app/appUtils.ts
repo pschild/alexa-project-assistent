@@ -1,2 +1,8 @@
-// tslint:disable-next-line:no-string-literal
-export const hasDisplaySupport = (request) => request.data.context.System.device['supportedInterfaces'].hasOwnProperty('Display');
+export const hasDisplaySupport = (request) => {
+    return request
+        && request.data
+        && request.data.context
+        && request.data.context.System
+        && request.data.context.System.device['supportedInterfaces']
+        && request.data.context.System.device['supportedInterfaces'].hasOwnProperty('Display');
+};

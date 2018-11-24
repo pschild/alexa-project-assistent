@@ -25,3 +25,4 @@
 * https://github.com/motdotla/dotenv
 * https://github.com/bubenshchykov/ngrok
 * https://github.com/EvanHahn/HumanizeDuration.js
+* https://github.com/sindresorhus/pageres

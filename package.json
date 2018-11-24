@@ -27,6 +27,7 @@
     "express": "^4.16.4",
     "humanize-duration": "^3.15.3",
     "nodemailer": "^4.6.8",
+    "pageres": "^4.5.1",
     "reflect-metadata": "^0.1.12",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",

@@ -56,6 +56,16 @@ export default async (request: alexa.request, response: alexa.response): Promise
         outputSayings = [...outputSayings, addTitleSpeech(issue)];
     } else if (ticketActionValue === 'zeit') {
         outputSayings = [...outputSayings, addEstimationSpeech(issue)];
+    } else if (ticketActionValue === 'diagramm') {
+        const publicScreenshotUrl = controller.getBurndownChartUrl(36, 37);
+        if (publicScreenshotUrl) {
+            outputSayings = [...outputSayings, `Hier ist das aktuelle Burndown Chart.`];
+            outputDirectives = [...outputDirectives, addBurndownChartDisplay(publicScreenshotUrl)];
+        } else {
+            outputSayings = [...outputSayings, `Ich erstelle das Diagramm. Bitte warte einen Moment und frag mich gleich nochmal.`];
+            controller.crawlBurndownChart(36, 37);
+            // TODO: add directive to enable the user to show the diagram when clicked a button?!
+        }
     } else if (ticketActionValue === 'zusammenfassung') {
         outputSayings = [
             ...outputSayings,
@@ -64,6 +74,8 @@ export default async (request: alexa.request, response: alexa.response): Promise
             addEstimationSpeech(issue)
         ];
     }
+
+    outputSayings = [...outputSayings, `Möchtest du noch weitere Infos? Sage zum Beispiel Zusammenfassung oder Diagramm.`];
 
     outputDirectives.map((d) => response.directive(d));
     response.say(outputSayings.join(' ')).shouldEndSession(false);
@@ -95,6 +107,23 @@ const addAssigneeDisplay = (issue): {type: string, template: any} => {
                     text: `<div align='center'>${issue.getAssignee().displayName || 'N/A'}</div>`,
                     type: 'RichText'
                 }
+            }
+        }
+    };
+};
+
+const addBurndownChartDisplay = (screenshotUrl: string): {type: string, template: any} => {
+    return {
+        type: 'Display.RenderTemplate',
+        template: {
+            type: 'BodyTemplate1',
+            backButton: 'HIDDEN',
+            backgroundImage: {
+                contentDescription: '',
+                sources: [{
+                    url: screenshotUrl,
+                    size: 'LARGE'
+                }]
             }
         }
     };

@@ -1,11 +1,16 @@
 import { get } from 'request-promise';
 import { CoreOptions, UriOptions } from 'request';
+import AppState from '../app/state/AppState';
+import { Inject } from 'typescript-ioc';
 
 export class EndpointController {
 
     protected baseUrl: string;
     protected username: string;
     protected password: string;
+
+    @Inject
+    protected appState: AppState;
 
     constructor() {
         this.config();

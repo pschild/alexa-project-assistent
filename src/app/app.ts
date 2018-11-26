@@ -17,14 +17,20 @@ import { hasDisplaySupport } from './appUtils';
 
 dotenv.config();
 
+const appState: AppState = Container.get(AppState);
+
 const app = express();
+app.use(express.static('media-gen'));
+app.use((req, res, next) => {
+    appState.setHostname(req.hostname);
+    return next();
+});
 
 const alexaApp = new alexa.app(process.env.ALEXA_SKILL_NAME);
-
 alexaApp.express({
     expressApp: app,
     checkCert: true,
-    debug: true
+    debug: false
 });
 
 alexaApp.post = (request, response, type, exception) => {
@@ -34,7 +40,6 @@ alexaApp.post = (request, response, type, exception) => {
     }
 };
 
-const appState: AppState = Container.get(AppState);
 appState.getEmployeeState().setActive('Doe, John');
 
 alexaApp.launch(LaunchIntentHandler);

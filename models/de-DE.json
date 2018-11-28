@@ -12,6 +12,13 @@
           "samples": []
         },
         {
+          "name": "JiraHelpIntent",
+          "samples": [
+            "jira hilfe",
+            "öffne jira hilfe"
+          ]
+        },
+        {
           "name": "AMAZON.StopIntent",
           "samples": []
         },

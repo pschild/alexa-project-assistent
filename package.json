@@ -32,6 +32,7 @@
     "reflect-metadata": "^0.1.12",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
+    "ssml-builder": "^0.4.3",
     "typescript-ioc": "^1.2.4"
   },
   "devDependencies": {

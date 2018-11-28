@@ -6,3 +6,11 @@ export const hasDisplaySupport = (request) => {
         && request.data.context.System.device['supportedInterfaces']
         && request.data.context.System.device['supportedInterfaces'].hasOwnProperty('Display');
 };
+
+export const wordToXSampaMap: Map<string, string> = new Map([
+    ['jira', 'dZi:r6'],
+    ['confluence', 'kOnfluEns'],
+    ['sonarqube', 'soUnarkjub'],
+    ['jenkins', '"dZEnkIns'],
+    ['gitlab', 'gitlEp']
+]);

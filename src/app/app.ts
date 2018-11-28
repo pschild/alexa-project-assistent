@@ -9,6 +9,7 @@ import JiraIssueIntentHandler from '../handler/JiraIssueIntentHandler';
 import JenkinsBuildsIntentHandler from '../handler/JenkinsBuildsIntentHandler';
 import StopIntentHandler from '../handler/StopIntentHandler';
 import HelpIntentHandler from '../handler/HelpIntentHandler';
+import JiraHelpIntentHandler from '../handler/JiraHelpIntentHandler';
 import SendMailIntentHandler from '../handler/SendMailIntentHandler';
 import SlotTestIntentHandler from '../handler/SlotTestIntentHandler';
 import AppState from './state/AppState';
@@ -43,8 +44,11 @@ alexaApp.post = (request, response, type, exception) => {
 appState.getEmployeeState().setActive('Doe, John');
 
 alexaApp.launch(LaunchIntentHandler);
-alexaApp.intent('AMAZON.HelpIntent', HelpIntentHandler);
 alexaApp.intent('AMAZON.StopIntent', StopIntentHandler);
+
+alexaApp.intent('AMAZON.HelpIntent', HelpIntentHandler); // 'hilfe'
+alexaApp.intent('JiraHelpIntent', JiraHelpIntentHandler); // 'jira hilfe'
+// TODO: add more HelpIntents
 
 alexaApp.intent('HelloWorldIntent', HelloWorldIntentHandler);
 alexaApp.intent('DisplayTestIntent', DisplayTestIntentHandler);

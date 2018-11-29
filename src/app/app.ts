@@ -43,6 +43,8 @@ alexaApp.post = (request, response, type, exception) => {
 
 appState.getEmployeeState().setActive('Doe, John');
 
+const jiraIssueIntentHandler: JiraIssueIntentHandler = Container.get(JiraIssueIntentHandler);
+
 alexaApp.launch(LaunchIntentHandler);
 alexaApp.intent('AMAZON.StopIntent', StopIntentHandler);
 
@@ -52,7 +54,7 @@ alexaApp.intent('JiraHelpIntent', JiraHelpIntentHandler); // 'jira hilfe'
 
 alexaApp.intent('HelloWorldIntent', HelloWorldIntentHandler);
 alexaApp.intent('DisplayTestIntent', DisplayTestIntentHandler);
-alexaApp.intent('JiraIssueIntent', JiraIssueIntentHandler); // 'starte informationsaggregator und öffne jira ticket'
+alexaApp.intent('JiraIssueIntent', jiraIssueIntentHandler.handle.bind(jiraIssueIntentHandler)); // 'starte informationsaggregator und öffne jira ticket'
 alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler); // 'starte informationsaggregator und zeige jenkins status'
 alexaApp.intent('SendMailIntent', SendMailIntentHandler); // 'starte informationsaggregator und sende eine mail'
 alexaApp.intent('SlotTestIntent', SlotTestIntentHandler); // 'starte informationsaggregator und teste slots'

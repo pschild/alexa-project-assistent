@@ -290,7 +290,7 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "Diktiere mir, was ich schreiben soll."
+            "value": "Was soll ich dir schreiben?"
           }
         ]
       },
@@ -308,7 +308,7 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "Sage mir die Ticket Bezeichnung"
+            "value": "Welche Bezeichnung hat das Ticket?"
           }
         ]
       },
@@ -317,7 +317,7 @@
         "variations": [
           {
             "type": "PlainText",
-            "value": "Sage mir noch die Ticket Nummer"
+            "value": "Welche Nummer hat das Ticket?"
           }
         ]
       },

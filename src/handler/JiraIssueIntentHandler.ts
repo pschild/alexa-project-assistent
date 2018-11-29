@@ -35,6 +35,7 @@ export default async (request: alexa.request, response: alexa.response): Promise
     // TODO: cleaner error handling
     if (!issue) {
         errorSpeechOutput = `Ich habe Probleme, das Ticket ${ticketIdentifierValue}-${ticketNumberValue} auszuwerten.`;
+        // TODO: UX: add display directive
     }
 
     if (errorSpeechOutput) {

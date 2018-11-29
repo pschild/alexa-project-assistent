@@ -37,7 +37,7 @@ export default async (request: alexa.request, response: alexa.response): Promise
             return null;
         });
 
-    if (!issue) {
+    if (!issue && !hasError) {
         hasError = true;
         addTicketNotFoundSpeech(ticketIdentifierValue, ticketNumberValue);
         // TODO: UX: add display directive

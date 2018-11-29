@@ -15,6 +15,8 @@ export default class AppState {
     private protocol: string = 'https';
     private hostname: string;
 
+    private firstStart: boolean = true;
+
     getEmployeeState(): EmployeeState {
         return this.employeeState;
     }
@@ -29,6 +31,14 @@ export default class AppState {
 
     getBaseUrl(): string {
         return `${this.protocol}://${this.hostname}/`;
+    }
+
+    setFirstStart(firstStart: boolean) {
+        this.firstStart = firstStart;
+    }
+
+    isFirstStart(): boolean {
+        return this.firstStart;
     }
 
 }

@@ -1,11 +1,15 @@
 import * as alexa from 'alexa-app';
+import * as Speech from 'ssml-builder';
 import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
 import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
 import { Container } from 'typescript-ioc';
 
+let speech;
+
 export default async (request: alexa.request, response: alexa.response): Promise<alexa.response> => {
+    speech = new Speech();
     const session = request.getSession();
-    let errorSpeechOutput;
+    let hasError = false;
 
     if (!request.getDialog().isCompleted()) {
         const updatedIntent = request.data.request.intent;
@@ -28,66 +32,72 @@ export default async (request: alexa.request, response: alexa.response): Promise
     const issue: JiraIssue = await controller
         .getIssue(`${ticketIdentifierValue}-${ticketNumberValue}`)
         .catch((error) => {
-            errorSpeechOutput = `Ich konnte das Ticket ${ticketIdentifierValue}-${ticketNumberValue} nicht finden.`;
+            hasError = true;
+            addTicketNotLoadableSpeech(ticketIdentifierValue, ticketNumberValue);
             return null;
         });
 
-    // TODO: cleaner error handling
     if (!issue) {
-        errorSpeechOutput = `Ich habe Probleme, das Ticket ${ticketIdentifierValue}-${ticketNumberValue} auszuwerten.`;
+        hasError = true;
+        addTicketNotFoundSpeech(ticketIdentifierValue, ticketNumberValue);
         // TODO: UX: add display directive
     }
 
-    if (errorSpeechOutput) {
-        return response.say(errorSpeechOutput);
+    if (hasError) {
+        return response.say(speech.ssml(true)).shouldEndSession(false);
     }
 
     session.set('jiraTicketId', ticketIdentifierValue);
     session.set('jiraTicketNo', ticketNumberValue);
 
-    let outputSayings = [];
     let outputDirectives = [];
 
-    outputSayings = [...outputSayings, `Ticket ${ticketIdentifierValue}-${ticketNumberValue}.`];
-
     if (ticketActionValue === 'bearbeiter') {
-        outputSayings = [...outputSayings, addAssigneeSpeech(issue)];
+        addAssigneeSpeech(issue);
         outputDirectives = [...outputDirectives, addAssigneeDisplay(issue)];
     } else if (ticketActionValue === 'titel') {
-        outputSayings = [...outputSayings, addTitleSpeech(issue)];
+        addTitleSpeech(issue);
     } else if (ticketActionValue === 'zeit') {
-        outputSayings = [...outputSayings, addEstimationSpeech(issue)];
+        addEstimationSpeech(issue);
     } else if (ticketActionValue === 'diagramm') {
         const publicScreenshotUrl = controller.getBurndownChartUrl(36, 37);
         if (publicScreenshotUrl) {
-            outputSayings = [...outputSayings, `Hier ist das aktuelle Burndown Chart.`];
+            speech.say(`Hier ist das aktuelle Burndown Chart.`);
             outputDirectives = [...outputDirectives, addBurndownChartDisplay(publicScreenshotUrl)];
         } else {
-            outputSayings = [...outputSayings, `Ich erstelle das Diagramm. Bitte warte einen Moment und frag mich gleich nochmal.`];
+            speech.say(`Ich erstelle das Diagramm. Bitte warte einen Moment und frage mich gleich nochmal.`);
             controller.crawlBurndownChart(36, 37);
             // TODO: add directive to enable the user to show the diagram when clicked a button?!
         }
     } else if (ticketActionValue === 'zusammenfassung') {
-        outputSayings = [
-            ...outputSayings,
-            addAssigneeSpeech(issue),
-            addTitleSpeech(issue),
-            addEstimationSpeech(issue)
-        ];
+        addAssigneeSpeech(issue);
+        speech.pause('100ms');
+        addTitleSpeech(issue);
+        speech.pause('100ms');
+        addEstimationSpeech(issue);
+        speech.pause('100ms');
     }
 
-    outputSayings = [...outputSayings, `Möchtest du noch weitere Infos? Sage zum Beispiel Zusammenfassung oder Diagramm.`];
+    speech
+        .pause('100ms')
+        .say(`Sonst noch etwas?`);
 
     outputDirectives.map((d) => response.directive(d));
-    response.say(outputSayings.join(' ')).shouldEndSession(false);
+    response.say(speech.ssml(true)).shouldEndSession(false);
 };
 
-const addAssigneeSpeech = (issue): string|string[] => {
+const addAssigneeSpeech = (issue: JiraIssue) => {
     const assigneeName = issue.getAssignee() ? issue.getAssignee().getFullName() : 'keinem Mitarbeiter';
-    return `Das Ticket ist ${assigneeName} zugewiesen.`;
+    speech
+        .say(`Das Ticket`)
+        .sayAs({
+            interpret: 'characters',
+            word: issue.key.replace('-', '')
+        })
+        .say(`ist ${assigneeName} zugewiesen.`);
 };
 
-const addAssigneeDisplay = (issue): {type: string, template: any} => {
+const addAssigneeDisplay = (issue: JiraIssue): {type: string, template: any} => {
     if (!issue.getAssignee()) {
         return;
     }
@@ -130,18 +140,53 @@ const addBurndownChartDisplay = (screenshotUrl: string): {type: string, template
     };
 };
 
-const addTitleSpeech = (issue): string|string[] => `Die Bezeichnung lautet ${issue.fields.summary}.`;
+const addTitleSpeech = (issue: JiraIssue) => {
+    speech
+        .say(`Die Bezeichnung lautet`)
+        .pause('200ms')
+        .say(issue.fields.summary);
+};
 
-const addEstimationSpeech = (issue): string|string[] => {
-    let output = [];
+const addEstimationSpeech = (issue: JiraIssue) => {
     if (issue.getRemainingEstimateTimeAsString()) {
-        output = [...output, `Der Restaufwand beträgt ${issue.getRemainingEstimateTimeAsString()}.`];
+        speech.say(`Der Restaufwand beträgt ${issue.getRemainingEstimateTimeAsString()}.`);
     }
     if (issue.getOriginalEstimatedTimeAsString()) {
-        output = [...output, `Ursprünglich geschätzt waren ${issue.getOriginalEstimatedTimeAsString()}.`];
+        speech
+            .pause('50ms')
+            .say(`Ursprünglich geschätzt waren ${issue.getOriginalEstimatedTimeAsString()}.`);
     }
-    if (!output.length) {
-        output = [`Keine Informationen über den Aufwand verfügbar.`];
+    if (!issue.getRemainingEstimateTimeAsString() && !issue.getOriginalEstimatedTimeAsString()) {
+        speech.say(`Es sind keine Informationen über den Aufwand verfügbar.`);
     }
-    return output;
+};
+
+const addTicketNotLoadableSpeech = (ticketIdentifierValue, ticketNumberValue) => {
+    speech
+        .say(`Ich konnte das Ticket`)
+        .sayAs({
+            interpret: 'characters',
+            word: ticketIdentifierValue
+        })
+        .pause('50ms')
+        .sayAs({
+            interpret: 'digits',
+            word: ticketNumberValue
+        })
+        .say(`nicht laden.`);
+};
+
+const addTicketNotFoundSpeech = (ticketIdentifierValue, ticketNumberValue) => {
+    speech
+        .say(`Ich habe Probleme, das Ticket`)
+        .sayAs({
+            interpret: 'characters',
+            word: ticketIdentifierValue
+        })
+        .pause('50ms')
+        .sayAs({
+            interpret: 'digits',
+            word: ticketNumberValue
+        })
+        .say(`auszuwerten.`);
 };

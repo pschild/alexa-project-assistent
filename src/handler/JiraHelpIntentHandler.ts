@@ -20,7 +20,6 @@ export default (request: alexa.request, response: alexa.response): void => {
         });
 
     const speechOutput = speech.ssml(true);
-
     response
         .say(speechOutput)
         .reprompt(speechOutput)

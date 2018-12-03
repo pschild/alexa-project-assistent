@@ -1,6 +1,7 @@
 import { AutoWired, Singleton, Inject } from 'typescript-ioc';
 import EmployeeState from './EmployeeState';
 import DeviceState from './DeviceState';
+import NotificationState from './NotificationState';
 
 @AutoWired
 @Singleton
@@ -11,6 +12,9 @@ export default class AppState {
 
     @Inject
     private deviceState: DeviceState;
+
+    @Inject
+    private notificationState: NotificationState;
 
     private protocol: string = 'https';
     private hostname: string;
@@ -23,6 +27,10 @@ export default class AppState {
 
     getDeviceState(): DeviceState {
         return this.deviceState;
+    }
+
+    getNotificationState(): NotificationState {
+        return this.notificationState;
     }
 
     setHostname(hostname: string) {

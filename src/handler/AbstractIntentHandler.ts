@@ -1,7 +1,16 @@
 import * as alexa from 'alexa-app';
 import * as Speech from 'ssml-builder';
+import { Inject } from 'typescript-ioc';
+import AppState from '../app/state/AppState';
 
+/**
+ * Idea: remove abstract and method handleSpecificIntent, override handle in subclasses and call super.handle() at the beginning.
+ * Idea: add methods addDirective(), addSpeech(), addError(), use simple classes as parameters, e.g. AssigneeSpeech extends Speech
+ */
 export abstract class AbstractIntentHandler {
+
+    @Inject
+    protected appState: AppState;
 
     protected speech: Speech;
     protected session: alexa.session;

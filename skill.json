@@ -16,7 +16,14 @@
       "isAvailableWorldwide": true,
       "testingInstructions": "Sample Testing Instructions.",
       "category": "EDUCATION_AND_REFERENCE",
-      "distributionCountries": []
+      "distributionCountries": [],
+      "gadgetSupport": {
+        "requirement": "REQUIRED",
+        "numPlayersMin": 1,
+        "numPlayersMax": 1,
+        "minGadgetButtons": 1,
+        "maxGadgetButtons": 1
+      }
     },
     "apis": {
       "custom": {
@@ -27,6 +34,9 @@
         "interfaces": [
           {
             "type": "RENDER_TEMPLATE"
+          },
+          {
+            "type": "GAME_ENGINE"
           }
         ]
       }

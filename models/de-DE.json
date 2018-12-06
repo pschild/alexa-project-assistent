@@ -117,6 +117,22 @@
           ]
         },
         {
+          "name": "JiraChartIntent",
+          "slots": [
+            {
+              "name": "BurndownChartSprint",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "{BurndownChartSprint}"
+              ]
+            }
+          ],
+          "samples": [
+            "zeige burndown chart",
+            "zeige burndown chart von sprint {BurndownChartSprint}"
+          ]
+        },
+        {
           "name": "JenkinsBuildsIntent",
           "slots": [],
           "samples": [
@@ -183,11 +199,6 @@
             {
               "name": {
                 "value": "Zusammenfassung"
-              }
-            },
-            {
-              "name": {
-                "value": "Diagramm"
               }
             }
           ]
@@ -271,6 +282,20 @@
           ]
         },
         {
+          "name": "JiraChartIntent",
+          "slots": [
+            {
+              "name": "BurndownChartSprint",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "BurndownChartSprint.Elicit.1"
+              }
+            }
+          ]
+        },
+        {
           "name": "SendMailIntent",
           "slots": [
             {
@@ -337,6 +362,15 @@
           {
             "type": "PlainText",
             "value": "Den Bezeichner {JiraTicketIdentifier} kenne ich nicht."
+          }
+        ]
+      },
+      {
+        "id": "BurndownChartSprint.Elicit.1",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Von welchem Sprint?"
           }
         ]
       },

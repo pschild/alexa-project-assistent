@@ -10,12 +10,19 @@ import JenkinsBuildsIntentHandler from '../handler/JenkinsBuildsIntentHandler';
 import StopIntentHandler from '../handler/StopIntentHandler';
 import HelpIntentHandler from '../handler/HelpIntentHandler';
 import JiraHelpIntentHandler from '../handler/JiraHelpIntentHandler';
+import JiraChartIntentHandler from '../handler/JiraChartIntentHandler';
 import SendMailIntentHandler from '../handler/SendMailIntentHandler';
 import SlotTestIntentHandler from '../handler/SlotTestIntentHandler';
 import TimeoutHandler from '../handler/TimeoutHandler';
 import AppState from './state/AppState';
 import { Container } from 'typescript-ioc';
-import { hasDisplaySupport } from './appUtils';
+import {
+    hasDisplaySupport,
+    containsDialogDirective,
+    isStopIntent,
+    excludeDisplayDirectives,
+    excludeGameEngineDirectives
+} from './appUtils';
 
 dotenv.config();
 
@@ -39,37 +46,59 @@ alexaApp.express({
 alexaApp.post = (request: alexa.request, response: alexa.response, type: string, exception: any) => {
     const responseObj = response.response.response;
     if (!hasDisplaySupport(request)) {
-        const directivesOfRequest = responseObj.directives;
-        responseObj.directives = directivesOfRequest.filter((directive) => directive.type !== 'Display.RenderTemplate');
+        responseObj.directives = excludeDisplayDirectives(response);
     }
 
-    if (!response.getDirectives().details.filter((directive) => directive.type === 'Dialog.Delegate').length) {
-        response.getDirectives().set(TimeoutHandler.TIMEOUT_DIRECTIVE);
+    if (containsDialogDirective(response) || isStopIntent(request)) {
+        responseObj.directives = excludeGameEngineDirectives(response);
+        return;
+    }
 
-        // If shouldEndSession is true, set it to undefined to make timeout work.
-        // If it is explicitly set to false, do nothing to keep session open.
-        if (responseObj.shouldEndSession) {
-            response.shouldEndSession(undefined);
-        }
+    responseObj.directives.push(TimeoutHandler.TIMEOUT_DIRECTIVE);
+
+    // If shouldEndSession is true, set it to undefined to make timeout work.
+    // If it is explicitly set to false, do nothing to keep session open.
+    if (responseObj.shouldEndSession) {
+        response.shouldEndSession(undefined);
     }
 };
 
 const jiraIssueIntentHandler: JiraIssueIntentHandler = Container.get(JiraIssueIntentHandler);
+const jiraChartIntentHandler: JiraChartIntentHandler = Container.get(JiraChartIntentHandler);
 const timeoutHandler: TimeoutHandler = Container.get(TimeoutHandler);
 
 alexaApp.launch(LaunchIntentHandler);
+
 alexaApp.intent('AMAZON.StopIntent', StopIntentHandler);
 
-alexaApp.intent('AMAZON.HelpIntent', HelpIntentHandler); // 'hilfe'
-alexaApp.intent('JiraHelpIntent', JiraHelpIntentHandler); // 'jira hilfe'
+// 'hilfe'
+alexaApp.intent('AMAZON.HelpIntent', HelpIntentHandler);
+
+// 'jira hilfe'
+alexaApp.intent('JiraHelpIntent', JiraHelpIntentHandler);
+
 // TODO: add more HelpIntents
 
+// 'hallo'
 alexaApp.intent('HelloWorldIntent', HelloWorldIntentHandler);
+
+// 'zeige'
 alexaApp.intent('DisplayTestIntent', DisplayTestIntentHandler);
-alexaApp.intent('JiraIssueIntent', jiraIssueIntentHandler.handle.bind(jiraIssueIntentHandler)); // 'starte informationsaggregator und öffne jira ticket'
-alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler); // 'starte informationsaggregator und zeige jenkins status'
-alexaApp.intent('SendMailIntent', SendMailIntentHandler); // 'starte informationsaggregator und sende eine mail'
-alexaApp.intent('SlotTestIntent', SlotTestIntentHandler); // 'starte informationsaggregator und teste slots'
+
+// 'starte informationsaggregator und öffne jira ticket'
+alexaApp.intent('JiraIssueIntent', jiraIssueIntentHandler.handle.bind(jiraIssueIntentHandler));
+
+// 'starte informationsaggregator und zeige burndown chart'
+alexaApp.intent('JiraChartIntent', jiraChartIntentHandler.handle.bind(jiraChartIntentHandler));
+
+// 'starte informationsaggregator und zeige jenkins status'
+alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler);
+
+// 'starte informationsaggregator und sende eine mail'
+alexaApp.intent('SendMailIntent', SendMailIntentHandler);
+
+// 'starte informationsaggregator und teste slots'
+alexaApp.intent('SlotTestIntent', SlotTestIntentHandler);
 
 alexaApp.on('GameEngine.InputHandlerEvent', timeoutHandler.handle.bind(timeoutHandler));
 

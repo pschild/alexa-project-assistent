@@ -1,10 +1,35 @@
-export const hasDisplaySupport = (request) => {
+import * as alexa from 'alexa-app';
+
+export const hasDisplaySupport = (request: alexa.request) => {
     return request
         && request.data
         && request.data.context
         && request.data.context.System
         && request.data.context.System.device['supportedInterfaces']
         && request.data.context.System.device['supportedInterfaces'].hasOwnProperty('Display');
+};
+
+export const containsDialogDirective = (response: alexa.response) => {
+    // TODO: Dialog.Confirmation / Dialog.Elicit?
+    return response.getDirectives().details.filter((directive) => directive.type === 'Dialog.Delegate').length > 0;
+};
+
+export const isStopIntent = (request: alexa.request) => {
+    return request.data.request.type === 'IntentRequest' && request.data.request.intent.name === 'AMAZON.StopIntent';
+};
+
+export const isSessionEndedRequest = (request: alexa.request) => {
+    return request.data.request.type === 'SessionEndedRequest';
+};
+
+export const excludeDisplayDirectives = (response: alexa.response) => {
+    const directivesOfResponse = response.response.response.directives;
+    return directivesOfResponse.filter((directive) => directive.type !== 'Display.RenderTemplate');
+};
+
+export const excludeGameEngineDirectives = (response: alexa.response) => {
+    const directivesOfResponse = response.response.response.directives;
+    return directivesOfResponse.filter((directive) => directive.type !== 'GameEngine.InputHandlerEvent');
 };
 
 export const wordToXSampaMap: Map<string, string> = new Map([

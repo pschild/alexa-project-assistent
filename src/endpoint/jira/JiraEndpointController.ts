@@ -5,7 +5,7 @@ import { AutoWired, Singleton } from 'typescript-ioc';
 import * as Pageres from 'Pageres';
 import * as path from 'path';
 import { existsSync } from 'fs';
-import { NotificationType } from '../../app/state/NotificationState';
+import { NotificationType, Notification } from '../../app/state/NotificationState';
 
 @AutoWired
 @Singleton
@@ -62,10 +62,9 @@ export class JiraEndpointController extends EndpointController {
                 throw new Error(`Error while crawling website: ${error.message}`);
             });
         if (result && result.length) {
-            this.appState.getNotificationState().add({
-                type: NotificationType.BURNDOWNCHART_READY,
-                payload: this.appState.getBaseUrl() + result[0].filename
-            });
+            this.appState.getNotificationState().add(
+                new Notification(NotificationType.BURNDOWNCHART_READY, this.appState.getBaseUrl() + result[0].filename)
+            );
 
             return Promise.resolve(this.appState.getBaseUrl() + result[0].filename);
         }

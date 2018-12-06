@@ -1,8 +1,14 @@
 import { AutoWired, Singleton } from 'typescript-ioc';
 
-interface INotification {
-    type: string;
-    payload: any;
+export class Notification {
+    public id: number;
+    public type: NotificationType;
+    public payload: any;
+
+    constructor(type: NotificationType, payload: any) {
+        this.type = type;
+        this.payload = payload;
+    }
 }
 
 export enum NotificationType {
@@ -13,26 +19,34 @@ export enum NotificationType {
 @Singleton
 export default class NotificationState {
 
-    private notifications: INotification[] = [];
+    private notifications: Notification[] = [];
+    private counter: number = 0;
 
-    add(notification: INotification) {
+    add(notification: Notification) {
+        notification.id = this.counter++;
         this.notifications.push(notification);
     }
 
-    getAll(): INotification[] {
+    getAll(): Notification[] {
         return this.notifications;
     }
 
-    getByType(type: string): INotification {
-        return this.notifications.find((notification: INotification) => notification.type === type);
+    getFirst(): Notification {
+        if (this.hasNotifications()) {
+            return this.notifications[0];
+        }
     }
 
-    removeAllByType(type: string): void {
-        this.notifications.filter((notification: INotification) => notification.type !== type);
+    remove(notification: Notification): void {
+        this.notifications = this.notifications.filter((n: Notification) => n.id !== notification.id);
     }
 
-    clear() {
+    clearAll() {
         this.notifications = [];
+    }
+
+    hasNotifications() {
+        return this.notifications.length > 0;
     }
 
 }

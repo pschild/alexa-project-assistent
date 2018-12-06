@@ -55,16 +55,6 @@ export default class JiraIssueIntentHandler extends AbstractIntentHandler {
             this.addTitleSpeech(issue);
         } else if (ticketActionValue === 'zeit') {
             this.addEstimationSpeech(issue);
-        } else if (ticketActionValue === 'diagramm') {
-            const publicScreenshotUrl = this.controller.getBurndownChartUrl(36, 37);
-            if (publicScreenshotUrl) {
-                this.speech.say(`Hier ist das aktuelle Burndown Chart.`);
-                this.addDirective(this.addBurndownChartDisplay(publicScreenshotUrl));
-            } else {
-                this.speech.say(`Ich erstelle das Diagramm. Bitte warte einen Moment und frage mich gleich nochmal.`);
-                this.controller.crawlBurndownChart(36, 37);
-                // TODO: add directive to enable the user to show the diagram when clicked a button?!
-            }
         } else if (ticketActionValue === 'zusammenfassung') {
             this.addAssigneeSpeech(issue);
             this.speech.pause('100ms');
@@ -114,23 +104,6 @@ export default class JiraIssueIntentHandler extends AbstractIntentHandler {
                         text: `<div align='center'>${issue.getAssignee().displayName || 'N/A'}</div>`,
                         type: 'RichText'
                     }
-                }
-            }
-        };
-    }
-
-    private addBurndownChartDisplay(screenshotUrl: string): { type: string, template: any } {
-        return {
-            type: 'Display.RenderTemplate',
-            template: {
-                type: 'BodyTemplate1',
-                backButton: 'HIDDEN',
-                backgroundImage: {
-                    contentDescription: '',
-                    sources: [{
-                        url: screenshotUrl,
-                        size: 'LARGE'
-                    }]
                 }
             }
         };

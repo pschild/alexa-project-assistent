@@ -7,5 +7,6 @@ describe('AppState', () => {
         const appState = Container.get(AppState);
         expect(appState.getEmployeeState()).toBeDefined();
         expect(appState.getDeviceState()).toBeDefined();
+        expect(appState.getNotificationState()).toBeDefined();
     });
 });

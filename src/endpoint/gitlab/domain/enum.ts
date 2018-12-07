@@ -21,3 +21,9 @@ export enum MergeStatus {
     CANNOT_BE_MERGED = 'cannot_be_merged',
     UNCHECKED = 'unchecked'
 }
+
+export enum PipelineState {
+    SUCCESS = 'success',
+    FAILED = 'failed',
+    SKIPPED = 'skipped'
+}

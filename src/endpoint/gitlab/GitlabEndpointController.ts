@@ -6,6 +6,7 @@ import { GitlabMergeRequest } from './domain/GitlabMergeRequest';
 import { MergeRequestState, MergeRequestScope } from './domain/enum';
 import { GitlabBranch } from './domain/GitlabBranch';
 import { GitlabCommit } from './domain/GitlabCommit';
+import { GitlabPipeline } from './domain/GitlabPipeline';
 
 @AutoWired
 @Singleton
@@ -58,5 +59,19 @@ export class GitlabEndpointController extends EndpointController {
             uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${id}/repository/commits`
         });
         return (result as GitlabCommit[]).map((commit) => plainToClass(GitlabCommit, commit));
+    }
+
+    public async getPipelinesOfProject(id: number): Promise<GitlabPipeline[]> {
+        const result = await this.get({
+            uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${id}/pipelines`
+        });
+        return (result as GitlabPipeline[]).map((pipeline) => plainToClass(GitlabPipeline, pipeline));
+    }
+
+    public async getPipeline(projectId: number, pipelineId: number): Promise<GitlabPipeline> {
+        const result = await this.get({
+            uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${projectId}/pipelines/${pipelineId}`
+        });
+        return plainToClass(GitlabPipeline, result as GitlabPipeline);
     }
 }

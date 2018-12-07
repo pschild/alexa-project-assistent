@@ -1,7 +1,7 @@
 import { Container } from 'typescript-ioc';
 import { TestAggregator } from '../../src/aggregator/TestAggregator';
 
-describe('TestAggregator', () => {
+xdescribe('TestAggregator', () => {
 
     it('can test', async () => {
         const aggregator = Container.get(TestAggregator);

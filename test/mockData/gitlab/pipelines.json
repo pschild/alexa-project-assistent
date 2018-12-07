@@ -1,0 +1,122 @@
+[
+    {
+        "id": 10880,
+        "sha": "4e2a71b0511f32a90106313963ff0ae562c1d21c",
+        "ref": "master",
+        "status": "success"
+    },
+    {
+        "id": 10844,
+        "sha": "4e2a71b0511f32a90106313963ff0ae562c1d21c",
+        "ref": "master",
+        "status": "success"
+    },
+    {
+        "id": 10822,
+        "sha": "7eca174e1f6a4f1c1388e321547977128e74347d",
+        "ref": "release/0_18_x",
+        "status": "skipped"
+    },
+    {
+        "id": 10821,
+        "sha": "007c5d9415ae595969fe33f0f873c5cb017e4dfa",
+        "ref": "release/0_18_x",
+        "status": "skipped"
+    },
+    {
+        "id": 10820,
+        "sha": "4e2a71b0511f32a90106313963ff0ae562c1d21c",
+        "ref": "master",
+        "status": "skipped"
+    },
+    {
+        "id": 10819,
+        "sha": "007c5d9415ae595969fe33f0f873c5cb017e4dfa",
+        "ref": "0.18.0",
+        "status": "skipped"
+    },
+    {
+        "id": 10818,
+        "sha": "007c5d9415ae595969fe33f0f873c5cb017e4dfa",
+        "ref": "master",
+        "status": "skipped"
+    },
+    {
+        "id": 10813,
+        "sha": "1d82ffde662d1d4c32e0e58baa5c4f19564a0d9d",
+        "ref": "master",
+        "status": "success"
+    },
+    {
+        "id": 10798,
+        "sha": "1d82ffde662d1d4c32e0e58baa5c4f19564a0d9d",
+        "ref": "master",
+        "status": "success"
+    },
+    {
+        "id": 10744,
+        "sha": "59b701dc5e16f62af0511a665e9b8f94adb6ddd5",
+        "ref": "master",
+        "status": "success"
+    },
+    {
+        "id": 10740,
+        "sha": "02141ec8d1e4ca9cc94301fb0aec7f116a42798d",
+        "ref": "feature/fixbroken_integrationTest",
+        "status": "success"
+    },
+    {
+        "id": 10716,
+        "sha": "ccc7ef4ce0e712dc48a80f2e93ba71d94b5df5e8",
+        "ref": "master",
+        "status": "failed"
+    },
+    {
+        "id": 10701,
+        "sha": "e8f7705ea7dc2db3204879e39bbff244f5a18077",
+        "ref": "master",
+        "status": "failed"
+    },
+    {
+        "id": 10699,
+        "sha": "623a8f53c9de2fd8c049f26f1961178da1e60b85",
+        "ref": "feature/MDK-3066_add_freigeben_aufvw",
+        "status": "success"
+    },
+    {
+        "id": 10695,
+        "sha": "a220f2e2a9fe7178eaf706fbe3deef310c1327f1",
+        "ref": "master",
+        "status": "failed"
+    },
+    {
+        "id": 10693,
+        "sha": "0b665858dfe97bce6da9412e8ddffaa11624665c",
+        "ref": "feature/MDK-3066_add_freigeben_aufvw",
+        "status": "success"
+    },
+    {
+        "id": 10673,
+        "sha": "c1adc7beeecf633a91f78e4f9e4716e2695a198d",
+        "ref": "master",
+        "status": "failed"
+    },
+    {
+        "id": 10669,
+        "sha": "a722880aee9b36ff575d9ae7a59dd13a616e86c5",
+        "ref": "feature/MDK-3066_trigger_freigabe_auftrag",
+        "status": "success"
+    },
+    {
+        "id": 10667,
+        "sha": "c45f59a95a7d52566ed43ace31a83b060ceff773",
+        "ref": "master",
+        "status": "failed"
+    },
+    {
+        "id": 10644,
+        "sha": "1038885ef5ae42799c635c1aa18fe50f23f8fcff",
+        "ref": "release/0_17_x",
+        "status": "skipped"
+    }
+]

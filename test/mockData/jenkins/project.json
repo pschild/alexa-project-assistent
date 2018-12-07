@@ -1,0 +1,22 @@
+{
+    "displayName": "jenkins-mock-project",
+    "buildable": true,
+    "builds": [
+        {
+            "_class": "hudson.model.FreeStyleBuild",
+            "number": 3,
+            "url": "http://jenkins/job/jenkins-mock-project/3/"
+        },
+        {
+            "_class": "hudson.model.FreeStyleBuild",
+            "number": 2,
+            "url": "http://jenkins/job/jenkins-mock-project/2/"
+        },
+        {
+            "_class": "hudson.model.FreeStyleBuild",
+            "number": 1,
+            "url": "http://jenkins/job/jenkins-mock-project/1/"
+        }
+    ],
+    "color": "aborted"
+}

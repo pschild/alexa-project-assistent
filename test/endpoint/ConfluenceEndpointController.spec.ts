@@ -2,26 +2,15 @@ import { Container } from 'typescript-ioc';
 import { ConfluenceEndpointController } from '../../src/endpoint/confluence/ConfluenceEndpointController';
 import { ConfluenceContent } from '../../src/endpoint/confluence/domain/ConfluenceContent';
 
+// tslint:disable-next-line:no-var-requires
+const mockPage = require('../mockData/confluence/page.json');
+
 describe('ConfluenceEndpointController', () => {
     beforeAll(() => {
         this.controller = Container.get(ConfluenceEndpointController);
 
         // mock backend response
-        spyOn(this.controller, 'get').and.returnValue({
-            results: [
-                {
-                    id: '4711',
-                    type: 'page',
-                    status: 'current',
-                    title: 'Foobar Title',
-                    body: {
-                        view: {
-                            value: 'Lorem ipsum dolor sit amet.'
-                        }
-                    }
-                }
-            ]
-        });
+        spyOn(this.controller, 'get').and.returnValue(mockPage);
     });
 
     it('can load a page', async () => {

@@ -1,0 +1,15 @@
+{
+    "results": [
+        {
+            "id": "4711",
+            "type": "page",
+            "status": "current",
+            "title": "Foobar Title",
+            "body": {
+                "view": {
+                    "value": "Lorem ipsum dolor sit amet."
+                }
+            }
+        }
+    ]
+}

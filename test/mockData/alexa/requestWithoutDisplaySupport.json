@@ -1,0 +1,42 @@
+{
+    "version": "1.0",
+    "session": {
+        "new": true,
+        "sessionId": "amzn1.echo-api.session.abcdefgh-1234-1234-1234-ijklmnopqrst",
+        "application": {
+            "applicationId": "amzn1.ask.skill.abcdefgh-1234-1234-1234-ijklmnopqrst"
+        },
+        "user": {
+            "userId": "amzn1.ask.account.foobar"
+        },
+        "userId": "amzn1.ask.account.foobar",
+        "accessToken": null
+    },
+    "context": {
+        "System": {
+            "application": {
+                "applicationId": "amzn1.ask.skill.abcdefgh-1234-1234-1234-ijklmnopqrst"
+            },
+            "user": {
+                "userId": "amzn1.ask.account.foobar"
+            },
+            "device": {
+                "deviceId": "amzn1.ask.device.foobar",
+                "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.eu.amazonalexa.com",
+            "apiAccessToken": "foobarbaz"
+        }
+    },
+    "request": {
+        "type": "IntentRequest",
+        "requestId": "amzn1.echo-api.request.abcdefgh-1234-1234-1234-ijklmnopqrst",
+        "timestamp": "2018-12-07T16:14:41Z",
+        "locale": "de-DE",
+        "intent": {
+            "name": "AMAZON.HelpIntent",
+            "confirmationStatus": "NONE"
+        },
+        "dialogState": "STARTED"
+    }
+}

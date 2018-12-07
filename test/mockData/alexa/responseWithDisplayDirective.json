@@ -1,0 +1,58 @@
+{
+    "resolved": false,
+    "response": {
+        "version": "1.0",
+        "response": {
+            "directives": [
+                {
+                    "type": "Display.RenderTemplate",
+                    "template": {
+                        "type": "BodyTemplate1",
+                        "backButton": "HIDDEN",
+                        "backgroundImage": {
+                            "contentDescription": "",
+                            "sources": [
+                                {
+                                    "url": "https://example.com/projects.jpg",
+                                    "size": "LARGE"
+                                }
+                            ]
+                        },
+                        "textContent": {
+                            "primaryText": {
+                                "text": "<div align=\"center\">centered</div>",
+                                "type": "RichText"
+                            },
+                            "secondaryText": {
+                                "text": "<action token='VALUE'>clickable text</action>",
+                                "type": "RichText"
+                            }
+                        }
+                    }
+                }
+            ],
+            "shouldEndSession": true,
+            "outputSpeech": {
+                "type": "SSML",
+                "ssml": "<speak>Hello World</speak>"
+            }
+        },
+        "sessionAttributes": {}
+    },
+    "sessionObject": {
+        "details": {
+            "new": true,
+            "sessionId": "amzn1.echo-api.session.abcdefgh-1234-1234-1234-ijklmnopqrst",
+            "application": {
+                "applicationId": "amzn1.ask.skill.abcdefgh-1234-1234-1234-ijklmnopqrst"
+            },
+            "user": {
+                "userId": "amzn1.ask.account.foobar"
+            },
+            "userId": "amzn1.ask.account.foobar",
+            "accessToken": null
+        },
+        "attributes": {},
+        "sessionId": "amzn1.echo-api.session.abcdefgh-1234-1234-1234-ijklmnopqrst"
+    }
+}

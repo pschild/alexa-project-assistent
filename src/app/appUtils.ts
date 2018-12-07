@@ -10,8 +10,8 @@ export const hasDisplaySupport = (request: alexa.request) => {
 };
 
 export const containsDialogDirective = (response: alexa.response) => {
-    // TODO: Dialog.Confirmation / Dialog.Elicit?
-    return response.getDirectives().details.filter((directive) => directive.type === 'Dialog.Delegate').length > 0;
+    const directivesOfResponse = response.response.response.directives;
+    return directivesOfResponse.filter((directive) => directive.type.startsWith('Dialog.')).length > 0;
 };
 
 export const isStopIntent = (request: alexa.request) => {
@@ -29,7 +29,7 @@ export const excludeDisplayDirectives = (response: alexa.response) => {
 
 export const excludeGameEngineDirectives = (response: alexa.response) => {
     const directivesOfResponse = response.response.response.directives;
-    return directivesOfResponse.filter((directive) => directive.type !== 'GameEngine.InputHandlerEvent');
+    return directivesOfResponse.filter((directive) => !directive.type.startsWith('GameEngine.'));
 };
 
 export const wordToXSampaMap: Map<string, string> = new Map([

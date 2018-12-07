@@ -1,11 +1,28 @@
 import { JiraIssueAssignee } from './JiraIssueAssignee';
 import { Type } from 'class-transformer';
-import { JiraIssueStatus } from './JiraIssueStatus';
 import { JiraIssueTimetracking } from './JiraIssueTimetracking';
+import { JiraIssueTestCoverage } from './JiraIssueTestCoverage';
+import { CF_TEST_COVERAGE } from './constants';
 
 // TODO: move to separate file
 export enum IssueType {
-    BUG = 'Bug'
+    BUG = 'Bug',
+    TASK = 'Aufgabe',
+    SUBTASK = 'Unteraufgabe',
+    STORY = 'Story',
+    EPIC = 'Epic',
+    IMPROVEMENT = 'Verbesserung'
+}
+
+// TODO: move to separate file
+export enum IssueStatus {
+    OPEN = 'Offen',
+    NEW = 'Neu',
+    CLOSED = 'Geschlossen',
+    DONE = 'Erledigt',
+    IN_PROGRESS = 'In Arbeit',
+    FINISHED = 'Fertig',
+    REOPENED = 'Erneut geöffnet'
 }
 
 export class JiraIssueFields {
@@ -15,9 +32,14 @@ export class JiraIssueFields {
     @Type(() => JiraIssueAssignee)
     assignee: JiraIssueAssignee;
 
-    @Type(() => JiraIssueStatus)
-    status: JiraIssueStatus;
+    status: {id: string, name: IssueStatus, iconUrl: string};
 
     @Type(() => JiraIssueTimetracking)
     timetracking: JiraIssueTimetracking;
+
+    // @Type(() => String)
+    labels: string[];
+
+    @Type(() => JiraIssueTestCoverage)
+    [CF_TEST_COVERAGE]: JiraIssueTestCoverage[];
 }

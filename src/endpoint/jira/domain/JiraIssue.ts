@@ -2,6 +2,7 @@ import * as humanizeDuration from 'humanize-duration';
 import { Type } from 'class-transformer';
 import { JiraIssueFields } from './JiraIssueFields';
 import { JiraIssueAssignee } from './JiraIssueAssignee';
+import { CF_TEST_COVERAGE } from './constants';
 
 export class JiraIssue {
     id: string;
@@ -34,5 +35,9 @@ export class JiraIssue {
             conjunction: ' und ',
             serialComma: false
         });
+    }
+
+    getTestCoverage() {
+        return this.fields[CF_TEST_COVERAGE] ? this.fields[CF_TEST_COVERAGE][0] : null;
     }
 }

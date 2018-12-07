@@ -1,6 +1,6 @@
 import { GitlabUser } from './GitlabUser';
 import { Type } from 'class-transformer';
-import { MergeRequestState, MergeStatus } from './GitlabEnums';
+import { MergeRequestState, MergeStatus } from './enum';
 
 export class GitlabMergeRequest {
     id: number;

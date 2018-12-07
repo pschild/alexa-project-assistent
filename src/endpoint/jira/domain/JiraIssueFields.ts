@@ -3,27 +3,7 @@ import { Type } from 'class-transformer';
 import { JiraIssueTimetracking } from './JiraIssueTimetracking';
 import { JiraIssueTestCoverage } from './JiraIssueTestCoverage';
 import { CF_TEST_COVERAGE } from './constants';
-
-// TODO: move to separate file
-export enum IssueType {
-    BUG = 'Bug',
-    TASK = 'Aufgabe',
-    SUBTASK = 'Unteraufgabe',
-    STORY = 'Story',
-    EPIC = 'Epic',
-    IMPROVEMENT = 'Verbesserung'
-}
-
-// TODO: move to separate file
-export enum IssueStatus {
-    OPEN = 'Offen',
-    NEW = 'Neu',
-    CLOSED = 'Geschlossen',
-    DONE = 'Erledigt',
-    IN_PROGRESS = 'In Arbeit',
-    FINISHED = 'Fertig',
-    REOPENED = 'Erneut geöffnet'
-}
+import { IssueType, IssueStatus } from './enum';
 
 export class JiraIssueFields {
     issuetype: {id: string, name: IssueType};

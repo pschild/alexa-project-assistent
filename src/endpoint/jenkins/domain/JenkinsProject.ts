@@ -1,12 +1,7 @@
 import { Type } from 'class-transformer';
 import { JenkinsBuild } from './JenkinsBuild';
 import { JenkinsHealthReport } from './JenkinsHealthReport';
-
-// TODO: move to separate file
-// see https://github.com/jenkinsci/jenkins/blob/22aa2e6e766074d11249893e3f35e0b99e20d3d0/core/src/main/java/hudson/model/BallColor.java
-export enum Color {
-    ABORTED = 'aborted'
-}
+import { Color } from './enum';
 
 export class JenkinsProject {
     displayName: string;

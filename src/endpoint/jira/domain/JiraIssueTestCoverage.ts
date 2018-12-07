@@ -1,10 +1,4 @@
-// TODO: move to separate file
-export enum TestCoverageStatus {
-    FAILED = 'NOK',
-    SUCCESSFUL = 'OK',
-    NOT_RUN = 'NOTRUN',
-    UNCOVERED = 'UNCOVERED'
-}
+import { TestCoverageStatus } from './enum';
 
 export class JiraIssueTestCoverage {
     status: TestCoverageStatus;

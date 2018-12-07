@@ -1,8 +1,7 @@
 import { Container } from 'typescript-ioc';
 import { JiraEndpointController } from '../../src/endpoint/jira/JiraEndpointController';
 import { JiraIssue } from '../../src/endpoint/jira/domain/JiraIssue';
-import { IssueType, IssueStatus } from '../../src/endpoint/jira/domain/JiraIssueFields';
-import { TestCoverageStatus } from '../../src/endpoint/jira/domain/JiraIssueTestCoverage';
+import { IssueType, IssueStatus, TestCoverageStatus } from '../../src/endpoint/jira/domain/enum';
 
 // tslint:disable-next-line:no-var-requires
 const mockIssue = require('../mockData/jira/issue.json');

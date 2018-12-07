@@ -1,4 +1,4 @@
-import { UserState } from './GitlabEnums';
+import { UserState } from './enum';
 
 export class GitlabUser {
     id: number;

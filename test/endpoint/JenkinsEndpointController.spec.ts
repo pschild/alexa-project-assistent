@@ -1,6 +1,7 @@
 import { Container } from 'typescript-ioc';
 import { JenkinsEndpointController } from '../../src/endpoint/jenkins/JenkinsEndpointController';
-import { JenkinsProject, Color } from '../../src/endpoint/jenkins/domain/JenkinsProject';
+import { JenkinsProject } from '../../src/endpoint/jenkins/domain/JenkinsProject';
+import { Color } from '../../src/endpoint/jenkins/domain/enum';
 
 // tslint:disable-next-line:no-var-requires
 const mockProject = require('../mockData/jenkins/project.json');

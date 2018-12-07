@@ -2,7 +2,7 @@ import { Container } from 'typescript-ioc';
 import { GitlabEndpointController } from '../../src/endpoint/gitlab/GitlabEndpointController';
 import { GitlabProject } from '../../src/endpoint/gitlab/domain/GitlabProject';
 import { GitlabMergeRequest } from '../../src/endpoint/gitlab/domain/GitlabMergeRequest';
-import { MergeRequestState, MergeStatus } from '../../src/endpoint/gitlab/domain/GitlabEnums';
+import { MergeRequestState, MergeStatus } from '../../src/endpoint/gitlab/domain/enum';
 import { GitlabBranch } from '../../src/endpoint/gitlab/domain/GitlabBranch';
 
 // tslint:disable-next-line:no-var-requires

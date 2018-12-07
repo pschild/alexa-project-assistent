@@ -3,7 +3,7 @@ import { plainToClass } from 'class-transformer';
 import { AutoWired, Singleton } from 'typescript-ioc';
 import { GitlabProject } from './domain/GitlabProject';
 import { GitlabMergeRequest } from './domain/GitlabMergeRequest';
-import { MergeRequestState, MergeRequestScope } from './domain/GitlabEnums';
+import { MergeRequestState, MergeRequestScope } from './domain/enum';
 import { GitlabBranch } from './domain/GitlabBranch';
 import { GitlabCommit } from './domain/GitlabCommit';
 

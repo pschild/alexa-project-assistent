@@ -3,8 +3,9 @@ import { Inject } from 'typescript-ioc';
 import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
 import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
 import { JenkinsEndpointController } from '../endpoint/jenkins/JenkinsEndpointController';
-import { JenkinsProject, Color } from '../endpoint/jenkins/domain/JenkinsProject';
-import { IssueType } from '../endpoint/jira/domain/JiraIssueFields';
+import { JenkinsProject } from '../endpoint/jenkins/domain/JenkinsProject';
+import { IssueType } from '../endpoint/jira/domain/enum';
+import { Color } from '../endpoint/jenkins/domain/enum';
 
 dotenv.config();
 

@@ -5,7 +5,7 @@ describe('EmployeeState', () => {
 
     it('can be initialized', async () => {
         const employeeState = Container.get(EmployeeState);
-        expect(employeeState.getAll().length).toBe(2);
+        expect(employeeState.getAll().length).toBeGreaterThan(0);
     });
 
     it('can set an active employee', async () => {
@@ -18,7 +18,11 @@ describe('EmployeeState', () => {
         expect(employeeState.getActive()).toBeDefined();
         expect(employeeState.getActive().name).toBe(employees[0].name);
 
-        employeeState.setActive('foo bar');
+        employeeState.removeActive();
         expect(employeeState.getActive()).toBeUndefined();
+
+        expect(() => {
+            employeeState.setActive('foo bar');
+        }).toThrowError(`Could not find employee with name foo bar`);
     });
 });

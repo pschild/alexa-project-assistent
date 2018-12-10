@@ -1,4 +1,6 @@
 import { AutoWired, Singleton } from 'typescript-ioc';
+// tslint:disable-next-line:no-var-requires
+const employeeList = require('../../../employees.json');
 
 export interface IEmployee {
     id?: number;
@@ -17,20 +19,28 @@ export default class EmployeeState {
     private employees: IEmployee[] = [];
 
     constructor() {
-        this.employees.push({ name: 'Doe, John', email: process.env.MAIL_RECIPIENT, enableEmail: true });
-        this.employees.push({ name: 'Power, Max', email: process.env.MAIL_RECIPIENT, enableEmail: false });
+        this.employees = employeeList.map((employee) => Object.assign(employee, { email: process.env.MAIL_RECIPIENT }));
     }
 
-    getAll() {
+    getAll(): IEmployee[] {
         return this.employees;
     }
 
-    setActive(name: string) {
-        this.active = this.employees.find((e) => e.name === name);
+    setActive(name: string): void {
+        const result: IEmployee = this.employees.find((e) => e.name === name);
+        if (result) {
+            this.active = result;
+        } else {
+            throw new Error(`Could not find employee with name ${name}`);
+        }
     }
 
-    getActive() {
+    getActive(): IEmployee {
         return this.active;
+    }
+
+    removeActive(): void {
+        this.active = undefined;
     }
 
 }

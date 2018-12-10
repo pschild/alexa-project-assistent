@@ -27,7 +27,6 @@ import {
 dotenv.config();
 
 const appState: AppState = Container.get(AppState);
-appState.getEmployeeState().setActive('Doe, John');
 
 const app = express();
 app.use(express.static('media-gen'));
@@ -54,7 +53,7 @@ alexaApp.post = (request: alexa.request, response: alexa.response, type: string,
         return;
     }
 
-    responseObj.directives.push(TimeoutHandler.TIMEOUT_DIRECTIVE);
+    // responseObj.directives.push(TimeoutHandler.TIMEOUT_DIRECTIVE);
 
     // If shouldEndSession is true, set it to undefined to make timeout work.
     // If it is explicitly set to false, do nothing to keep session open.

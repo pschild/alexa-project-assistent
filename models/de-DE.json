@@ -148,6 +148,14 @@
               "samples": [
                 "{MailContent}"
               ]
+            },
+            {
+              "name": "MailRecipient",
+              "type": "EmployeeName",
+              "samples": [
+                "{MailRecipient}",
+                "an {MailRecipient}"
+              ]
             }
           ],
           "samples": [
@@ -155,7 +163,7 @@
             "schicke eine Mail",
             "sende eine Mail mit dem Inhalt {MailContent}",
             "schicke eine Mail mit dem Inhalt {MailContent}",
-            "sende mir eine Erinnerung"
+            "sende eine Erinnerung"
           ]
         },
         {
@@ -178,6 +186,10 @@
         }
       ],
       "types": [
+        {
+          "name": "EmployeeName",
+          "values": []
+        },
         {
           "name": "JiraTicketAction",
           "values": [
@@ -305,6 +317,10 @@
               "prompts": {
                 "elicitation": "MailContent.Elicit.1"
               }
+            },
+            {
+              "name": "MailRecipient",
+              "type": "EmployeeName"
             }
           ]
         }
@@ -317,6 +333,24 @@
           {
             "type": "PlainText",
             "value": "Was soll ich dir schreiben?"
+          }
+        ]
+      },
+      {
+        "id": "MailRecipient.Elicit.1",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "An wen soll die Mail gehen?"
+          }
+        ]
+      },
+      {
+        "id": "MailRecipient.Validation.1",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "{MailRecipient} ist mir nicht bekannt"
           }
         ]
       },

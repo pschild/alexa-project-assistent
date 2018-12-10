@@ -5,7 +5,10 @@ const editJsonFile = require('edit-json-file');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
+const employeeList = require('./employees.json');
+
 const tempSkillFileName = '.temp-skill.json';
+const tempModelFileName = '.temp-model.json';
 
 const runNgrok = async () => {
     console.log('Starting ngrok...');
@@ -26,6 +29,21 @@ const createTempSkillJson = async (ngrokUrl) => {
     console.log('Done!');
 }
 
+const createTempModelJson = async () => {
+    console.log(`Generating ${tempModelFileName}...`);
+    fs.copyFileSync(`${__dirname}/models/de-DE.json`, `${__dirname}/${tempModelFileName}`);
+    let file = editJsonFile(`${__dirname}/${tempModelFileName}`);
+    let employeeNameType = file.get('interactionModel.languageModel.types').find((type) => type.name === 'EmployeeName');
+    if (!employeeNameType) {
+        throw new Error(`Could not find type "EmployeeName" in model`);
+    }
+    employeeNameType.values = employeeList.map(employee => {
+        return { name: { value: employee.name } };
+    });
+    file.save();
+    console.log('Done!');
+}
+
 const deploySkill = async () => {
     console.log('Deploying skill...');
     const { stdout, stderr } = await exec(`ask api update-skill -s ${process.env.ALEXA_SKILL_ID} -f ${tempSkillFileName}`);
@@ -40,7 +58,7 @@ const deploySkill = async () => {
 
 const deployModel = async () => {
     console.log('Deploying model...');
-    const { stdout, stderr } = await exec(`ask api update-model -s ${process.env.ALEXA_SKILL_ID} -f models/de-DE.json -l de-DE`);
+    const { stdout, stderr } = await exec(`ask api update-model -s ${process.env.ALEXA_SKILL_ID} -f ${tempModelFileName} -l de-DE`);
     if (stdout) {
         console.log(stdout);
     }
@@ -53,13 +71,15 @@ const deployModel = async () => {
 const cleanTempFiles = async () => {
     console.log('Cleaning temporary files...');
     fs.unlinkSync(`${__dirname}/${tempSkillFileName}`);
+    fs.unlinkSync(`${__dirname}/${tempModelFileName}`);
     console.log('Done!');
 }
 
 (async function () {
-    const url = await runNgrok();
-    await createTempSkillJson(url);
     try {
+        const url = await runNgrok();
+        await createTempSkillJson(url);
+        await createTempModelJson();
         await deploySkill();
         await deployModel();
     } catch (error) {

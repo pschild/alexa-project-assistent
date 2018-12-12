@@ -5,11 +5,6 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
-    "prepare-package-json": "node prepare-package-json.js",
-    "deploy:lambda": "npm run compile && npm run prepare-package-json && npm --prefix ./src/lambda/dist install ./src/lambda/dist && ask deploy -t lambda",
-    "deploy:skill": "ask deploy -t skill",
-    "deploy:model": "ask deploy -t model",
-    "deploy": "npm run deploy:skill && npm run deploy:model && npm run deploy:lambda",
     "deploy:ngrok": "node ngrok-deploy.js",
     "server:start": "npm run compile && node dist/app/app.js",
     "dev": "nodemon",
@@ -25,8 +20,6 @@
   },
   "dependencies": {
     "alexa-app": "^4.2.3",
-    "ask-sdk": "^2.3.0",
-    "ask-sdk-v1adapter": "^2.3.0",
     "class-transformer": "^0.2.0",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",

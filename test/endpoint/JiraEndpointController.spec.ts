@@ -4,7 +4,7 @@ import { JiraIssue } from '../../src/endpoint/jira/domain/JiraIssue';
 import { IssueType, IssueStatus, TestCoverageStatus } from '../../src/endpoint/jira/domain/enum';
 
 // tslint:disable-next-line:no-var-requires
-const mockIssue = require('../mockData/jira/issue.json');
+const mockIssue = require('@mockData/jira/issue.json');
 
 describe('JiraEndpointController', () => {
     beforeAll(() => {

@@ -3,7 +3,7 @@ import { ConfluenceEndpointController } from '../../src/endpoint/confluence/Conf
 import { ConfluenceContent } from '../../src/endpoint/confluence/domain/ConfluenceContent';
 
 // tslint:disable-next-line:no-var-requires
-const mockPage = require('../mockData/confluence/page.json');
+const mockPage = require('@mockData/confluence/page.json');
 
 describe('ConfluenceEndpointController', () => {
     beforeAll(() => {

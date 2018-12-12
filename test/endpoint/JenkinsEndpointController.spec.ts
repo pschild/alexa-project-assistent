@@ -4,7 +4,7 @@ import { JenkinsProject } from '../../src/endpoint/jenkins/domain/JenkinsProject
 import { Color } from '../../src/endpoint/jenkins/domain/enum';
 
 // tslint:disable-next-line:no-var-requires
-const mockProject = require('../mockData/jenkins/project.json');
+const mockProject = require('@mockData/jenkins/project.json');
 
 describe('JenkinsEndpointController', () => {
     beforeAll(() => {

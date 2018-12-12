@@ -1,6 +1,6 @@
 import { AutoWired, Singleton } from 'typescript-ioc';
 // tslint:disable-next-line:no-var-requires
-const employeeList = require('../../../employees.json');
+const employeeList = require('@root/employees.json');
 
 export interface IEmployee {
     id?: number;

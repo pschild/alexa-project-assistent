@@ -2,23 +2,23 @@ import * as alexa from 'alexa-app';
 import { hasDisplaySupport, isStopIntent, isSessionEndedRequest, containsDialogDirective, excludeDisplayDirectives, excludeGameEngineDirectives } from '../../src/app/appUtils';
 
 // tslint:disable-next-line:no-var-requires
-const mockRequestWithDisplaySupport = require('../mockData/alexa/requestWithDisplaySupport.json');
+const mockRequestWithDisplaySupport = require('@mockData/alexa/requestWithDisplaySupport.json');
 // tslint:disable-next-line:no-var-requires
-const mockRequestWithoutDisplaySupport = require('../mockData/alexa/requestWithoutDisplaySupport.json');
+const mockRequestWithoutDisplaySupport = require('@mockData/alexa/requestWithoutDisplaySupport.json');
 // tslint:disable-next-line:no-var-requires
-const mockRequestWithSessionEndedRequest = require('../mockData/alexa/requestWithSessionEndedRequest.json');
+const mockRequestWithSessionEndedRequest = require('@mockData/alexa/requestWithSessionEndedRequest.json');
 // tslint:disable-next-line:no-var-requires
-const mockRequestWithStopIntent = require('../mockData/alexa/requestWithStopIntent.json');
+const mockRequestWithStopIntent = require('@mockData/alexa/requestWithStopIntent.json');
 // tslint:disable-next-line:no-var-requires
-const mockResponseWithDialogConfirmSlotDirective = require('../mockData/alexa/responseWithDialogConfirmSlotDirective.json');
+const mockResponseWithDialogConfirmSlotDirective = require('@mockData/alexa/responseWithDialogConfirmSlotDirective.json');
 // tslint:disable-next-line:no-var-requires
-const mockResponseWithDialogDelegateDirective = require('../mockData/alexa/responseWithDialogDelegateDirective.json');
+const mockResponseWithDialogDelegateDirective = require('@mockData/alexa/responseWithDialogDelegateDirective.json');
 // tslint:disable-next-line:no-var-requires
-const mockResponseWithDialogElicitSlotDirective = require('../mockData/alexa/responseWithDialogElicitSlotDirective.json');
+const mockResponseWithDialogElicitSlotDirective = require('@mockData/alexa/responseWithDialogElicitSlotDirective.json');
 // tslint:disable-next-line:no-var-requires
-const mockResponseWithDisplayDirective = require('../mockData/alexa/responseWithDisplayDirective.json');
+const mockResponseWithDisplayDirective = require('@mockData/alexa/responseWithDisplayDirective.json');
 // tslint:disable-next-line:no-var-requires
-const mockResponseWithGameEngineDirective = require('../mockData/alexa/responseWithGameEngineDirective.json');
+const mockResponseWithGameEngineDirective = require('@mockData/alexa/responseWithGameEngineDirective.json');
 
 describe('AppUtils', () => {
 

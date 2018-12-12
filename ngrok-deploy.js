@@ -1,3 +1,4 @@
+require('module-alias/register');
 require('dotenv').config();
 const fs = require('fs');
 const ngrok = require('ngrok');
@@ -5,7 +6,7 @@ const editJsonFile = require('edit-json-file');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
-const employeeList = require('./employees.json');
+const employeeList = require('@root/employees.json');
 
 const tempSkillFileName = '.temp-skill.json';
 const tempModelFileName = '.temp-model.json';

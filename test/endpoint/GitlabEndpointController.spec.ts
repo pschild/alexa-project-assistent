@@ -7,15 +7,15 @@ import { GitlabBranch } from '../../src/endpoint/gitlab/domain/GitlabBranch';
 import { GitlabPipeline } from '../../src/endpoint/gitlab/domain/GitlabPipeline';
 
 // tslint:disable-next-line:no-var-requires
-const mockProjects = require('../mockData/gitlab/projects.json');
+const mockProjects = require('@mockData/gitlab/projects.json');
 // tslint:disable-next-line:no-var-requires
-const mockMergeRequests = require('../mockData/gitlab/mergeRequests.json');
+const mockMergeRequests = require('@mockData/gitlab/mergeRequests.json');
 // tslint:disable-next-line:no-var-requires
-const mockBranches = require('../mockData/gitlab/branches.json');
+const mockBranches = require('@mockData/gitlab/branches.json');
 // tslint:disable-next-line:no-var-requires
-const mockPipelines = require('../mockData/gitlab/pipelines.json');
+const mockPipelines = require('@mockData/gitlab/pipelines.json');
 // tslint:disable-next-line:no-var-requires
-const mockPipeline = require('../mockData/gitlab/pipeline.json');
+const mockPipeline = require('@mockData/gitlab/pipeline.json');
 
 describe('GitlabEndpointController', () => {
     beforeAll(() => {

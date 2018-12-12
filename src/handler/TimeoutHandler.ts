@@ -1,6 +1,7 @@
 import * as alexa from 'alexa-app';
 import { AbstractIntentHandler } from './AbstractIntentHandler';
 import { NotificationType, Notification } from '../app/state/NotificationState';
+import { buildImageDirective } from '../apl/datasources';
 
 export default class TimeoutHandler extends AbstractIntentHandler {
 
@@ -34,7 +35,11 @@ export default class TimeoutHandler extends AbstractIntentHandler {
                 switch (firstNotification.type) {
                     case NotificationType.BURNDOWNCHART_READY:
                         const publicScreenshotUrl = firstNotification.payload;
-                        this.addDirective(this.addBurndownChartDisplay(publicScreenshotUrl));
+                        this.addDirective(buildImageDirective({
+                            title: `Burndownchart von Sprint tbd`,
+                            imageUrl: publicScreenshotUrl,
+                            logoUrl: 'https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png'
+                        }));
                         this.speech.say(`Bitteschön`);
                         break;
                 }
@@ -44,23 +49,5 @@ export default class TimeoutHandler extends AbstractIntentHandler {
 
         this.outputDirectives.map((d) => response.directive(d));
         return response.say(this.speech.ssml(true)).shouldEndSession(true);
-    }
-
-    // TODO: duplicated code
-    private addBurndownChartDisplay(screenshotUrl: string): { type: string, template: any } {
-        return {
-            type: 'Display.RenderTemplate',
-            template: {
-                type: 'BodyTemplate1',
-                backButton: 'HIDDEN',
-                backgroundImage: {
-                    contentDescription: '',
-                    sources: [{
-                        url: screenshotUrl,
-                        size: 'LARGE'
-                    }]
-                }
-            }
-        };
     }
 }

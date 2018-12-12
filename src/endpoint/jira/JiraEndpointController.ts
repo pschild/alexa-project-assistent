@@ -55,7 +55,7 @@ export class JiraEndpointController extends EndpointController {
         };
         // TODO: extract to own helper class?
         const result = await new Pageres(options)
-            .src(`${process.env.JIRA_BASE_URL}secure/RapidBoard.jspa?rapidView=${boardId}&view=reporting&chart=burndownChart&sprint=${sprintId}`, ['1920x1080'])
+            .src(`${process.env.JIRA_BASE_URL}secure/RapidBoard.jspa?rapidView=${boardId}&view=reporting&chart=burndownChart&sprint=${sprintId}`, ['993x1080'])
             .dest(path.join(process.cwd(), 'media-gen'))
             .run()
             .catch((error) => {

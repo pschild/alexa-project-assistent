@@ -20,7 +20,7 @@
   "license": "MIT",
   "_moduleAliases": {
     "@root": ".",
-    "@apl": "./apl",
+    "@apl": "./src/apl",
     "@mockData": "./test/mockData"
   },
   "dependencies": {

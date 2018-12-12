@@ -1,3 +1,5 @@
+// tslint:disable-next-line:no-var-requires
+require('module-alias/register');
 import 'reflect-metadata';
 import * as dotenv from 'dotenv';
 import * as express from 'express';
@@ -100,5 +102,9 @@ alexaApp.intent('SendMailIntent', SendMailIntentHandler);
 alexaApp.intent('SlotTestIntent', SlotTestIntentHandler);
 
 alexaApp.on('GameEngine.InputHandlerEvent', timeoutHandler.handle.bind(timeoutHandler));
+
+alexaApp.on('Alexa.Presentation.APL.UserEvent', (request: alexa.request, response: alexa.response) => {
+    console.log(`Received TouchEvent, payload: ${request.data.request.arguments[0]}, source.id: ${request.data.request.source.id}`);
+});
 
 app.listen(process.env.ALEXA_APP_PORT, () => console.log(`Listening on port ${process.env.ALEXA_APP_PORT}`));

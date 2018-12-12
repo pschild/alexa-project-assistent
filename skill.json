@@ -37,6 +37,9 @@
           },
           {
             "type": "GAME_ENGINE"
+          },
+          {
+            "type": "ALEXA_PRESENTATION_APL"
           }
         ]
       }

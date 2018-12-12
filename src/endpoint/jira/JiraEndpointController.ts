@@ -63,7 +63,10 @@ export class JiraEndpointController extends EndpointController {
             });
         if (result && result.length) {
             this.appState.getNotificationState().add(
-                new Notification(NotificationType.BURNDOWNCHART_READY, this.appState.getBaseUrl() + result[0].filename)
+                new Notification(NotificationType.BURNDOWNCHART_READY, {
+                    sprintId,
+                    publicScreenshotUrl: this.appState.getBaseUrl() + result[0].filename
+                })
             );
 
             return Promise.resolve(this.appState.getBaseUrl() + result[0].filename);

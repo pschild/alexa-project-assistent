@@ -34,10 +34,10 @@ export default class TimeoutHandler extends AbstractIntentHandler {
             if (firstNotification) {
                 switch (firstNotification.type) {
                     case NotificationType.BURNDOWNCHART_READY:
-                        const publicScreenshotUrl = firstNotification.payload;
+                        const payload = firstNotification.payload;
                         this.addDirective(buildImageDirective({
-                            title: `Burndownchart von Sprint tbd`,
-                            imageUrl: publicScreenshotUrl,
+                            title: `Burndownchart von Sprint ${payload.sprintId}`,
+                            imageUrl: payload.publicScreenshotUrl,
                             logoUrl: 'https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png'
                         }));
                         this.speech.say(`Bitteschön`);

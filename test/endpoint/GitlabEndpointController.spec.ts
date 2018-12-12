@@ -31,6 +31,7 @@ describe('GitlabEndpointController', () => {
         expect(projects.length).toBe(4);
         expect(projects[0].id).toBe(107);
         expect(projects[0].name).toBe('foo');
+        expect(projects[0].name_with_namespace).toBe('bar / foo');
     });
 
     it('can load merge requests', async () => {

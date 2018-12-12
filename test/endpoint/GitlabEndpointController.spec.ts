@@ -39,7 +39,7 @@ describe('GitlabEndpointController', () => {
 
         const mergeRequests: GitlabMergeRequest[] = await this.controller.getAllOpenMergeRequests();
 
-        expect(mergeRequests.length).toBe(2);
+        expect(mergeRequests.length).toBe(3);
 
         expect(mergeRequests[0].title).toBe('WIP: [FOO-265] some description');
         expect(mergeRequests[0].state).toBe(MergeRequestState.OPENED);
@@ -61,6 +61,30 @@ describe('GitlabEndpointController', () => {
         expect(mergeRequests[0].created_at.getUTCHours()).toBe(12);
         expect(mergeRequests[0].created_at.getUTCMinutes()).toBe(41);
         expect(mergeRequests[0].created_at.getUTCSeconds()).toBe(53);
+    });
+
+    it('can group merge requests by assignee', async () => {
+        const groupedMergeRequests: GitlabMergeRequest[] = this.controller.groupMergeRequestsByAssignee(mockMergeRequests);
+
+        expect(Object.keys(groupedMergeRequests).length).toBe(2);
+        expect(groupedMergeRequests['Power, Max'].length).toBe(2);
+        expect(groupedMergeRequests['Doe, John'].length).toBe(1);
+    });
+
+    it('can group merge requests by author', async () => {
+        const groupedMergeRequests: GitlabMergeRequest[] = this.controller.groupMergeRequestsByAuthor(mockMergeRequests);
+
+        expect(Object.keys(groupedMergeRequests).length).toBe(2);
+        expect(groupedMergeRequests['Power, Max'].length).toBe(1);
+        expect(groupedMergeRequests['Doe, John'].length).toBe(2);
+    });
+
+    it('can group merge requests by project', async () => {
+        const groupedMergeRequests: GitlabMergeRequest[] = this.controller.groupMergeRequestsByProject(mockMergeRequests);
+
+        expect(Object.keys(groupedMergeRequests).length).toBe(2);
+        expect(groupedMergeRequests['46'].length).toBe(1);
+        expect(groupedMergeRequests['91'].length).toBe(2);
     });
 
     it('can load branches', async () => {

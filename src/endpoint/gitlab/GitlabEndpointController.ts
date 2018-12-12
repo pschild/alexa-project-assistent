@@ -74,4 +74,43 @@ export class GitlabEndpointController extends EndpointController {
         });
         return plainToClass(GitlabPipeline, result as GitlabPipeline);
     }
+
+    public groupMergeRequestsByAssignee(mergeRequests: GitlabMergeRequest[]) {
+        const result = {};
+        mergeRequests.forEach((mergeRequest: GitlabMergeRequest) => {
+            const key = mergeRequest.assignee.name;
+            if (result[key] && result[key].length) {
+                result[key].push(mergeRequest);
+            } else {
+                result[key] = [mergeRequest];
+            }
+        });
+        return result;
+    }
+
+    public groupMergeRequestsByAuthor(mergeRequests: GitlabMergeRequest[]) {
+        const result = {};
+        mergeRequests.forEach((mergeRequest: GitlabMergeRequest) => {
+            const key = mergeRequest.author.name;
+            if (result[key] && result[key].length) {
+                result[key].push(mergeRequest);
+            } else {
+                result[key] = [mergeRequest];
+            }
+        });
+        return result;
+    }
+
+    public groupMergeRequestsByProject(mergeRequests: GitlabMergeRequest[]) {
+        const result = {};
+        mergeRequests.forEach((mergeRequest: GitlabMergeRequest) => {
+            const key = mergeRequest.project_id;
+            if (result[key] && result[key].length) {
+                result[key].push(mergeRequest);
+            } else {
+                result[key] = [mergeRequest];
+            }
+        });
+        return result;
+    }
 }

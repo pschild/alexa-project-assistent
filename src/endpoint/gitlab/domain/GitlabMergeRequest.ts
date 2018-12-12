@@ -6,6 +6,8 @@ export class GitlabMergeRequest {
     id: number;
     title: string;
     description: string;
+    // tslint:disable-next-line:variable-name
+    project_id: number;
     state: MergeRequestState;
 
     @Type(() => Date)

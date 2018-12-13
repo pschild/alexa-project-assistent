@@ -10,6 +10,13 @@ export interface ITouchableTextDocumentPayload {
     text: string;
 }
 
+export interface ITextSamplesDocumentPayload {
+    title: string;
+    backgroundImageUrl?: string;
+    logoUrl: string;
+    textContent: {primaryText: any}
+}
+
 export interface IListItem {
     listItemIdentifier: string;
     textContent: {primaryText: any, secondaryText: any};
@@ -39,6 +46,15 @@ export const buildTouchableTextDirective = (data: ITouchableTextDocumentPayload)
         type: 'Alexa.Presentation.APL.RenderDocument',
         token: 'touchableTextDocument',
         document: require(`@apl/touchableTextDocument.json`),
+        datasources: { data }
+    };
+};
+
+export const buildTextSamplesDirective = (data: ITextSamplesDocumentPayload) => {
+    return {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'textSamplesDocument',
+        document: require(`@apl/textSamplesDocument.json`),
         datasources: { data }
     };
 };

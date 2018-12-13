@@ -125,36 +125,33 @@
         "items": [
             {
                 "type": "Container",
+                "height": "100vh",
                 "items": [
                     {
                         "type": "Image",
                         "source": "${payload.data.backgroundImageUrl}",
-                        "scale": "best-fill",
                         "position": "absolute",
                         "width": "100vw",
-                        "height": "100vh"
+                        "height": "100vh",
+                        "scale": "best-fill"
                     },
                     {
                         "type": "AlexaHeader",
                         "headerTitle": "${payload.data.title}",
-                        "headerSubtitle": "${payload.data.subtitle}",
                         "headerAttributionImage": "${payload.data.logoUrl}"
                     },
                     {
                         "type": "Container",
-                        "direction": "row",
-                        "paddingLeft": "2vw",
-                        "paddingRight": "2vw",
-                        "alignItems": "center",
-                        "justifyContent": "center",
+                        "paddingLeft": "@marginLeft",
+                        "paddingRight": "@marginRight",
+                        "paddingBottom": "@marginBottom",
                         "items": [
                             {
-                                "type": "Image",
-                                "height": "75vh",
-                                "width": "96vw",
-                                "source": "${payload.data.imageUrl}",
-                                "scale": "best-fit",
-                                "align": "center"
+                                "type": "Text",
+                                "text": "${payload.data.textContent.primaryText.text}",
+                                "fontSize": "@textSizeBody",
+                                "spacing": "@spacingSmall",
+                                "style": "textStyleBody"
                             }
                         ]
                     }

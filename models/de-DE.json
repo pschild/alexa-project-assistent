@@ -110,7 +110,9 @@
             }
           ],
           "samples": [
+            "öffne ticket",
             "öffne jira ticket",
+            "öffne ticket {JiraTicketIdentifier} {JiraTicketNumber}",
             "öffne jira ticket {JiraTicketIdentifier} {JiraTicketNumber}",
             "{JiraTicketAction}",
             "{JiraTicketAction} jira ticket",

@@ -6,6 +6,8 @@ import * as Pageres from 'Pageres';
 import * as path from 'path';
 import { existsSync } from 'fs';
 import { NotificationType, Notification } from '../../app/state/NotificationState';
+import { IssueType, IssueStatus } from './domain/enum';
+import { JiraIssueSearchResult } from './domain/JiraIssueSearchResult';
 
 @AutoWired
 @Singleton
@@ -29,6 +31,14 @@ export class JiraEndpointController extends EndpointController {
             uri: `${this.baseUrl}/rest/api/${JiraEndpointController.API_VERSION}/issue/${identifier}`
         });
         return plainToClass(JiraIssue, result as JiraIssue);
+    }
+
+    public async searchIssues(): Promise<JiraIssueSearchResult> {
+        const jql = `issuetype = ${IssueType.BUG} AND status = ${IssueStatus.OPEN} AND assignee in (EMPTY)`;
+        const result = await this.get({
+            uri: `${this.baseUrl}/rest/api/${JiraEndpointController.API_VERSION}/search?jql=${encodeURIComponent(jql)}`
+        });
+        return plainToClass(JiraIssueSearchResult, result as JiraIssueSearchResult);
     }
 
     public getBurndownChartUrl(boardId: number, sprintId: number): string {
@@ -55,7 +65,13 @@ export class JiraEndpointController extends EndpointController {
         };
         // TODO: extract to own helper class?
         const result = await new Pageres(options)
-            .src(`${process.env.JIRA_BASE_URL}secure/RapidBoard.jspa?rapidView=${boardId}&view=reporting&chart=burndownChart&sprint=${sprintId}`, ['993x1080'])
+            .src(`${process.env.JIRA_BASE_URL}secure/RapidBoard.jspa`
+                + `?rapidView=${boardId}`
+                + `&view=reporting`
+                + `&chart=burndownChart`
+                + `&sprint=${sprintId}`,
+                ['993x1080']
+            )
             .dest(path.join(process.cwd(), 'media-gen'))
             .run()
             .catch((error) => {

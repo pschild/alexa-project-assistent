@@ -129,7 +129,9 @@
           ],
           "samples": [
             "zeige burndown chart",
-            "zeige burndown chart von sprint {BurndownChartSprint}"
+            "zeige mir das burndown chart",
+            "zeige burndown chart von sprint {BurndownChartSprint}",
+            "zeige mir das burndown chart von sprint {BurndownChartSprint}"
           ]
         },
         {

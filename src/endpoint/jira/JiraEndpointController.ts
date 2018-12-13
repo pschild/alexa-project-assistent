@@ -6,8 +6,9 @@ import * as Pageres from 'Pageres';
 import * as path from 'path';
 import { existsSync } from 'fs';
 import { NotificationType, Notification } from '../../app/state/NotificationState';
-import { IssueType, IssueStatus } from './domain/enum';
+import { IssueType, IssueStatus, SprintStatus } from './domain/enum';
 import { JiraIssueSearchResult } from './domain/JiraIssueSearchResult';
+import { JiraSprint } from './domain/JiraSprint';
 
 @AutoWired
 @Singleton
@@ -28,15 +29,45 @@ export class JiraEndpointController extends EndpointController {
 
     public async getIssue(identifier: string): Promise<JiraIssue> {
         const result = await this.get({
-            uri: `${this.baseUrl}/rest/api/${JiraEndpointController.API_VERSION}/issue/${identifier}`
+            uri: `${this.baseUrl}rest/api/${JiraEndpointController.API_VERSION}/issue/${identifier}`
         });
         return plainToClass(JiraIssue, result as JiraIssue);
+    }
+
+    public async getSprintsOfBoard(boardId: number, stateFilter?: SprintStatus[]): Promise<JiraSprint[]> {
+        const result = await this.get({
+            uri: `${this.baseUrl}rest/agile/1.0/board/${boardId}/sprint${stateFilter ? `?state=${stateFilter.join(',')}` : ``}`
+        });
+        return (result.values as JiraSprint[]).map((sprint) => plainToClass(JiraSprint, sprint));
+    }
+
+    public async getSprint(sprintId: number): Promise<JiraSprint> {
+        const result = await this.get({
+            uri: `${this.baseUrl}rest/agile/1.0/sprint/${sprintId}`
+        });
+        return plainToClass(JiraSprint, result as JiraSprint);
+    }
+
+    public async getSprintBySprintNumber(sprintNo: number): Promise<JiraSprint> {
+        const sprintsOfBoard = await this.getSprintsOfBoard(36); // TODO: constant
+        if (sprintsOfBoard) {
+            const pattern = new RegExp(`sprint ${sprintNo}`, 'i');
+            return sprintsOfBoard.find((sprint: JiraSprint) => sprint.name.search(pattern) >= 0);
+        }
+    }
+
+    public async getCurrentSprint(): Promise<JiraSprint> {
+        const activeSprints = await this.getSprintsOfBoard(36, [SprintStatus.ACTIVE]); // TODO: constant
+        if (activeSprints.length > 1) {
+            throw new Error(`Expected to have one active sprint, but found ${activeSprints.length} active ones`);
+        }
+        return activeSprints[0];
     }
 
     public async searchIssues(): Promise<JiraIssueSearchResult> {
         const jql = `issuetype = ${IssueType.BUG} AND status = ${IssueStatus.OPEN} AND assignee in (EMPTY)`;
         const result = await this.get({
-            uri: `${this.baseUrl}/rest/api/${JiraEndpointController.API_VERSION}/search?jql=${encodeURIComponent(jql)}`
+            uri: `${this.baseUrl}rest/api/${JiraEndpointController.API_VERSION}/search?jql=${encodeURIComponent(jql)}`
         });
         return plainToClass(JiraIssueSearchResult, result as JiraIssueSearchResult);
     }

@@ -17,6 +17,12 @@ export enum IssueStatus {
     REOPENED = 'Erneut geöffnet'
 }
 
+export enum SprintStatus {
+    ACTIVE = 'active',
+    CLOSED = 'closed',
+    FUTURE = 'future'
+}
+
 export enum TestCoverageStatus {
     FAILED = 'NOK',
     SUCCESSFUL = 'OK',

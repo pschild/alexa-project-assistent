@@ -51,7 +51,8 @@ export default class JiraChartIntentHandler extends AbstractIntentHandler {
             if (publicScreenshotUrl) {
                 this.speech.say(`Hier ist das Burndown Chart von Sprint ${loadedSprint.getSprintNumber()}.`);
                 this.addDirective(buildImageDirective({
-                    title: `Burndownchart von Sprint ${loadedSprint.getSprintNumber()}`, // TODO: add subtitle => loadedSprint.goal
+                    title: `Burndownchart von Sprint ${loadedSprint.getSprintNumber()}`,
+                    subtitle: loadedSprint.goal,
                     imageUrl: publicScreenshotUrl,
                     logoUrl: 'https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png'
                 }));

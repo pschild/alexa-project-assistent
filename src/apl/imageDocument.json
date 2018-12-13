@@ -138,23 +138,23 @@
                     {
                         "type": "AlexaHeader",
                         "headerTitle": "${payload.data.title}",
+                        "headerSubtitle": "${payload.data.subtitle}",
                         "headerAttributionImage": "${payload.data.logoUrl}"
                     },
                     {
                         "type": "Container",
                         "direction": "row",
-                        "paddingLeft": "5vw",
-                        "paddingRight": "5vw",
-                        "paddingBottom": "5vh",
+                        "paddingLeft": "2vw",
+                        "paddingRight": "2vw",
                         "alignItems": "center",
                         "justifyContent": "center",
                         "items": [
                             {
                                 "type": "Image",
                                 "height": "75vh",
-                                "width": "90vw",
+                                "width": "96vw",
                                 "source": "${payload.data.imageUrl}",
-                                "scale": "best-fill",
+                                "scale": "best-fit",
                                 "align": "center"
                             }
                         ]

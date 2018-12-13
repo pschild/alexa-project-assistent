@@ -1,5 +1,6 @@
 export interface IImageDocumentPayload {
     title: string;
+    subtitle?: string;
     backgroundImageUrl?: string;
     imageUrl: string;
     logoUrl: string;

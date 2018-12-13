@@ -24,7 +24,9 @@ export const isSessionEndedRequest = (request: alexa.request) => {
 
 export const excludeDisplayDirectives = (response: alexa.response) => {
     const directivesOfResponse = response.response.response.directives;
-    return directivesOfResponse.filter((directive) => directive.type !== 'Display.RenderTemplate');
+    return directivesOfResponse.filter((directive) => {
+        return directive.type !== 'Display.RenderTemplate' && directive.type !== 'Alexa.Presentation.APL.RenderDocument';
+    });
 };
 
 export const excludeGameEngineDirectives = (response: alexa.response) => {

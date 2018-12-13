@@ -18,6 +18,8 @@ const mockResponseWithDialogElicitSlotDirective = require('@mockData/alexa/respo
 // tslint:disable-next-line:no-var-requires
 const mockResponseWithDisplayDirective = require('@mockData/alexa/responseWithDisplayDirective.json');
 // tslint:disable-next-line:no-var-requires
+const mockResponseWithAplDocumentDirective = require('@mockData/alexa/responseWithAplDocumentDirective.json');
+// tslint:disable-next-line:no-var-requires
 const mockResponseWithGameEngineDirective = require('@mockData/alexa/responseWithGameEngineDirective.json');
 
 describe('AppUtils', () => {
@@ -47,6 +49,16 @@ describe('AppUtils', () => {
         expect(responseObj.directives[0].type).toBe('Display.RenderTemplate');
 
         responseObj.directives = excludeDisplayDirectives(mockResponseWithDisplayDirective);
+
+        expect(responseObj.directives.length).toBe(0);
+    });
+
+    it('can filter display APL directives', () => {
+        const responseObj = mockResponseWithAplDocumentDirective.response.response;
+        expect(responseObj.directives.length).toBe(1);
+        expect(responseObj.directives[0].type).toBe('Alexa.Presentation.APL.RenderDocument');
+
+        responseObj.directives = excludeDisplayDirectives(mockResponseWithAplDocumentDirective);
 
         expect(responseObj.directives.length).toBe(0);
     });

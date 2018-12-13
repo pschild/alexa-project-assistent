@@ -15,7 +15,9 @@
           "name": "JiraHelpIntent",
           "samples": [
             "jira hilfe",
-            "öffne jira hilfe"
+            "hilfe für jira",
+            "öffne jira hilfe",
+            "öffne die hilfe für jira"
           ]
         },
         {

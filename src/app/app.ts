@@ -55,7 +55,7 @@ alexaApp.post = (request: alexa.request, response: alexa.response, type: string,
         return;
     }
 
-    responseObj.directives.push(TimeoutHandler.TIMEOUT_DIRECTIVE);
+    // responseObj.directives.push(TimeoutHandler.TIMEOUT_DIRECTIVE);
 
     // If shouldEndSession is true, set it to undefined to make timeout work.
     // If it is explicitly set to false, do nothing to keep session open.
@@ -104,7 +104,20 @@ alexaApp.intent('SlotTestIntent', SlotTestIntentHandler);
 alexaApp.on('GameEngine.InputHandlerEvent', timeoutHandler.handle.bind(timeoutHandler));
 
 alexaApp.on('Alexa.Presentation.APL.UserEvent', (request: alexa.request, response: alexa.response) => {
-    console.log(`Received TouchEvent, payload: ${request.data.request.arguments[0]}, source.id: ${request.data.request.source.id}`);
+    console.log(`Received TouchEvent, arguments: ${request.data.request.arguments}`);
+    const action = request.data.request.arguments[0];
+    const selectedItemIdentifier = request.data.request.arguments[1];
+    if (action === 'HelpItemSelected') {
+        switch (selectedItemIdentifier) {
+            case 'jira':
+                return request.getRouter().intent('JiraHelpIntent');
+            case 'confluence':
+            case 'gitlab':
+            case 'sonarqube':
+            default:
+                return response.say(`Diese Hilfe ist noch nicht implementiert.`);
+        }
+    }
 });
 
 app.listen(process.env.ALEXA_APP_PORT, () => console.log(`Listening on port ${process.env.ALEXA_APP_PORT}`));

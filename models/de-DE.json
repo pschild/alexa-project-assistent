@@ -120,18 +120,29 @@
           "name": "JiraChartIntent",
           "slots": [
             {
-              "name": "BurndownChartSprint",
+              "name": "BurndownChartSprintNumber",
               "type": "AMAZON.NUMBER",
               "samples": [
-                "{BurndownChartSprint}"
+                "{BurndownChartSprintNumber}",
+                "sprint {BurndownChartSprintNumber}"
+              ]
+            },
+            {
+              "name": "BurndownChartSprintType",
+              "type": "SprintType",
+              "samples": [
+                "{BurndownChartSprintType}",
+                "vom {BurndownChartSprintType} sprint"
               ]
             }
           ],
           "samples": [
             "zeige burndown chart",
             "zeige mir das burndown chart",
-            "zeige burndown chart von sprint {BurndownChartSprint}",
-            "zeige mir das burndown chart von sprint {BurndownChartSprint}"
+            "zeige burndown chart von sprint {BurndownChartSprintNumber}",
+            "zeige mir das burndown chart von sprint {BurndownChartSprintNumber}",
+            "zeige mir das {BurndownChartSprintType} burndown chart",
+            "zeige mir das burndown chart vom {BurndownChartSprintType} sprint"
           ]
         },
         {
@@ -231,6 +242,25 @@
               }
             }
           ]
+        },
+        {
+          "name": "SprintType",
+          "values": [
+            {
+              "id": "current",
+              "name": {
+                "value": "aktuell",
+                "synonyms": ["aktuelle", "aktuellen", "derzeitige", "derzeitigen", "laufenden", "aktive", "aktiven"]
+              }
+            },
+            {
+              "id": "last",
+              "name": {
+                "value": "letzte",
+                "synonyms": ["letzten", "vorherigen", "vergangenen"]
+              }
+            }
+          ]
         }
       ]
     },
@@ -291,20 +321,6 @@
               "elicitationRequired": true,
               "prompts": {
                 "elicitation": "JiraTicketNumber.Elicit.1"
-              }
-            }
-          ]
-        },
-        {
-          "name": "JiraChartIntent",
-          "slots": [
-            {
-              "name": "BurndownChartSprint",
-              "type": "AMAZON.NUMBER",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "BurndownChartSprint.Elicit.1"
               }
             }
           ]
@@ -398,15 +414,6 @@
           {
             "type": "PlainText",
             "value": "Den Bezeichner {JiraTicketIdentifier} kenne ich nicht."
-          }
-        ]
-      },
-      {
-        "id": "BurndownChartSprint.Elicit.1",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Von welchem Sprint?"
           }
         ]
       },

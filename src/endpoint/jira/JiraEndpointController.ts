@@ -64,6 +64,17 @@ export class JiraEndpointController extends EndpointController {
         return activeSprints[0];
     }
 
+    public async getPreviousSprint(): Promise<JiraSprint> {
+        const sprints = await this.getSprintsOfBoard(36); // TODO: constant
+        const activeIndex = sprints.findIndex((sprint: JiraSprint) => sprint.state === SprintStatus.ACTIVE);
+        if (activeIndex < 0) {
+            throw new Error(`Could not find an active sprint`);
+        } else if (activeIndex === 0) {
+            throw new Error(`Could not find a previous sprint`);
+        }
+        return sprints[activeIndex - 1];
+    }
+
     public async searchIssues(): Promise<JiraIssueSearchResult> {
         const jql = `issuetype = ${IssueType.BUG} AND status = ${IssueStatus.OPEN} AND assignee in (EMPTY)`;
         const result = await this.get({

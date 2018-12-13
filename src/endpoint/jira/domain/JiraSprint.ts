@@ -16,4 +16,11 @@ export class JiraSprint {
 
     @Type(() => Date)
     completeDate: Date;
+
+    getSprintNumber(): number {
+        const matches = this.name.match(/(\d+)/);
+        if (matches) {
+            return +matches[0];
+        }
+    }
 }

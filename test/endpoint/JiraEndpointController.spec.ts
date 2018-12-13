@@ -75,7 +75,7 @@ describe('JiraEndpointController', () => {
     });
 
     it('can load current sprint', async () => {
-        const filteredMockSprintsOfBoard = mockSprintsOfBoard;
+        const filteredMockSprintsOfBoard = Object.assign({}, mockSprintsOfBoard);
         filteredMockSprintsOfBoard.values = filteredMockSprintsOfBoard.values.filter(s => s.state === SprintStatus.ACTIVE);
         spyOn(this.controller, 'get').and.returnValue(filteredMockSprintsOfBoard);
 
@@ -84,5 +84,29 @@ describe('JiraEndpointController', () => {
         expect(sprint).toBeDefined();
         expect(sprint.id).toBe(38);
         expect(sprint.name).toBe('Sprint 19');
+    });
+
+    it('can load previous sprint', async () => {
+        spyOn(this.controller, 'get').and.returnValue(mockSprintsOfBoard);
+
+        const sprint: JiraSprint = await this.controller.getPreviousSprint();
+
+        expect(sprint).toBeDefined();
+        expect(sprint.id).toBe(37);
+        expect(sprint.name).toBe('Sprint 18');
+    });
+
+    it('throws error if there is no previous sprint', async () => {
+        const filteredMockSprintsOfBoard = Object.assign({}, mockSprintsOfBoard);
+        filteredMockSprintsOfBoard.values = filteredMockSprintsOfBoard.values.filter(s => s.state === SprintStatus.ACTIVE);
+        spyOn(this.controller, 'get').and.returnValue(filteredMockSprintsOfBoard);
+
+        let errorMessage;
+        try {
+            await this.controller.getPreviousSprint();
+        } catch (error) {
+            errorMessage = error.message;
+        }
+        expect(errorMessage).toBe('Could not find a previous sprint');
     });
 });

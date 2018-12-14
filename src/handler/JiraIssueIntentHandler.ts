@@ -5,7 +5,7 @@ import { Inject } from 'typescript-ioc';
 import { AbstractIntentHandler } from './AbstractIntentHandler';
 import { HandlerError } from '../error/HandlerError';
 import { buildErrorNotification } from '../apl/datasources';
-import { jiraTicketSpeech } from '../app/speechUtils';
+import { sayJiraTicket, pause } from '../app/speechUtils';
 
 export default class JiraIssueIntentHandler extends AbstractIntentHandler {
 
@@ -34,14 +34,14 @@ export default class JiraIssueIntentHandler extends AbstractIntentHandler {
             .getIssue(`${ticketIdentifierValue}-${ticketNumberValue}`)
             .catch((error) => {
                 throw new HandlerError(
-                    `Ich konnte das Ticket ${jiraTicketSpeech(ticketIdentifierValue, ticketNumberValue)} nicht laden.`,
+                    `Ich konnte das Ticket ${sayJiraTicket(ticketIdentifierValue, ticketNumberValue)} nicht laden.`,
                     buildErrorNotification('Fehler', `Fehler beim Laden des Tickets ${ticketIdentifierValue}-${ticketNumberValue}`)
                 );
             });
 
         if (!issue) {
             throw new HandlerError(
-                `Ich habe Probleme, das Ticket ${jiraTicketSpeech(ticketIdentifierValue, ticketNumberValue)} auszuwerten.`,
+                `Ich habe Probleme, das Ticket ${sayJiraTicket(ticketIdentifierValue, ticketNumberValue)} auszuwerten.`,
                 buildErrorNotification('Fehler', `Fehler beim Auswerten des Tickets ${ticketIdentifierValue}-${ticketNumberValue}`)
             );
         }
@@ -49,39 +49,29 @@ export default class JiraIssueIntentHandler extends AbstractIntentHandler {
         this.session.set('jiraTicketId', ticketIdentifierValue);
         this.session.set('jiraTicketNo', ticketNumberValue);
 
+        let speech: string = '';
         if (ticketActionValue === 'bearbeiter') {
-            this.addAssigneeSpeech(issue);
+            speech += this.addAssigneeSpeech(issue);
             this.addDirective(this.addAssigneeDisplay(issue));
         } else if (ticketActionValue === 'titel') {
-            this.addTitleSpeech(issue);
+            speech += this.addTitleSpeech(issue);
         } else if (ticketActionValue === 'zeit') {
-            this.addEstimationSpeech(issue);
+            speech += this.addEstimationSpeech(issue);
         } else if (ticketActionValue === 'zusammenfassung') {
-            this.addAssigneeSpeech(issue);
-            this.speech.pause('100ms');
-            this.addTitleSpeech(issue);
-            this.speech.pause('100ms');
-            this.addEstimationSpeech(issue);
-            this.speech.pause('100ms');
+            speech += this.addAssigneeSpeech(issue);
+            speech += this.addTitleSpeech(issue);
+            speech += this.addEstimationSpeech(issue);
         }
 
-        this.speech
-            .pause('100ms')
-            .say(`Sonst noch etwas?`);
-
         this.outputDirectives.map((d) => response.directive(d));
-        response.say(this.speech.ssml(true)).shouldEndSession(false);
+        response.say(speech).shouldEndSession(false);
     }
 
     private addAssigneeSpeech(issue: JiraIssue) {
-        const assigneeName = issue.getAssignee() ? issue.getAssignee().getFullName() : 'keinem Mitarbeiter';
-        this.speech
-            .say(`Das Ticket`)
-            .sayAs({
-                interpret: 'characters',
-                word: issue.key.replace('-', '')
-            })
-            .say(`ist ${assigneeName} zugewiesen.`);
+        const issueKeyParts = issue.key.split('-');
+        return `Das Ticket ${sayJiraTicket(issueKeyParts[0], issueKeyParts[1])} ist `
+            + `${issue.getAssignee() ? issue.getAssignee().getFullName() : 'keinem Mitarbeiter'}`
+            + ` zugewiesen. `;
     }
 
     private addAssigneeDisplay(issue: JiraIssue): { type: string, template: any } {
@@ -111,23 +101,18 @@ export default class JiraIssueIntentHandler extends AbstractIntentHandler {
     }
 
     private addTitleSpeech(issue: JiraIssue) {
-        this.speech
-            .say(`Die Bezeichnung lautet`)
-            .pause('200ms')
-            .say(issue.fields.summary);
+        return `Die Bezeichnung lautet: ${pause(200)} ${issue.fields.summary}. `;
     }
 
-    private addEstimationSpeech(issue: JiraIssue) {
+    private addEstimationSpeech(issue: JiraIssue): string {
         if (issue.getRemainingEstimateTimeAsString()) {
-            this.speech.say(`Der Restaufwand beträgt ${issue.getRemainingEstimateTimeAsString()}.`);
+            return `Der Restaufwand beträgt ${issue.getRemainingEstimateTimeAsString()}. `;
         }
         if (issue.getOriginalEstimatedTimeAsString()) {
-            this.speech
-                .pause('50ms')
-                .say(`Ursprünglich geschätzt waren ${issue.getOriginalEstimatedTimeAsString()}.`);
+            return `${pause(50)}Ursprünglich geschätzt waren ${issue.getOriginalEstimatedTimeAsString()}. `;
         }
         if (!issue.getRemainingEstimateTimeAsString() && !issue.getOriginalEstimatedTimeAsString()) {
-            this.speech.say(`Es sind keine Informationen über den Aufwand verfügbar.`);
+            return `Es sind keine Informationen über den Aufwand verfügbar. `;
         }
     }
 

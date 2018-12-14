@@ -1,6 +1,6 @@
 import * as Speech from 'ssml-builder';
 
-export const pronounceEnglish = (text: string): string => {
+export const sayInEnglish = (text: string): string => {
     return `<lang xml:lang="en-US">${text}</lang>`;
 };
 
@@ -8,7 +8,7 @@ export const pause = (ms: number): string => {
     return new Speech().pause(`${ms}ms`).ssml(true);
 };
 
-export const jiraTicketSpeech = (ticketIdentifier: string, ticketNumber: string): string => {
+export const sayJiraTicket = (ticketIdentifier: string, ticketNumber: string): string => {
     return new Speech()
         .sayAs({
             interpret: 'characters',

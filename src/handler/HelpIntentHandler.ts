@@ -1,10 +1,10 @@
 import * as alexa from 'alexa-app';
 import { buildListDirective, buildListItem } from '../apl/datasources';
-import { pronounceEnglish } from '../app/speechUtils';
+import { sayInEnglish } from '../app/speechUtils';
 
 export default (request: alexa.request, response: alexa.response): void => {
     const speech = `Du kannst mir Fragen zu folgenden Systemen stellen: `
-        + `${pronounceEnglish('jira')}, ${pronounceEnglish('confluence')}, ${pronounceEnglish('gitlab')} und ${pronounceEnglish('sonarcube')}.`;
+        + `${sayInEnglish('jira')}, ${sayInEnglish('confluence')}, ${sayInEnglish('gitlab')} und ${sayInEnglish('sonarcube')}.`;
 
     response
         .say(speech)

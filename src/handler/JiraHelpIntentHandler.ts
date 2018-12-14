@@ -1,11 +1,11 @@
 import * as alexa from 'alexa-app';
 import { buildTextSamplesDirective } from '../apl/datasources';
-import { jiraTicketSpeech, pronounceEnglish, pause } from '../app/speechUtils';
+import { sayJiraTicket, sayInEnglish, pause } from '../app/speechUtils';
 
 export default (request: alexa.request, response: alexa.response): void => {
-    const speech = `Du kannst mich nach Informationen aus ${pronounceEnglish('jira')} Tickets fragen. Frage zum Beispiel:`
+    const speech = `Du kannst mich nach Informationen aus ${sayInEnglish('jira')} Tickets fragen. Frage zum Beispiel:`
         + `${pause(500)}`
-        + `Gib mir eine Zusammenfassung von Ticket ${jiraTicketSpeech('MDK', '2871')}`;
+        + `Gib mir eine Zusammenfassung von Ticket ${sayJiraTicket('MDK', '2871')}`;
 
     response
         .say(speech)

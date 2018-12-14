@@ -1,26 +1,14 @@
 import * as alexa from 'alexa-app';
-import * as Speech from 'ssml-builder';
-import { wordToXSampaMap } from '../app/appUtils';
 import { buildListDirective, buildListItem } from '../apl/datasources';
+import { pronounceEnglish } from '../app/speechUtils';
 
 export default (request: alexa.request, response: alexa.response): void => {
-    const speech = new Speech()
-        .say(`Du kannst mir Fragen zu folgenden Systemen stellen: `)
-        .phoneme('x-sampa', wordToXSampaMap.get('jira'), 'Jira, ')
-        .pause('50ms')
-        .phoneme('x-sampa', wordToXSampaMap.get('confluence'), 'Confluence, ')
-        .pause('50ms')
-        .phoneme('x-sampa', wordToXSampaMap.get('sonarqube'), 'Sonar Qube, ')
-        .pause('50ms')
-        .phoneme('x-sampa', wordToXSampaMap.get('jenkins'), 'Jenkins')
-        .say(`und`)
-        .phoneme('x-sampa', wordToXSampaMap.get('gitlab'), 'Gitlab');
-
-    const speechOutput = speech.ssml(true);
+    const speech = `Du kannst mir Fragen zu folgenden Systemen stellen: `
+        + `${pronounceEnglish('jira')}, ${pronounceEnglish('confluence')}, ${pronounceEnglish('gitlab')} und ${pronounceEnglish('sonarcube')}.`;
 
     response
-        .say(speechOutput)
-        .reprompt(speechOutput)
+        .say(speech)
+        .reprompt(speech)
         .directive(buildListDirective({
             title: 'Herzlich Willkommen!',
             logoUrl: 'https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png',

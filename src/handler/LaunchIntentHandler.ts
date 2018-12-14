@@ -1,34 +1,22 @@
 import * as alexa from 'alexa-app';
-import * as Speech from 'ssml-builder';
 import AppState from '../app/state/AppState';
 import { Container } from 'typescript-ioc';
-import { wordToXSampaMap } from '../app/appUtils';
+import { pronounceEnglish } from '../app/speechUtils';
 
 export default (request: alexa.request, response: alexa.response): void => {
     const appState: AppState = Container.get(AppState);
 
-    const speech = new Speech();
+    let speech: string;
     if (appState.isFirstStart()) {
         appState.setFirstStart(false);
-        speech
-            .say(`Hallo und willkommen zum Projekthelferlein.`)
-            .say(`Du kannst mir Fragen zu folgenden Systemen stellen: `)
-            .phoneme('x-sampa', wordToXSampaMap.get('jira'), 'Jira, ')
-            .pause('50ms')
-            .phoneme('x-sampa', wordToXSampaMap.get('confluence'), 'Confluence, ')
-            .pause('50ms')
-            .phoneme('x-sampa', wordToXSampaMap.get('sonarqube'), 'Sonar Qube, ')
-            .pause('50ms')
-            .phoneme('x-sampa', wordToXSampaMap.get('jenkins'), 'Jenkins')
-            .say(`und`)
-            .phoneme('x-sampa', wordToXSampaMap.get('gitlab'), 'Gitlab');
+        speech = `Hallo und willkommen. Du kannst mir Fragen zu folgenden Systemen stellen: `
+            + `${pronounceEnglish('jira')}, ${pronounceEnglish('confluence')}, ${pronounceEnglish('gitlab')} und ${pronounceEnglish('sonarcube')}.`;
     } else {
-        speech.say(`Willkommen zurück! Wobei kann ich dir behilflich sein?`);
+        speech = `Willkommen zurück! Wobei kann ich dir behilflich sein?`;
     }
 
-    const speechOutput = speech.ssml(true);
     response
-        .say(speechOutput)
-        .reprompt(speechOutput)
+        .say(speech)
+        .reprompt(speech)
         .shouldEndSession(false);
 };

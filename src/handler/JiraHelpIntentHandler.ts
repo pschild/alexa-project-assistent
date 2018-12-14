@@ -1,29 +1,15 @@
 import * as alexa from 'alexa-app';
-import * as Speech from 'ssml-builder';
-import { wordToXSampaMap } from '../app/appUtils';
 import { buildTextSamplesDirective } from '../apl/datasources';
+import { jiraTicketSpeech, pronounceEnglish, pause } from '../app/speechUtils';
 
 export default (request: alexa.request, response: alexa.response): void => {
-    const speech = new Speech()
-        .say(`Du kannst mich nach Informationen aus `)
-        .phoneme('x-sampa', wordToXSampaMap.get('jira'), 'Jira')
-        .say(`Tickets fragen. Frage zum Beispiel:`)
-        .pause('500ms')
-        .say(`Gib mir eine Zusammenfassung von Ticket `)
-        .sayAs({
-            interpret: 'characters',
-            word: 'MDK'
-        })
-        .pause('50ms')
-        .sayAs({
-            interpret: 'digits',
-            word: '2871'
-        });
+    const speech = `Du kannst mich nach Informationen aus ${pronounceEnglish('jira')} Tickets fragen. Frage zum Beispiel:`
+        + `${pause(500)}`
+        + `Gib mir eine Zusammenfassung von Ticket ${jiraTicketSpeech('MDK', '2871')}`;
 
-    const speechOutput = speech.ssml(true);
     response
-        .say(speechOutput)
-        .reprompt(speechOutput)
+        .say(speech)
+        .reprompt(speech)
         .directive(buildTextSamplesDirective({
             title: 'Hilfe für Jira',
             logoUrl: 'https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png',

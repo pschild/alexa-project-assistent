@@ -45,7 +45,9 @@ alexaApp.express({
 });
 
 alexaApp.error = (exception, request, response) => {
-    exception.directives.map((d) => response.directive(d));
+    if (exception.directives) {
+        exception.directives.map((d) => response.directive(d));
+    }
     if (exception.message) {
         response.say(exception.message);
     } else {

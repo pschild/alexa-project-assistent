@@ -33,11 +33,3 @@ export const excludeGameEngineDirectives = (response: alexa.response) => {
     const directivesOfResponse = response.response.response.directives;
     return directivesOfResponse.filter((directive) => !directive.type.startsWith('GameEngine.'));
 };
-
-export const wordToXSampaMap: Map<string, string> = new Map([
-    ['jira', 'dZi:r6'],
-    ['confluence', 'kOnfluEns'],
-    ['sonarqube', 'soUnarkjub'],
-    ['jenkins', '"dZEnkIns'],
-    ['gitlab', 'gitlEp']
-]);

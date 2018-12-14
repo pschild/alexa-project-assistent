@@ -3,6 +3,9 @@ import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController'
 import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
 import { Inject } from 'typescript-ioc';
 import { AbstractIntentHandler } from './AbstractIntentHandler';
+import { HandlerError } from '../error/HandlerError';
+import { buildErrorNotification } from '../apl/datasources';
+import { jiraTicketSpeech } from '../app/speechUtils';
 
 export default class JiraIssueIntentHandler extends AbstractIntentHandler {
 
@@ -30,19 +33,17 @@ export default class JiraIssueIntentHandler extends AbstractIntentHandler {
         const issue: JiraIssue = await this.controller
             .getIssue(`${ticketIdentifierValue}-${ticketNumberValue}`)
             .catch((error) => {
-                this.hasError = true;
-                this.addTicketNotLoadableSpeech(ticketIdentifierValue, ticketNumberValue);
-                return null;
+                throw new HandlerError(
+                    `Ich konnte das Ticket ${jiraTicketSpeech(ticketIdentifierValue, ticketNumberValue)} nicht laden.`,
+                    buildErrorNotification('Fehler', `Fehler beim Laden des Tickets ${ticketIdentifierValue}-${ticketNumberValue}`)
+                );
             });
 
-        if (!issue && !this.hasError) {
-            this.hasError = true;
-            this.addTicketNotFoundSpeech(ticketIdentifierValue, ticketNumberValue);
-            // TODO: UX: add display directive
-        }
-
-        if (this.hasError) {
-            return response.say(this.speech.ssml(true)).shouldEndSession(false);
+        if (!issue) {
+            throw new HandlerError(
+                `Ich habe Probleme, das Ticket ${jiraTicketSpeech(ticketIdentifierValue, ticketNumberValue)} auszuwerten.`,
+                buildErrorNotification('Fehler', `Fehler beim Auswerten des Tickets ${ticketIdentifierValue}-${ticketNumberValue}`)
+            );
         }
 
         this.session.set('jiraTicketId', ticketIdentifierValue);
@@ -128,36 +129,6 @@ export default class JiraIssueIntentHandler extends AbstractIntentHandler {
         if (!issue.getRemainingEstimateTimeAsString() && !issue.getOriginalEstimatedTimeAsString()) {
             this.speech.say(`Es sind keine Informationen über den Aufwand verfügbar.`);
         }
-    }
-
-    private addTicketNotLoadableSpeech(ticketIdentifierValue, ticketNumberValue) {
-        this.speech
-            .say(`Ich konnte das Ticket`)
-            .sayAs({
-                interpret: 'characters',
-                word: ticketIdentifierValue
-            })
-            .pause('50ms')
-            .sayAs({
-                interpret: 'digits',
-                word: ticketNumberValue
-            })
-            .say(`nicht laden.`);
-    }
-
-    private addTicketNotFoundSpeech(ticketIdentifierValue, ticketNumberValue) {
-        this.speech
-            .say(`Ich habe Probleme, das Ticket`)
-            .sayAs({
-                interpret: 'characters',
-                word: ticketIdentifierValue
-            })
-            .pause('50ms')
-            .sayAs({
-                interpret: 'digits',
-                word: ticketNumberValue
-            })
-            .say(`auszuwerten.`);
     }
 
 }

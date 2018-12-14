@@ -44,6 +44,15 @@ alexaApp.express({
     debug: false
 });
 
+alexaApp.error = (exception, request, response) => {
+    exception.directives.map((d) => response.directive(d));
+    if (exception.message) {
+        response.say(exception.message);
+    } else {
+        response.say(`Es ist ein Fehler aufgetreten.`);
+    }
+};
+
 alexaApp.post = (request: alexa.request, response: alexa.response, type: string, exception: any) => {
     const responseObj = response.response.response;
     if (!hasDisplaySupport(request)) {

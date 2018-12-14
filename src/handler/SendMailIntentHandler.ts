@@ -3,7 +3,8 @@ import { Container } from 'typescript-ioc';
 import MailController from '../mail/MailController';
 import AppState from '../app/state/AppState';
 import EmployeeState from '../app/state/EmployeeState';
-import { buildNotificationDirective, NotificationType } from '../apl/datasources';
+import { buildSuccessNotification, buildErrorNotification, buildWarningNotification } from '../apl/datasources';
+import { HandlerError } from '../error/HandlerError';
 
 export default async (request: alexa.request, response: alexa.response): Promise<alexa.response> => {
     const appState: AppState = Container.get(AppState);
@@ -61,7 +62,7 @@ export default async (request: alexa.request, response: alexa.response): Promise
     }
 
     // get recipient name either from local state or from slot
-    let recipientName;
+    let recipientName: string;
     if (!activeEmployee) {
         recipientName = request.slots.MailRecipient.resolution().values[0].name;
     } else {
@@ -87,48 +88,28 @@ export default async (request: alexa.request, response: alexa.response): Promise
         employeeState.setActive(recipientName);
         activeEmployee = employeeState.getActive();
     } catch (error) {
-        response.say(`${recipientName} wurde nicht in der Liste der Mitarbeiter gefunden.`);
-        return;
+        throw new HandlerError(
+            `${recipientName} wurde nicht in der Liste der Mitarbeiter gefunden.`,
+            buildWarningNotification('Mitarbeiter nicht gefunden', `${recipientName} wurde nicht in der Liste der Mitarbeiter gefunden.`)
+        );
     }
 
     if (!activeEmployee.email) {
-        response.say(`Für ${activeEmployee.name} ist keine E-Mail-Adresse hinterlegt.`);
-        return;
+        throw new HandlerError(`Für ${activeEmployee.name} ist keine E-Mail-Adresse hinterlegt.`);
     } else if (!activeEmployee.enableEmail) {
-        response.say(`Für ${activeEmployee.name} ist der Versand von E-Mails deaktiviert.`);
-        return;
+        throw new HandlerError(`Für ${activeEmployee.name} ist der Versand von E-Mails deaktiviert.`);
     }
 
     const mailContent = request.slot('MailContent');
     try {
         await controller.send(activeEmployee, mailContent);
     } catch (error) {
-        response
-            .directive(buildNotificationDirective({
-                logoUrl: '',
-                title: 'Fehler beim Senden der Mail',
-                type: NotificationType.ERROR,
-                textContent: {
-                    primaryText: {
-                        type: 'PlainText',
-                        text: `E-Mail konnte nicht versendet werden`
-                    }
-                }
-            }))
-            .say(`Beim Senden der Mail ist etwas schief gelaufen.`);
-        return;
+        throw new HandlerError(
+            `Beim Senden der Mail ist etwas schief gelaufen.`,
+            buildErrorNotification('Fehler beim Senden der Mail', 'E-Mail konnte nicht versendet werden')
+        );
     }
     response
-        .directive(buildNotificationDirective({
-            logoUrl: '',
-            title: 'E-Mail versendet',
-            type: NotificationType.SUCCESS,
-            textContent: {
-                primaryText: {
-                    type: 'PlainText',
-                    text: `An ${activeEmployee.email} versendet!`
-                }
-            }
-        }))
+        .directive(buildSuccessNotification('E-Mail versendet', `An ${activeEmployee.email} versendet!`))
         .say(`Die Mail wurde erfolgreich an ${activeEmployee.email} versendet.`);
 };

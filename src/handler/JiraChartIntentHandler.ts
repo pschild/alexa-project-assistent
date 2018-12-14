@@ -4,6 +4,7 @@ import { Inject } from 'typescript-ioc';
 import { AbstractIntentHandler } from './AbstractIntentHandler';
 import { buildImageDirective } from '../apl/datasources';
 import { JiraSprint } from '../endpoint/jira/domain/JiraSprint';
+import { HandlerError } from '../error/HandlerError';
 
 export default class JiraChartIntentHandler extends AbstractIntentHandler {
 
@@ -32,9 +33,7 @@ export default class JiraChartIntentHandler extends AbstractIntentHandler {
         if (request.slot('BurndownChartSprintNumber')) {
             const sprintNumberValue = parseInt(request.slot('BurndownChartSprintNumber'), 0);
             if (isNaN(sprintNumberValue)) {
-                return response
-                    .say(`Ich habe dich nicht genau verstanden. Versuche es bitte noch einmal.`)
-                    .shouldEndSession(true);
+                throw new HandlerError(`Ich habe dich nicht genau verstanden. Versuche es bitte noch einmal.`);
             }
             loadedSprint = await this.controller.getSprintBySprintNumber(sprintNumberValue);
         } else if (request.slots.BurndownChartSprintType.resolution()) {
@@ -61,7 +60,7 @@ export default class JiraChartIntentHandler extends AbstractIntentHandler {
                 this.controller.crawlBurndownChart(36, loadedSprint.id);
             }
         } else {
-            this.speech.say(`Ich konnte den angeforderten Sprint nicht laden.`);
+            throw new HandlerError(`Ich konnte den angeforderten Sprint nicht laden.`);
         }
 
         // this.speech

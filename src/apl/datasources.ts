@@ -108,3 +108,29 @@ export const buildListItem = (identifier: string, primaryText: string, secondary
         token: identifier
     };
 };
+
+export const buildSuccessNotification = (title: string, text: string) => {
+    return buildNotification(NotificationType.SUCCESS, title, text);
+};
+
+export const buildWarningNotification = (title: string, text: string) => {
+    return buildNotification(NotificationType.WARNING, title, text);
+};
+
+export const buildErrorNotification = (title: string, text: string) => {
+    return buildNotification(NotificationType.ERROR, title, text);
+};
+
+const buildNotification = (type: NotificationType, title: string, text: string) => {
+    return buildNotificationDirective({
+        type,
+        title,
+        logoUrl: '',
+        textContent: {
+            primaryText: {
+                type: 'PlainText',
+                text
+            }
+        }
+    });
+};

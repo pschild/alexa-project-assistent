@@ -1,3 +1,9 @@
+export enum NotificationType {
+    SUCCESS = 'success',
+    WARNING = 'warning',
+    ERROR = 'error'
+}
+
 export interface IImageDocumentPayload {
     title: string;
     subtitle?: string;
@@ -14,7 +20,15 @@ export interface ITextSamplesDocumentPayload {
     title: string;
     backgroundImageUrl?: string;
     logoUrl: string;
-    textContent: {primaryText: any}
+    textContent: {primaryText: any};
+}
+
+export interface INotificationDocumentPayload {
+    title: string;
+    backgroundImageUrl?: string;
+    logoUrl: string;
+    type: NotificationType;
+    textContent: {primaryText: any};
 }
 
 export interface IListItem {
@@ -55,6 +69,15 @@ export const buildTextSamplesDirective = (data: ITextSamplesDocumentPayload) => 
         type: 'Alexa.Presentation.APL.RenderDocument',
         token: 'textSamplesDocument',
         document: require(`@apl/textSamplesDocument.json`),
+        datasources: { data }
+    };
+};
+
+export const buildNotificationDirective = (data: INotificationDocumentPayload) => {
+    return {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'notificationDocument',
+        document: require(`@apl/notificationDocument.json`),
         datasources: { data }
     };
 };

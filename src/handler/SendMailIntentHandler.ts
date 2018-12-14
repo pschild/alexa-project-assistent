@@ -3,7 +3,7 @@ import { Container } from 'typescript-ioc';
 import MailController from '../mail/MailController';
 import AppState from '../app/state/AppState';
 import EmployeeState from '../app/state/EmployeeState';
-import { buildTouchableTextDirective } from '../apl/datasources';
+import { buildNotificationDirective, NotificationType } from '../apl/datasources';
 
 export default async (request: alexa.request, response: alexa.response): Promise<alexa.response> => {
     const appState: AppState = Container.get(AppState);
@@ -29,8 +29,8 @@ export default async (request: alexa.request, response: alexa.response): Promise
             })
             .shouldEndSession(false);
 
-    // manually ensure that MailRecipient slot is filled
-    // also re-ask for MailRecipient when a recipient was denied by the user
+        // manually ensure that MailRecipient slot is filled
+        // also re-ask for MailRecipient when a recipient was denied by the user
     } else if (!request.slot('MailRecipient') || request.slots.MailRecipient.confirmationStatus === 'DENIED') {
         employeeState.removeActive();
         const updatedIntent = request.data.request.intent;
@@ -43,8 +43,8 @@ export default async (request: alexa.request, response: alexa.response): Promise
             })
             .shouldEndSession(false);
 
-    // make sure that given MailRecipient is a valid user
-    // otherwise, re-ask for MailRecipient
+        // make sure that given MailRecipient is a valid user
+        // otherwise, re-ask for MailRecipient
     } else if (request.slots.MailRecipient.resolution()) {
         if (!request.slots.MailRecipient.resolution().isMatched()) {
             const updatedIntent = request.data.request.intent;
@@ -103,12 +103,32 @@ export default async (request: alexa.request, response: alexa.response): Promise
     try {
         await controller.send(activeEmployee, mailContent);
     } catch (error) {
-        response.say(`Beim Senden der Mail ist etwas schief gelaufen.`);
+        response
+            .directive(buildNotificationDirective({
+                logoUrl: '',
+                title: 'Fehler beim Senden der Mail',
+                type: NotificationType.ERROR,
+                textContent: {
+                    primaryText: {
+                        type: 'PlainText',
+                        text: `E-Mail konnte nicht versendet werden`
+                    }
+                }
+            }))
+            .say(`Beim Senden der Mail ist etwas schief gelaufen.`);
         return;
     }
     response
-        .directive(buildTouchableTextDirective({
-            text: 'Juhu!'
+        .directive(buildNotificationDirective({
+            logoUrl: '',
+            title: 'E-Mail versendet',
+            type: NotificationType.SUCCESS,
+            textContent: {
+                primaryText: {
+                    type: 'PlainText',
+                    text: `An ${activeEmployee.email} versendet!`
+                }
+            }
         }))
         .say(`Die Mail wurde erfolgreich an ${activeEmployee.email} versendet.`);
 };

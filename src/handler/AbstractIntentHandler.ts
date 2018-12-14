@@ -14,19 +14,16 @@ export abstract class AbstractIntentHandler {
 
     protected speech: Speech;
     protected session: alexa.session;
-    protected hasError: boolean;
 
     protected outputDirectives: any[] = [];
 
     constructor() {
         this.resetSpeech();
         this.resetDirectives();
-        this.resetError();
     }
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         this.resetSpeech();
-        this.resetError();
         this.resetDirectives();
         this.session = request.getSession();
         return this.handleSpecificIntent(request, response);
@@ -44,10 +41,6 @@ export abstract class AbstractIntentHandler {
 
     protected addDirective(directive: any) {
         this.outputDirectives = [...this.outputDirectives, directive];
-    }
-
-    protected resetError() {
-        this.hasError = false;
     }
 
 }

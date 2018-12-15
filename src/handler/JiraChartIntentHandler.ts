@@ -4,6 +4,7 @@ import { Inject } from 'typescript-ioc';
 import { buildImageDirective } from '../apl/datasources';
 import { JiraSprint } from '../endpoint/jira/domain/JiraSprint';
 import { HandlerError } from '../error/HandlerError';
+import { elicitSlot, ElicitationStatus } from './handlerUtils';
 
 export default class JiraChartIntentHandler {
 
@@ -13,31 +14,30 @@ export default class JiraChartIntentHandler {
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         const currentSprint: JiraSprint = await this.controller.getCurrentSprint();
 
+        const sprintNumberElicitationResult = elicitSlot(request, 'BurndownChartSprintNumber');
+        const sprintTypeElicitationResult = elicitSlot(request, 'BurndownChartSprintType', true);
+
         if (
-            !request.slot('BurndownChartSprintNumber')
-            && (!request.slots.BurndownChartSprintType.resolution() || !request.slots.BurndownChartSprintType.resolution().isMatched())
+            sprintNumberElicitationResult.status === ElicitationStatus.MISSING
+            && sprintTypeElicitationResult.status !== ElicitationStatus.SUCCESS
         ) {
-            const updatedIntent = request.data.request.intent;
             return response
                 .say(`Von welchem Sprint soll ich dir das Burndown Chart zeigen? `
                     + `Sage zum Beispiel ${currentSprint.name} für den aktuellen Sprint.`
                 )
-                .directive({
-                    type: 'Dialog.ElicitSlot',
-                    slotToElicit: 'BurndownChartSprintNumber',
-                    updatedIntent
-                })
+                .directive(sprintNumberElicitationResult.directive)
                 .shouldEndSession(false);
         }
 
         let loadedSprint: JiraSprint;
-        if (request.slot('BurndownChartSprintNumber')) {
-            const sprintNumberValue = parseInt(request.slot('BurndownChartSprintNumber'), 0);
+        if (sprintNumberElicitationResult.status === ElicitationStatus.SUCCESS) {
+            const sprintNumberValue = parseInt(sprintNumberElicitationResult.value, 0);
             if (isNaN(sprintNumberValue)) {
                 throw new HandlerError(`Ich habe dich nicht genau verstanden. Versuche es bitte noch einmal.`);
             }
             loadedSprint = await this.controller.getSprintBySprintNumber(sprintNumberValue);
-        } else if (request.slots.BurndownChartSprintType.resolution()) {
+
+        } else if (sprintTypeElicitationResult.status === ElicitationStatus.SUCCESS) {
             const sprintTypeValue = request.slots.BurndownChartSprintType.resolution().first().id;
             if (sprintTypeValue === 'current') {
                 loadedSprint = currentSprint;

@@ -334,11 +334,7 @@
           "slots": [
             {
               "name": "MailContent",
-              "type": "AMAZON.SearchQuery",
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "MailContent.Elicit.1"
-              }
+              "type": "AMAZON.SearchQuery"
             },
             {
               "name": "MailRecipient",
@@ -349,33 +345,6 @@
       ]
     },
     "prompts": [
-      {
-        "id": "MailContent.Elicit.1",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Was soll ich dir schreiben?"
-          }
-        ]
-      },
-      {
-        "id": "MailRecipient.Elicit.1",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "An wen soll die Mail gehen?"
-          }
-        ]
-      },
-      {
-        "id": "MailRecipient.Validation.1",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "{MailRecipient} ist mir nicht bekannt"
-          }
-        ]
-      },
       {
         "id": "JiraTicketAction.Elicit.1",
         "variations": [

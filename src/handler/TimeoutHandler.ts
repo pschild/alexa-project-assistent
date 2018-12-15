@@ -1,9 +1,13 @@
 import * as alexa from 'alexa-app';
-import { AbstractIntentHandler } from './AbstractIntentHandler';
 import { NotificationType, Notification } from '../app/state/NotificationState';
 import { buildImageDirective } from '../apl/datasources';
+import AppState from '../app/state/AppState';
+import { Inject } from 'typescript-ioc';
 
-export default class TimeoutHandler extends AbstractIntentHandler {
+export default class TimeoutHandler {
+
+    @Inject
+    private appState: AppState;
 
     private static TIMEOUT_EVENT_NAME: string = 'timeOut';
     private static TIMEOUT_DURATION: number = 5000;
@@ -20,7 +24,7 @@ export default class TimeoutHandler extends AbstractIntentHandler {
         }
     };
 
-    protected async handleSpecificIntent(request: alexa.request, response: alexa.response): Promise<alexa.response> {
+    public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         const notificationState = this.appState.getNotificationState();
         console.log(`HANDLE TIMEOUT`);
         console.log(JSON.stringify(notificationState.getAll()));
@@ -35,19 +39,18 @@ export default class TimeoutHandler extends AbstractIntentHandler {
                 switch (firstNotification.type) {
                     case NotificationType.BURNDOWNCHART_READY:
                         const payload = firstNotification.payload;
-                        this.addDirective(buildImageDirective({
+                        response.directive(buildImageDirective({
                             title: `Burndownchart von Sprint ${payload.sprintId}`,
                             imageUrl: payload.publicScreenshotUrl,
                             logoUrl: 'https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png'
                         }));
-                        this.speech.say(`Bitteschön`);
+                        response.say(`Bitteschön`);
                         break;
                 }
                 notificationState.remove(firstNotification);
             }
         }
 
-        this.outputDirectives.map((d) => response.directive(d));
-        return response.say(this.speech.ssml(true)).shouldEndSession(true);
+        return response.shouldEndSession(true);
     }
 }

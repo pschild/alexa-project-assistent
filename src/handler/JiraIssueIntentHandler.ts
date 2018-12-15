@@ -2,20 +2,19 @@ import * as alexa from 'alexa-app';
 import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
 import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
 import { Inject } from 'typescript-ioc';
-import { AbstractIntentHandler } from './AbstractIntentHandler';
 import { HandlerError } from '../error/HandlerError';
 import { buildErrorNotification } from '../apl/datasources';
 import { sayJiraTicket, pause } from '../app/speechUtils';
 
-export default class JiraIssueIntentHandler extends AbstractIntentHandler {
+export default class JiraIssueIntentHandler {
 
     @Inject
     private controller: JiraEndpointController;
 
-    protected async handleSpecificIntent(request: alexa.request, response: alexa.response): Promise<alexa.response> {
+    public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         if (!request.getDialog().isCompleted()) {
             const updatedIntent = request.data.request.intent;
-            if (!this.session.get('jiraTicketId') || !this.session.get('jiraTicketNo')) {
+            if (!request.getSession().get('jiraTicketId') || !request.getSession().get('jiraTicketNo')) {
                 return response
                     .directive({
                         type: 'Dialog.Delegate',
@@ -26,8 +25,8 @@ export default class JiraIssueIntentHandler extends AbstractIntentHandler {
         }
 
         const ticketActionValue = request.slot('JiraTicketAction');
-        const ticketIdentifierValue = request.slot('JiraTicketIdentifier') || this.session.get('jiraTicketId');
-        const ticketNumberValue = request.slot('JiraTicketNumber') || this.session.get('jiraTicketNo');
+        const ticketIdentifierValue = request.slot('JiraTicketIdentifier') || request.getSession().get('jiraTicketId');
+        const ticketNumberValue = request.slot('JiraTicketNumber') || request.getSession().get('jiraTicketNo');
         console.log(ticketActionValue, ticketIdentifierValue, ticketNumberValue);
 
         const issue: JiraIssue = await this.controller
@@ -46,25 +45,23 @@ export default class JiraIssueIntentHandler extends AbstractIntentHandler {
             );
         }
 
-        this.session.set('jiraTicketId', ticketIdentifierValue);
-        this.session.set('jiraTicketNo', ticketNumberValue);
+        request.getSession().set('jiraTicketId', ticketIdentifierValue);
+        request.getSession().set('jiraTicketNo', ticketNumberValue);
 
-        let speech: string = '';
         if (ticketActionValue === 'bearbeiter') {
-            speech += this.addAssigneeSpeech(issue);
-            this.addDirective(this.addAssigneeDisplay(issue));
+            response.say(this.addAssigneeSpeech(issue));
+            response.directive(this.addAssigneeDisplay(issue));
         } else if (ticketActionValue === 'titel') {
-            speech += this.addTitleSpeech(issue);
+            response.say(this.addTitleSpeech(issue));
         } else if (ticketActionValue === 'zeit') {
-            speech += this.addEstimationSpeech(issue);
+            response.say(this.addEstimationSpeech(issue));
         } else if (ticketActionValue === 'zusammenfassung') {
-            speech += this.addAssigneeSpeech(issue);
-            speech += this.addTitleSpeech(issue);
-            speech += this.addEstimationSpeech(issue);
+            response.say(this.addAssigneeSpeech(issue));
+            response.say(this.addTitleSpeech(issue));
+            response.say(this.addEstimationSpeech(issue));
         }
 
-        this.outputDirectives.map((d) => response.directive(d));
-        response.say(speech).shouldEndSession(false);
+        return response.shouldEndSession(false);
     }
 
     private addAssigneeSpeech(issue: JiraIssue) {

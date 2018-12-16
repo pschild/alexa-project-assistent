@@ -98,27 +98,28 @@ alexaApp.intent('HelloWorldIntent', HelloWorldIntentHandler);
 // 'zeige'
 alexaApp.intent('DisplayTestIntent', DisplayTestIntentHandler);
 
-// 'starte informationsaggregator und öffne jira ticket'
+// 'starte pm assistent und öffne jira ticket'
 alexaApp.intent('JiraIssueIntent', jiraIssueIntentHandler.handle.bind(jiraIssueIntentHandler));
 
-// 'starte informationsaggregator und zeige burndown chart'
+// 'starte pm assistent und zeige burndown chart'
 alexaApp.intent('JiraChartIntent', jiraChartIntentHandler.handle.bind(jiraChartIntentHandler));
 
-// 'starte informationsaggregator und suche nach offenen jira bugs'
+// 'starte pm assistent und suche nach offenen jira bugs'
 alexaApp.intent('JiraSearchIssuesIntent', JiraSearchIssuesIntentHandler);
 
-// 'starte informationsaggregator und zeige jenkins status'
+// 'starte pm assistent und zeige jenkins status'
 alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler);
 
-// 'starte informationsaggregator und sende eine mail'
+// 'starte pm assistent und sende eine mail'
 alexaApp.intent('SendMailIntent', SendMailIntentHandler);
 
-// 'starte informationsaggregator und teste slots'
+// 'starte pm assistent und teste slots'
 alexaApp.intent('SlotTestIntent', SlotTestIntentHandler);
 
 alexaApp.on('GameEngine.InputHandlerEvent', timeoutHandler.handle.bind(timeoutHandler));
 
 alexaApp.on('Alexa.Presentation.APL.UserEvent', (request: alexa.request, response: alexa.response) => {
+    // TODO: move to own handler
     console.log(`Received TouchEvent, arguments: ${request.data.request.arguments}`);
     const action = request.data.request.arguments[0];
     const selectedItemIdentifier = request.data.request.arguments[1];

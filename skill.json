@@ -3,14 +3,14 @@
     "publishingInformation": {
       "locales": {
         "de-DE": {
-          "summary": "Sample Short Description",
+          "summary": "Fasst Informationen aus verschiedenen Systemen eines IT-Projektes zusammen",
           "examplePhrases": [
-            "Alexa open hello world",
-            "Alexa tell hello world hello",
-            "Alexa ask hello world say hello"
+            "Alexa, öffne PM Assistent",
+            "Alexa, öffne PM Assistent und schreibe eine Mail",
+            "Alexa, frage PM Assistent nach einer Zusammenfassung vom Jira Ticket"
           ],
-          "name": "pm-info-aggregator",
-          "description": "Sample Full Description"
+          "name": "PM Assistent",
+          "description": "Fasst Informationen aus verschiedenen Systemen eines IT-Projektes zusammen"
         }
       },
       "isAvailableWorldwide": true,

@@ -69,13 +69,6 @@
           "samples": []
         },
         {
-          "name": "HelloWorldIntent",
-          "slots": [],
-          "samples": [
-            "hallo"
-          ]
-        },
-        {
           "name": "DisplayTestIntent",
           "slots": [],
           "samples": [
@@ -188,24 +181,6 @@
           "samples": [
             "suche nach offenen jira bugs"
           ]
-        },
-        {
-          "name": "SlotTestIntent",
-          "slots": [
-            {
-              "name": "Animal",
-              "type": "AMAZON.Animal",
-              "samples": [
-                "Das Tier heißt {Animal}",
-                "Das Tier ist {Animal}",
-                "{Animal}"
-              ]
-            }
-          ],
-          "samples": [
-            "teste slots",
-            "teste slots mit {Animal}"
-          ]
         }
       ],
       "types": [
@@ -276,21 +251,6 @@
     },
     "dialog": {
       "intents": [
-        {
-          "name": "SlotTestIntent",
-          "slots": [
-            {
-              "name": "Animal",
-              "type": "AMAZON.Animal",
-              "confirmationRequired": true,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Animal.Elicit.1",
-                "confirmation": "Animal.Confirm.1"
-              }
-            }
-          ]
-        },
         {
           "name": "JiraIssueIntent",
           "slots": [
@@ -393,36 +353,6 @@
           {
             "type": "PlainText",
             "value": "Den Bezeichner {JiraTicketIdentifier} kenne ich nicht."
-          }
-        ]
-      },
-      {
-        "id": "Animal.Elicit.1",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Du musst mir ein Tier nennen."
-          },
-          {
-            "type": "PlainText",
-            "value": "Bitte nenne mir ein Tier."
-          }
-        ]
-      },
-      {
-        "id": "Animal.Confirm.1",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Ist {Animal} korrekt?"
-          },
-          {
-            "type": "PlainText",
-            "value": "{Animal}, habe ich das richtig verstanden?"
-          },
-          {
-            "type": "PlainText",
-            "value": "{Animal}?"
           }
         ]
       }

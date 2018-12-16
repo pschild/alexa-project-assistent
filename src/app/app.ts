@@ -4,7 +4,6 @@ import 'reflect-metadata';
 import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as alexa from 'alexa-app';
-import HelloWorldIntentHandler from '../handler/HelloWorldIntentHandler';
 import LaunchIntentHandler from '../handler/LaunchIntentHandler';
 import DisplayTestIntentHandler from '../handler/DisplayTestIntentHandler';
 import JiraIssueIntentHandler from '../handler/JiraIssueIntentHandler';
@@ -15,7 +14,6 @@ import JiraHelpIntentHandler from '../handler/JiraHelpIntentHandler';
 import JiraChartIntentHandler from '../handler/JiraChartIntentHandler';
 import JiraSearchIssuesIntentHandler from '../handler/JiraSearchIssuesIntentHandler';
 import SendMailIntentHandler from '../handler/SendMailIntentHandler';
-import SlotTestIntentHandler from '../handler/SlotTestIntentHandler';
 import TimeoutHandler from '../handler/TimeoutHandler';
 import AppState from './state/AppState';
 import { Container } from 'typescript-ioc';
@@ -92,9 +90,6 @@ alexaApp.intent('JiraHelpIntent', JiraHelpIntentHandler);
 
 // TODO: add more HelpIntents
 
-// 'hallo'
-alexaApp.intent('HelloWorldIntent', HelloWorldIntentHandler);
-
 // 'zeige'
 alexaApp.intent('DisplayTestIntent', DisplayTestIntentHandler);
 
@@ -112,9 +107,6 @@ alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler);
 
 // 'starte pm assistent und sende eine mail'
 alexaApp.intent('SendMailIntent', SendMailIntentHandler);
-
-// 'starte pm assistent und teste slots'
-alexaApp.intent('SlotTestIntent', SlotTestIntentHandler);
 
 alexaApp.on('GameEngine.InputHandlerEvent', timeoutHandler.handle.bind(timeoutHandler));
 

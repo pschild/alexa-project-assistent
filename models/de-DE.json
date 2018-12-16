@@ -184,6 +184,12 @@
           ]
         },
         {
+          "name": "JiraSearchIssuesIntent",
+          "samples": [
+            "suche nach offenen jira bugs"
+          ]
+        },
+        {
           "name": "SlotTestIntent",
           "slots": [
             {

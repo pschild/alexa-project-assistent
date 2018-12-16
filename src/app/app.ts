@@ -13,6 +13,7 @@ import StopIntentHandler from '../handler/StopIntentHandler';
 import HelpIntentHandler from '../handler/HelpIntentHandler';
 import JiraHelpIntentHandler from '../handler/JiraHelpIntentHandler';
 import JiraChartIntentHandler from '../handler/JiraChartIntentHandler';
+import JiraSearchIssuesIntentHandler from '../handler/JiraSearchIssuesIntentHandler';
 import SendMailIntentHandler from '../handler/SendMailIntentHandler';
 import SlotTestIntentHandler from '../handler/SlotTestIntentHandler';
 import TimeoutHandler from '../handler/TimeoutHandler';
@@ -102,6 +103,9 @@ alexaApp.intent('JiraIssueIntent', jiraIssueIntentHandler.handle.bind(jiraIssueI
 
 // 'starte informationsaggregator und zeige burndown chart'
 alexaApp.intent('JiraChartIntent', jiraChartIntentHandler.handle.bind(jiraChartIntentHandler));
+
+// 'starte informationsaggregator und suche nach offenen jira bugs'
+alexaApp.intent('JiraSearchIssuesIntent', JiraSearchIssuesIntentHandler);
 
 // 'starte informationsaggregator und zeige jenkins status'
 alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler);

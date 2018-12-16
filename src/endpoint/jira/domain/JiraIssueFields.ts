@@ -3,10 +3,11 @@ import { Type } from 'class-transformer';
 import { JiraIssueTimetracking } from './JiraIssueTimetracking';
 import { JiraIssueTestCoverage } from './JiraIssueTestCoverage';
 import { CF_TEST_COVERAGE } from './constants';
-import { IssueType, IssueStatus } from './enum';
+import { IssueType, IssueStatus, IssuePriority } from './enum';
 
 export class JiraIssueFields {
     issuetype: {id: string, name: IssueType};
+    priority: {iconUrl: string, name: IssuePriority, id: string};
     summary: string;
 
     @Type(() => JiraIssueAssignee)

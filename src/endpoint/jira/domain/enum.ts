@@ -7,6 +7,14 @@ export enum IssueType {
     IMPROVEMENT = 'Verbesserung'
 }
 
+export enum IssuePriority {
+    HIGHEST = 'Highest',
+    HIGH = 'High',
+    MEDIUM = 'Medium',
+    LOW = 'Low',
+    LOWEST = 'Lowest'
+}
+
 export enum IssueStatus {
     OPEN = 'Offen',
     NEW = 'Neu',

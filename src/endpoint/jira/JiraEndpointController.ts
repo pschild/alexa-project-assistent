@@ -78,7 +78,9 @@ export class JiraEndpointController extends EndpointController {
     public async searchIssues(): Promise<JiraIssueSearchResult> {
         const jql = `issuetype = ${IssueType.BUG} AND status = ${IssueStatus.OPEN} AND assignee in (EMPTY)`;
         const result = await this.get({
-            uri: `${this.baseUrl}rest/api/${JiraEndpointController.API_VERSION}/search?jql=${encodeURIComponent(jql)}`
+            uri: `${this.baseUrl}rest/api/${JiraEndpointController.API_VERSION}/search`
+                + `?jql=${encodeURIComponent(jql)}`
+                + `&fields=issuetype,priority,status`
         });
         return plainToClass(JiraIssueSearchResult, result as JiraIssueSearchResult);
     }

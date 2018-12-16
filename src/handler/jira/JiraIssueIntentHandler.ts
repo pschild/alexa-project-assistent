@@ -1,10 +1,10 @@
 import * as alexa from 'alexa-app';
-import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
-import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
+import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointController';
+import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
 import { Inject } from 'typescript-ioc';
-import { HandlerError } from '../error/HandlerError';
-import { buildErrorNotification } from '../apl/datasources';
-import { sayJiraTicket, pause } from '../app/speechUtils';
+import { HandlerError } from '../../error/HandlerError';
+import { buildErrorNotification } from '../../apl/datasources';
+import { sayJiraTicket, pause } from '../../app/speechUtils';
 
 export default class JiraIssueIntentHandler {
 

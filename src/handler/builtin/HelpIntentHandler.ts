@@ -1,6 +1,6 @@
 import * as alexa from 'alexa-app';
-import { buildListDirective, buildListItem } from '../apl/datasources';
-import { sayInEnglish } from '../app/speechUtils';
+import { buildListDirective, buildListItem } from '../../apl/datasources';
+import { sayInEnglish } from '../../app/speechUtils';
 
 export default (request: alexa.request, response: alexa.response): void => {
     const speech = `Du kannst mir Fragen zu folgenden Systemen stellen: `

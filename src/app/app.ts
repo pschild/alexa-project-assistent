@@ -4,15 +4,15 @@ import 'reflect-metadata';
 import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as alexa from 'alexa-app';
-import LaunchIntentHandler from '../handler/LaunchIntentHandler';
+import LaunchIntentHandler from '../handler/builtin/LaunchIntentHandler';
+import StopIntentHandler from '../handler/builtin/StopIntentHandler';
+import HelpIntentHandler from '../handler/builtin/HelpIntentHandler';
+import JiraIssueIntentHandler from '../handler/jira/JiraIssueIntentHandler';
+import JiraChartIntentHandler from '../handler/jira/JiraChartIntentHandler';
+import JiraHelpIntentHandler from '../handler/jira/JiraHelpIntentHandler';
+import JiraSearchIssuesIntentHandler from '../handler/jira/JiraSearchIssuesIntentHandler';
 import DisplayTestIntentHandler from '../handler/DisplayTestIntentHandler';
-import JiraIssueIntentHandler from '../handler/JiraIssueIntentHandler';
-import JenkinsBuildsIntentHandler from '../handler/JenkinsBuildsIntentHandler';
-import StopIntentHandler from '../handler/StopIntentHandler';
-import HelpIntentHandler from '../handler/HelpIntentHandler';
-import JiraHelpIntentHandler from '../handler/JiraHelpIntentHandler';
-import JiraChartIntentHandler from '../handler/JiraChartIntentHandler';
-import JiraSearchIssuesIntentHandler from '../handler/JiraSearchIssuesIntentHandler';
+import JenkinsBuildsIntentHandler from '../handler/jenkins/JenkinsBuildsIntentHandler';
 import SendMailIntentHandler from '../handler/SendMailIntentHandler';
 import TimeoutHandler from '../handler/TimeoutHandler';
 import AppState from './state/AppState';
@@ -24,6 +24,7 @@ import {
     excludeDisplayDirectives,
     excludeGameEngineDirectives
 } from './appUtils';
+import AggregateIntentHandler from '../handler/AggregateIntentHandler';
 
 dotenv.config();
 
@@ -107,6 +108,9 @@ alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler);
 
 // 'starte pm assistent und sende eine mail'
 alexaApp.intent('SendMailIntent', SendMailIntentHandler);
+
+// 'starte pm assistent und gib mir einen aktuellen status'
+alexaApp.intent('AggregateIntent', AggregateIntentHandler);
 
 alexaApp.on('GameEngine.InputHandlerEvent', timeoutHandler.handle.bind(timeoutHandler));
 

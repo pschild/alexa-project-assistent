@@ -1,10 +1,10 @@
 import * as alexa from 'alexa-app';
-import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
+import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointController';
 import { Inject } from 'typescript-ioc';
-import { buildImageDirective } from '../apl/datasources';
-import { JiraSprint } from '../endpoint/jira/domain/JiraSprint';
-import { HandlerError } from '../error/HandlerError';
-import { elicitSlot, ElicitationStatus } from './handlerUtils';
+import { buildImageDirective } from '../../apl/datasources';
+import { JiraSprint } from '../../endpoint/jira/domain/JiraSprint';
+import { HandlerError } from '../../error/HandlerError';
+import { elicitSlot, ElicitationStatus } from '../handlerUtils';
 
 export default class JiraChartIntentHandler {
 

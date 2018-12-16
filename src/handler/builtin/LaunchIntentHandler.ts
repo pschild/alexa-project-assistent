@@ -1,7 +1,7 @@
 import * as alexa from 'alexa-app';
-import AppState from '../app/state/AppState';
+import AppState from '../../app/state/AppState';
 import { Container } from 'typescript-ioc';
-import { sayInEnglish } from '../app/speechUtils';
+import { sayInEnglish } from '../../app/speechUtils';
 
 export default (request: alexa.request, response: alexa.response): void => {
     const appState: AppState = Container.get(AppState);

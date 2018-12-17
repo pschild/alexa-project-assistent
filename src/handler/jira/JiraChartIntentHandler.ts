@@ -59,7 +59,7 @@ export default class JiraChartIntentHandler {
                     })
                 );
             } else {
-                this.controller.crawlBurndownChart(36, loadedSprint.id);
+                this.controller.crawlBurndownChart(36, loadedSprint);
                 response
                     .say(`Ich suche das Burndown Chart von Sprint ${loadedSprint.getSprintNumber()} heraus und sage dir gleich bescheid.`);
             }

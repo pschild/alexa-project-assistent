@@ -103,9 +103,9 @@ export class JiraEndpointController extends EndpointController {
         return undefined;
     }
 
-    public async crawlBurndownChart(boardId: number, sprintId: number): Promise<string> {
+    public async crawlBurndownChart(boardId: number, sprint: JiraSprint): Promise<string> {
         // TODO: extract to MediaController (?)
-        const filename = `burndown-rapidView${boardId}-sprint${sprintId}`;
+        const filename = `burndown-rapidView${boardId}-sprint${sprint.id}`;
 
         // TODO: does it overwrite already existing images?
         const options = {
@@ -122,7 +122,7 @@ export class JiraEndpointController extends EndpointController {
                 + `?rapidView=${boardId}`
                 + `&view=reporting`
                 + `&chart=burndownChart`
-                + `&sprint=${sprintId}`,
+                + `&sprint=${sprint.id}`,
                 ['993x1080']
             )
             .dest(path.join(process.cwd(), 'media-gen'))
@@ -133,7 +133,7 @@ export class JiraEndpointController extends EndpointController {
         if (result && result.length) {
             this.appState.getNotificationState().add(
                 new Notification(NotificationType.BURNDOWNCHART_READY, {
-                    sprintId,
+                    sprint,
                     publicScreenshotUrl: this.appState.getBaseUrl() + result[0].filename
                 })
             );

@@ -1,13 +1,16 @@
 import { Container } from 'typescript-ioc';
 import { JiraEndpointController } from '../../src/endpoint/jira/JiraEndpointController';
 import { JiraIssue } from '../../src/endpoint/jira/domain/JiraIssue';
-import { IssueType, IssueStatus, TestCoverageStatus, SprintStatus } from '../../src/endpoint/jira/domain/enum';
+import { IssueType, IssueStatus, TestCoverageStatus, SprintStatus, SwimlaneStatus } from '../../src/endpoint/jira/domain/enum';
 import { JiraSprint } from '../../src/endpoint/jira/domain/JiraSprint';
+import { JiraIssueSearchResult } from '../../src/endpoint/jira/domain/JiraIssueSearchResult';
 
 // tslint:disable-next-line:no-var-requires
 const mockIssue = require('@mockData/jira/issue.json');
 // tslint:disable-next-line:no-var-requires
 const mockSprintsOfBoard = require('@mockData/jira/sprintsOfBoard.json');
+// tslint:disable-next-line:no-var-requires
+const mockissuesOfSprint = require('@mockData/jira/issuesOfSprint.json');
 
 describe('JiraEndpointController', () => {
     beforeAll(() => {
@@ -27,8 +30,8 @@ describe('JiraEndpointController', () => {
 
         expect(issue.fields.status.name).toBe(IssueStatus.OPEN);
 
-        expect(issue.getOriginalEstimatedTimeAsString()).toEqual('8 Stunden, 3 Minuten und 20 Sekunden');
-        expect(issue.getRemainingEstimateTimeAsString()).toEqual('4 Stunden');
+        expect(issue.getOriginalEstimateSeconds()).toEqual(29000);
+        expect(issue.getRemainingEstimateSeconds()).toEqual(14400);
 
         expect(issue.fields.labels).toEqual(['Tag1', 'Tag2', 'Tag3']);
 
@@ -108,5 +111,27 @@ describe('JiraEndpointController', () => {
             errorMessage = error.message;
         }
         expect(errorMessage).toBe('Could not find a previous sprint');
+    });
+
+    it('can load issues of sprint', async () => {
+        spyOn(this.controller, 'get').and.returnValue(mockissuesOfSprint);
+
+        const result: JiraIssueSearchResult = await this.controller.getIssuesOfSprint(42);
+
+        const issues = result.issues.filter((issue: JiraIssue) => {
+            return issue.fields.issuetype.name !== IssueType.EPIC && issue.fields.issuetype.name !== IssueType.STORY;
+        });
+
+        const todoIssues = issues.filter((issue: JiraIssue) => issue.getSwimlaneStatus() === SwimlaneStatus.TODO);
+        const doingIssues = issues.filter((issue: JiraIssue) => issue.getSwimlaneStatus() === SwimlaneStatus.IN_PROGRESS);
+        const doneIssues = issues.filter((issue: JiraIssue) => issue.getSwimlaneStatus() === SwimlaneStatus.DONE);
+
+        const overallBugs = issues.filter((issue: JiraIssue) => issue.fields.issuetype.name === IssueType.BUG);
+        const todoBugs = todoIssues.filter((issue: JiraIssue) => issue.fields.issuetype.name === IssueType.BUG);
+
+        const sumOfRemainingSeconds = issues
+            .map((issue: JiraIssue) => issue.getRemainingEstimateSeconds())
+            .reduce((accumulator, currentValue) => accumulator + currentValue);
+        console.log(sumOfRemainingSeconds);
     });
 });

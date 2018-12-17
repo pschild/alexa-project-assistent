@@ -1,8 +1,8 @@
-import * as humanizeDuration from 'humanize-duration';
 import { Type } from 'class-transformer';
 import { JiraIssueFields } from './JiraIssueFields';
 import { JiraIssueAssignee } from './JiraIssueAssignee';
 import { CF_TEST_COVERAGE } from './constants';
+import { IssueStatus, SwimlaneStatus } from './enum';
 
 export class JiraIssue {
     id: string;
@@ -15,29 +15,34 @@ export class JiraIssue {
         return this.fields.assignee;
     }
 
-    getOriginalEstimatedTimeAsString(): string {
-        if (!this.fields.timetracking || !this.fields.timetracking.originalEstimateSeconds) {
-            return null;
+    getOriginalEstimateSeconds(): number {
+        if (this.fields.timetracking && this.fields.timetracking.originalEstimateSeconds) {
+            return this.fields.timetracking.originalEstimateSeconds;
         }
-        return humanizeDuration(this.fields.timetracking.originalEstimateSeconds * 1000, {
-            language: 'de',
-            conjunction: ' und ',
-            serialComma: false
-        });
     }
 
-    getRemainingEstimateTimeAsString(): string {
-        if (!this.fields.timetracking || !this.fields.timetracking.remainingEstimateSeconds) {
-            return null;
+    getRemainingEstimateSeconds(): number {
+        if (this.fields.timetracking && this.fields.timetracking.remainingEstimateSeconds) {
+            return this.fields.timetracking.remainingEstimateSeconds;
         }
-        return humanizeDuration(this.fields.timetracking.remainingEstimateSeconds * 1000, {
-            language: 'de',
-            conjunction: ' und ',
-            serialComma: false
-        });
     }
 
     getTestCoverage() {
         return this.fields[CF_TEST_COVERAGE] ? this.fields[CF_TEST_COVERAGE][0] : null;
+    }
+
+    getSwimlaneStatus(): SwimlaneStatus {
+        switch (this.fields.status.name) {
+            case IssueStatus.OPEN:
+            case IssueStatus.REOPENED:
+                return SwimlaneStatus.TODO;
+            case IssueStatus.IN_PROGRESS:
+                return SwimlaneStatus.IN_PROGRESS;
+            case IssueStatus.CLOSED:
+            case IssueStatus.RESOLVED:
+                return SwimlaneStatus.DONE;
+            default:
+                throw new Error(`Unknwon status of jira ticket ${this.key}: ${this.fields.status.name}`);
+        }
     }
 }

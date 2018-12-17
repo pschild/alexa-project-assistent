@@ -110,7 +110,8 @@
             "{JiraTicketAction}",
             "{JiraTicketAction} jira ticket",
             "{JiraTicketAction} jira ticket {JiraTicketIdentifier} {JiraTicketNumber}",
-            "{JiraTicketAction} {JiraTicketIdentifier} {JiraTicketNumber}"
+            "{JiraTicketAction} {JiraTicketIdentifier} {JiraTicketNumber}",
+            "Gib mir {JiraTicketAction} von Ticket {JiraTicketIdentifier} {JiraTicketNumber}"
           ]
         },
         {
@@ -180,6 +181,13 @@
           "name": "JiraSearchIssuesIntent",
           "samples": [
             "suche nach offenen jira bugs"
+          ]
+        },
+        {
+          "name": "AggregateIntent",
+          "samples": [
+            "gib mir einen aktuellen status",
+            "gib mir einen statusbericht"
           ]
         }
       ],

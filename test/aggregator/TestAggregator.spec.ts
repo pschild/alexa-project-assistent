@@ -1,10 +1,11 @@
 import { Container } from 'typescript-ioc';
 import { TestAggregator } from '../../src/aggregator/TestAggregator';
+import { JiraIssueSearchResult } from '../../src/endpoint/jira/domain/JiraIssueSearchResult';
 
-xdescribe('TestAggregator', () => {
+describe('TestAggregator', () => {
 
     it('can test', async () => {
         const aggregator = Container.get(TestAggregator);
-        const result = await aggregator.test();
+        const result: JiraIssueSearchResult = await aggregator.tooManyOpenIssues();
     });
 });

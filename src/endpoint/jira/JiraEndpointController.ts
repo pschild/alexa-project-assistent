@@ -85,6 +85,15 @@ export class JiraEndpointController extends EndpointController {
         return plainToClass(JiraIssueSearchResult, result as JiraIssueSearchResult);
     }
 
+    public async getIssuesOfSprint(sprintId: number): Promise<JiraIssueSearchResult> {
+        const result = await this.get({
+            uri: `${this.baseUrl}rest/agile/1.0/sprint/${sprintId}/issue`
+                + `?fields=resolution,issuetype,assignee,status,summary,timetracking`
+                + `&maxResults=1000`
+        });
+        return plainToClass(JiraIssueSearchResult, result as JiraIssueSearchResult);
+    }
+
     public getBurndownChartUrl(boardId: number, sprintId: number): string {
         // TODO: extract to MediaController (?)
         const filename = `burndown-rapidView${boardId}-sprint${sprintId}`;

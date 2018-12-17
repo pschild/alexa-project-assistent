@@ -18,11 +18,12 @@ export enum IssuePriority {
 export enum IssueStatus {
     OPEN = 'Offen',
     NEW = 'Neu',
-    CLOSED = 'Geschlossen',
+    CLOSED = 'Closed',
     DONE = 'Erledigt',
-    IN_PROGRESS = 'In Arbeit',
+    IN_PROGRESS = 'In Progress',
     FINISHED = 'Fertig',
-    REOPENED = 'Erneut geöffnet'
+    RESOLVED = 'Resolved',
+    REOPENED = 'Reopened'
 }
 
 export enum SprintStatus {
@@ -36,4 +37,10 @@ export enum TestCoverageStatus {
     SUCCESSFUL = 'OK',
     NOT_RUN = 'NOTRUN',
     UNCOVERED = 'UNCOVERED'
+}
+
+export enum SwimlaneStatus {
+    TODO = 'To Do',
+    IN_PROGRESS = 'In Progress',
+    DONE = 'Done'
 }

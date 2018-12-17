@@ -23,4 +23,16 @@ export class JiraSprint {
             return +matches[0];
         }
     }
+
+    getPassedHours(): number {
+        const now = new Date().getTime();
+        const startTime = this.startDate.getTime();
+        return (now - startTime) / (1000 * 60 * 60);
+    }
+
+    getRemainingHours(): number {
+        const now = new Date().getTime();
+        const endTime = this.endDate.getTime();
+        return (endTime - now) / (1000 * 60 * 60);
+    }
 }

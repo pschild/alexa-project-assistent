@@ -1,27 +1,47 @@
-import * as dotenv from 'dotenv';
 import { Inject } from 'typescript-ioc';
 import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
+import { JiraIssueSearchResult } from '../endpoint/jira/domain/JiraIssueSearchResult';
+import { JiraSprint } from '../endpoint/jira/domain/JiraSprint';
 import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
-import { JenkinsEndpointController } from '../endpoint/jenkins/JenkinsEndpointController';
-import { JenkinsProject } from '../endpoint/jenkins/domain/JenkinsProject';
-import { IssueType } from '../endpoint/jira/domain/enum';
-import { Color } from '../endpoint/jenkins/domain/enum';
-
-dotenv.config();
+import { IssueType, SwimlaneStatus } from '../endpoint/jira/domain/enum';
 
 export class TestAggregator {
+
     @Inject
     private jiraEndpointController: JiraEndpointController;
 
-    @Inject
-    private jenkinsEndpointController: JenkinsEndpointController;
+    public async tooManyOpenIssues(): Promise<any> {
+        const currentSprint: JiraSprint = await this.jiraEndpointController.getCurrentSprint();
+        const sprintIssues: JiraIssueSearchResult = await this.jiraEndpointController.getIssuesOfSprint(currentSprint.id);
 
-    public async test() {
-        const issue: JiraIssue = await this.jiraEndpointController.getIssue(process.env.TEST_ISSUE_ID);
-        const project: JenkinsProject = await this.jenkinsEndpointController.getProject(process.env.JENKINS_PROJECT);
+        const passedHours = currentSprint.getPassedHours();
+        const remainingHours = currentSprint.getRemainingHours();
 
-        if (issue.fields.issuetype.name === IssueType.BUG && project.color === Color.ABORTED) {
-            console.log('do something');
-        }
+        const issues = sprintIssues.issues.filter((issue: JiraIssue) => {
+            return issue.fields.issuetype.name !== IssueType.EPIC && issue.fields.issuetype.name !== IssueType.STORY;
+        });
+
+        const todoIssues = issues.filter((issue: JiraIssue) => issue.getSwimlaneStatus() === SwimlaneStatus.TODO);
+        const doingIssues = issues.filter((issue: JiraIssue) => issue.getSwimlaneStatus() === SwimlaneStatus.IN_PROGRESS);
+        const doneIssues = issues.filter((issue: JiraIssue) => issue.getSwimlaneStatus() === SwimlaneStatus.DONE);
+
+        const overallBugs = issues.filter((issue: JiraIssue) => issue.fields.issuetype.name === IssueType.BUG);
+        const todoBugs = todoIssues.filter((issue: JiraIssue) => issue.fields.issuetype.name === IssueType.BUG);
+
+        const doneIssesPerHour = doneIssues.length / passedHours;
+        const todoAndDoingIssuesPerHour = (doingIssues.length + todoIssues.length) / remainingHours;
+
+        const sumOfRemainingSeconds = issues
+            .map((issue: JiraIssue) => issue.getRemainingEstimateSeconds() || 0)
+            .reduce((accumulator, currentValue) => accumulator + currentValue);
+
+        return {
+            remainingHours,
+            todoBugs: todoBugs.length,
+            todoAndDoingIssues: doingIssues.length + doneIssues.length,
+            doneIssesPerHour,
+            todoAndDoingIssuesPerHour,
+            sumOfRemainingSeconds
+        };
     }
 }

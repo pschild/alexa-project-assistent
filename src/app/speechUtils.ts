@@ -1,7 +1,20 @@
 import * as Speech from 'ssml-builder';
+import * as humanizeDuration from 'humanize-duration';
 
 export const sayInEnglish = (text: string): string => {
     return `<lang xml:lang="en-US">${text}</lang>`;
+};
+
+export const sayAsDecimal = (decNumber: number): string => {
+    return decNumber.toString().replace('.', ',');
+};
+
+export const sayAsDuration = (seconds: number): string => {
+    return humanizeDuration(seconds * 1000, {
+        language: 'de',
+        conjunction: ' und ',
+        serialComma: false
+    });
 };
 
 export const pause = (ms: number): string => {

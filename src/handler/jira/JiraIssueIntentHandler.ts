@@ -4,7 +4,7 @@ import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
 import { Inject } from 'typescript-ioc';
 import { HandlerError } from '../../error/HandlerError';
 import { buildErrorNotification } from '../../apl/datasources';
-import { sayJiraTicket, pause } from '../../app/speechUtils';
+import { sayJiraTicket, pause, sayAsDuration } from '../../app/speechUtils';
 
 export default class JiraIssueIntentHandler {
 
@@ -102,15 +102,17 @@ export default class JiraIssueIntentHandler {
     }
 
     private addEstimationSpeech(issue: JiraIssue): string {
-        if (issue.getRemainingEstimateTimeAsString()) {
-            return `Der Restaufwand beträgt ${issue.getRemainingEstimateTimeAsString()}. `;
+        let speech = '';
+        if (issue.getRemainingEstimateSeconds()) {
+            speech = `Der Restaufwand beträgt ${sayAsDuration(issue.getRemainingEstimateSeconds())}. `;
         }
-        if (issue.getOriginalEstimatedTimeAsString()) {
-            return `${pause(50)}Ursprünglich geschätzt waren ${issue.getOriginalEstimatedTimeAsString()}. `;
+        if (issue.getOriginalEstimateSeconds() && issue.getOriginalEstimateSeconds() !== issue.getRemainingEstimateSeconds()) {
+            speech += `${pause(50)}Ursprünglich geschätzt waren ${sayAsDuration(issue.getOriginalEstimateSeconds())}. `;
         }
-        if (!issue.getRemainingEstimateTimeAsString() && !issue.getOriginalEstimatedTimeAsString()) {
-            return `Es sind keine Informationen über den Aufwand verfügbar. `;
+        if (!issue.getRemainingEstimateSeconds() && !issue.getOriginalEstimateSeconds()) {
+            speech = `Es sind keine Informationen über den Aufwand verfügbar. `;
         }
+        return speech;
     }
 
 }

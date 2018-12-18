@@ -9,8 +9,6 @@ import { JiraIssueSearchResult } from '../../src/endpoint/jira/domain/JiraIssueS
 const mockIssue = require('@mockData/jira/issue.json');
 // tslint:disable-next-line:no-var-requires
 const mockSprintsOfBoard = require('@mockData/jira/sprintsOfBoard.json');
-// tslint:disable-next-line:no-var-requires
-const mockissuesOfSprint = require('@mockData/jira/issuesOfSprint.json');
 
 describe('JiraEndpointController', () => {
     beforeAll(() => {
@@ -111,27 +109,5 @@ describe('JiraEndpointController', () => {
             errorMessage = error.message;
         }
         expect(errorMessage).toBe('Could not find a previous sprint');
-    });
-
-    it('can load issues of sprint', async () => {
-        spyOn(this.controller, 'get').and.returnValue(mockissuesOfSprint);
-
-        const result: JiraIssueSearchResult = await this.controller.getIssuesOfSprint(42);
-
-        const issues = result.issues.filter((issue: JiraIssue) => {
-            return issue.fields.issuetype.name !== IssueType.EPIC && issue.fields.issuetype.name !== IssueType.STORY;
-        });
-
-        const todoIssues = issues.filter((issue: JiraIssue) => issue.getSwimlaneStatus() === SwimlaneStatus.TODO);
-        const doingIssues = issues.filter((issue: JiraIssue) => issue.getSwimlaneStatus() === SwimlaneStatus.IN_PROGRESS);
-        const doneIssues = issues.filter((issue: JiraIssue) => issue.getSwimlaneStatus() === SwimlaneStatus.DONE);
-
-        const overallBugs = issues.filter((issue: JiraIssue) => issue.fields.issuetype.name === IssueType.BUG);
-        const todoBugs = todoIssues.filter((issue: JiraIssue) => issue.fields.issuetype.name === IssueType.BUG);
-
-        const sumOfRemainingSeconds = issues
-            .map((issue: JiraIssue) => issue.getRemainingEstimateSeconds())
-            .reduce((accumulator, currentValue) => accumulator + currentValue);
-        console.log(sumOfRemainingSeconds);
     });
 });

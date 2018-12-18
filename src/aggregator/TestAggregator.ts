@@ -10,7 +10,7 @@ export class TestAggregator {
     @Inject
     private jiraEndpointController: JiraEndpointController;
 
-    public async tooManyOpenIssues(): Promise<any> {
+    public async getCurrentSprintStats(): Promise<any> {
         const currentSprint: JiraSprint = await this.jiraEndpointController.getCurrentSprint();
         const sprintIssues: JiraIssueSearchResult = await this.jiraEndpointController.getIssuesOfSprint(currentSprint.id);
 
@@ -31,7 +31,7 @@ export class TestAggregator {
         const doneIssesPerHour = doneIssues.length / passedHours;
         const todoAndDoingIssuesPerHour = (doingIssues.length + todoIssues.length) / remainingHours;
 
-        const sumOfRemainingSeconds = issues
+        const sumOfRemainingSeconds = todoIssues
             .map((issue: JiraIssue) => issue.getRemainingEstimateSeconds() || 0)
             .reduce((accumulator, currentValue) => accumulator + currentValue);
 

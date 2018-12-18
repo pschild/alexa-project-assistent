@@ -14,11 +14,14 @@ export class GitlabEndpointController extends EndpointController {
 
     public static API_VERSION: number = 4;
 
-    public config(baseUrl?: string, username?: string, password?: string) {
+    public config(baseUrl?: string, authToken?: string) {
         return super.config(
             baseUrl || process.env.GITLAB_BASE_URL,
-            username || process.env.GITLAB_USERNAME,
-            password || process.env.GITLAB_API_TOKEN
+            undefined,
+            undefined,
+            {
+                'Private-Token': authToken || process.env.GITLAB_API_TOKEN
+            }
         );
     }
 

@@ -1,0 +1,139 @@
+{
+    "type": "APL",
+    "version": "1.0",
+    "theme": "dark",
+    "import": [],
+    "resources": [
+        {
+            "description": "Colors dark to light",
+            "colors": {
+                "backgroundColor": "#343838"
+            }
+        }
+    ],
+    "styles": {},
+    "layouts": {},
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "width": "100vw",
+                "height": "100vh",
+                "item": [
+                    {
+                        "type": "Frame",
+                        "width": "100vw",
+                        "height": "100vh",
+                        "backgroundColor": "@backgroundColor",
+                        "position": "absolute"
+                    },
+                    {
+                        "type": "Frame",
+                        "width": "50vw",
+                        "height": "50vh",
+                        "paddingLeft": "20",
+                        "paddingTop": "20",
+                        "paddingRight": "20",
+                        "paddingBottom": "20",
+                        "position": "absolute",
+                        "item": [
+                            {
+                                "type": "Container",
+                                "items": [
+                                    {
+                                        "type": "Text",
+                                        "textAlign": "center",
+                                        "text": "Sprint-Status"
+                                    },
+                                    {
+                                        "type": "Text",
+                                        "text": "Bugs: 42<br>Progress: 42%"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Frame",
+                        "width": "50vw",
+                        "height": "50vh",
+                        "paddingLeft": "20",
+                        "paddingTop": "20",
+                        "paddingRight": "20",
+                        "paddingBottom": "20",
+                        "position": "absolute",
+                        "left": "50vw",
+                        "item": [
+                            {
+                                "type": "Container",
+                                "width": "100%",
+                                "height": "100%",
+                                "alignItems": "center",
+                                "justifyContent": "start",
+                                "item": [
+                                    {
+                                        "type": "Text",
+                                        "text": "Burn-Down-Chart"
+                                    },
+                                    {
+                                        "type": "Image",
+                                        "width": "100%",
+                                        "height": "100%",
+                                        "source": "https://placekitten.com/1000/1000",
+                                        "scale": "best-fill"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Frame",
+                        "width": "50vw",
+                        "height": "50vh",
+                        "paddingLeft": "20",
+                        "paddingTop": "20",
+                        "paddingRight": "20",
+                        "paddingBottom": "20",
+                        "position": "absolute",
+                        "top": "50vh",
+                        "item": [
+                            {
+                                "type": "Container",
+                                "item": {
+                                    "type": "Text",
+                                    "textAlign": "center",
+                                    "text": "Build-Status"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Frame",
+                        "width": "50vw",
+                        "height": "50vh",
+                        "paddingLeft": "20",
+                        "paddingTop": "20",
+                        "paddingRight": "20",
+                        "paddingBottom": "20",
+                        "position": "absolute",
+                        "left": "50vw",
+                        "top": "50vh",
+                        "item": [
+                            {
+                                "type": "Container",
+                                "item": {
+                                    "type": "Text",
+                                    "textAlign": "center",
+                                    "text": "Qualitätsmaß"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

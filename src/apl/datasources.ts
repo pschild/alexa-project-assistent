@@ -55,6 +55,15 @@ export const buildImageDirective = (data: IImageDocumentPayload) => {
     };
 };
 
+export const buildDashboardDirective = () => {
+    return {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'dashboardDocument',
+        document: require(`@apl/dashboardDocument.json`),
+        datasources: {}
+    };
+};
+
 export const buildTouchableTextDirective = (data: ITouchableTextDocumentPayload) => {
     return {
         type: 'Alexa.Presentation.APL.RenderDocument',

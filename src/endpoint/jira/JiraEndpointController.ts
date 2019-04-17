@@ -57,7 +57,7 @@ export class JiraEndpointController extends EndpointController {
     }
 
     public async getCurrentSprint(): Promise<JiraSprint> {
-        const activeSprints = await this.getSprintsOfBoard(36, [SprintStatus.ACTIVE]); // TODO: constant
+        const activeSprints = await this.getSprintsOfBoard(48, [SprintStatus.ACTIVE]); // TODO: constant
         if (activeSprints.length > 1) {
             throw new Error(`Expected to have one active sprint, but found ${activeSprints.length} active ones`);
         }

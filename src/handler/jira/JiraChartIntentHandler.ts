@@ -52,11 +52,22 @@ export default class JiraChartIntentHandler {
 
         if (loadedSprint) {
             const lineData: ILineChartDataItem[] = [
-                { key: 1554983612551, value: 272 },
-                { key: 1555317138000, value: 248 }, // -3d
-                { key: 1555401302000, value: 244 }, // -4h
-                { key: 1555433701000, value: 240 } // -4h
-            ];
+                { key: 1551351187447, value: 1123200 },
+                { key: 1551448769000, value: 1094400 },
+                { key: 1551456613000, value: 1036800 },
+                { key: 1551975627000, value: 1008000 },
+                { key: 1552044726000, value: 921600 },
+                { key: 1552054312000, value: 835200 },
+                { key: 1552054674000, value: 777600 },
+                { key: 1552313060000, value: 792000 },
+                { key: 1552405962000, value: 763200 },
+                { key: 1552465083000, value: 676800 },
+                { key: 1552472876000, value: 705600 },
+                { key: 1552472888000, value: 691200 },
+                { key: 1552474192000, value: 604800 },
+                { key: 1552474806555, value: 604800 },
+                { key: 1552539120000, value: 604800 }
+            ].map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
             const lineChartUrl = await this.lineChartController.generateChart(lineData).catch((e) => {
                 throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
             });

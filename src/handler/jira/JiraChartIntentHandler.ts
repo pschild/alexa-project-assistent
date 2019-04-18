@@ -5,11 +5,15 @@ import { buildImageDirective } from '../../apl/datasources';
 import { JiraSprint } from '../../endpoint/jira/domain/JiraSprint';
 import { HandlerError } from '../../error/HandlerError';
 import { elicitSlot, ElicitationStatus } from '../handlerUtils';
+import { ILineChartDataItem, LineChartController } from '../../media/LineChartController';
 
 export default class JiraChartIntentHandler {
 
     @Inject
     private controller: JiraEndpointController;
+
+    @Inject
+    private lineChartController: LineChartController;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         const currentSprint: JiraSprint = await this.controller.getCurrentSprint();
@@ -47,7 +51,23 @@ export default class JiraChartIntentHandler {
         }
 
         if (loadedSprint) {
-            const publicScreenshotUrl = this.controller.getBurndownChartUrl(36, loadedSprint.id);
+            const lineData: ILineChartDataItem[] = [
+                { key: 1554983612551, value: 272 },
+                { key: 1555317138000, value: 248 }, // -3d
+                { key: 1555401302000, value: 244 }, // -4h
+                { key: 1555433701000, value: 240 } // -4h
+            ];
+            const lineChartUrl = await this.lineChartController.generateChart(lineData).catch((e) => {
+                throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
+            });
+            response
+                .say(`Hier ist das Burndown Chart von Sprint ${loadedSprint.getSprintNumber()}.`)
+                .directive(buildImageDirective({
+                        title: `Burndownchart von Sprint ${loadedSprint.getSprintNumber()}`,
+                        imageUrl: lineChartUrl
+                    })
+                );
+            /*const publicScreenshotUrl = this.controller.getBurndownChartUrl(36, loadedSprint.id);
             if (publicScreenshotUrl) {
                 response
                     .say(`Hier ist das Burndown Chart von Sprint ${loadedSprint.getSprintNumber()}.`)
@@ -62,7 +82,7 @@ export default class JiraChartIntentHandler {
                 this.controller.crawlBurndownChart(36, loadedSprint);
                 response
                     .say(`Ich suche das Burndown Chart von Sprint ${loadedSprint.getSprintNumber()} heraus und sage dir gleich bescheid.`);
-            }
+            }*/
         } else {
             throw new HandlerError(`Ich konnte den angeforderten Sprint nicht laden.`);
         }

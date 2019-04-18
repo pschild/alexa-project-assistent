@@ -41,9 +41,7 @@ export default class TimeoutHandler {
                         const payload = firstNotification.payload;
                         response.directive(buildImageDirective({
                             title: `Burndownchart von Sprint ${payload.sprint.getSprintNumber()}`,
-                            subtitle: payload.sprint.goal,
-                            imageUrl: payload.publicScreenshotUrl,
-                            logoUrl: 'https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png'
+                            imageUrl: payload.publicScreenshotUrl
                         }));
                         response.say(`Hier ist das Burndownchart von Sprint ${payload.sprint.getSprintNumber()}`);
                         break;

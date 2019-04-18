@@ -2,10 +2,10 @@ import { EndpointController } from '../EndpointController';
 import { plainToClass } from 'class-transformer';
 import { JiraIssue } from './domain/JiraIssue';
 import { AutoWired, Singleton } from 'typescript-ioc';
-import * as Pageres from 'Pageres';
-import * as path from 'path';
-import { existsSync } from 'fs';
-import { NotificationType, Notification } from '../../app/state/NotificationState';
+// import * as Pageres from 'Pageres';
+// import * as path from 'path';
+// import { existsSync } from 'fs';
+// import { NotificationType, Notification } from '../../app/state/NotificationState';
 import { IssueType, IssueStatus, SprintStatus } from './domain/enum';
 import { JiraIssueSearchResult } from './domain/JiraIssueSearchResult';
 import { JiraSprint } from './domain/JiraSprint';
@@ -17,7 +17,7 @@ export class JiraEndpointController extends EndpointController {
     public static API_VERSION: number = 2;
 
     // TODO: extract to MediaController (?)
-    public static SCREENSHOT_FORMAT: string = 'png';
+    // public static SCREENSHOT_FORMAT: string = 'png';
 
     public config(baseUrl?: string, username?: string, password?: string) {
         return super.config(
@@ -94,7 +94,7 @@ export class JiraEndpointController extends EndpointController {
         return plainToClass(JiraIssueSearchResult, result as JiraIssueSearchResult);
     }
 
-    public getBurndownChartUrl(boardId: number, sprintId: number): string {
+    /*public getBurndownChartUrl(boardId: number, sprintId: number): string {
         // TODO: extract to MediaController (?)
         const filename = `burndown-rapidView${boardId}-sprint${sprintId}`;
         if (existsSync(path.join(process.cwd(), 'media-gen', `${filename}.${JiraEndpointController.SCREENSHOT_FORMAT}`))) {
@@ -141,5 +141,5 @@ export class JiraEndpointController extends EndpointController {
             return Promise.resolve(this.appState.getBaseUrl() + result[0].filename);
         }
         return Promise.reject(`Screenshot could not be created.`);
-    }
+    }*/
 }

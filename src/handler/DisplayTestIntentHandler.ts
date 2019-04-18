@@ -23,9 +23,7 @@ export default class DisplayTestIntentHandler {
         return response
             .directive(buildImageDirective({
                 title: `Burndownchart`,
-                subtitle: `subtitle`,
-                imageUrl: chartUrl,
-                logoUrl: 'https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png'
+                imageUrl: chartUrl
             }))
             .say('Triggered DisplayTestIntent');
     }

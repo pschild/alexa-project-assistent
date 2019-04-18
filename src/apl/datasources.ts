@@ -12,6 +12,13 @@ export interface IImageDocumentPayload {
     logoUrl: string;
 }
 
+export interface IDashboardDocumentPayload {
+    q1: { bugs: number; progress: string; };
+    q2: { imageUrl: string; };
+    q3: { imageUrl: string; };
+    q4: { imageUrl: string; };
+}
+
 export interface ITouchableTextDocumentPayload {
     text: string;
 }
@@ -55,12 +62,12 @@ export const buildImageDirective = (data: IImageDocumentPayload) => {
     };
 };
 
-export const buildDashboardDirective = () => {
+export const buildDashboardDirective = (data: IDashboardDocumentPayload) => {
     return {
         type: 'Alexa.Presentation.APL.RenderDocument',
         token: 'dashboardDocument',
         document: require(`@apl/dashboardDocument.json`),
-        datasources: {}
+        datasources: { data }
     };
 };
 

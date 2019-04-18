@@ -50,7 +50,7 @@
                                     },
                                     {
                                         "type": "Text",
-                                        "text": "Bugs: 42<br>Progress: 42%"
+                                        "text": "Bugs: ${payload.data.q1.bugs}<br>Progress: ${payload.data.q1.progress}"
                                     }
                                 ]
                             }
@@ -82,8 +82,9 @@
                                         "type": "Image",
                                         "width": "100%",
                                         "height": "100%",
-                                        "source": "https://placekitten.com/1000/1000",
-                                        "scale": "best-fill"
+                                        "paddingBottom": "45",
+                                        "source": "${payload.data.q2.imageUrl}",
+                                        "scale": "best-fit"
                                     }
                                 ]
                             }
@@ -102,11 +103,25 @@
                         "item": [
                             {
                                 "type": "Container",
-                                "item": {
-                                    "type": "Text",
-                                    "textAlign": "center",
-                                    "text": "Build-Status"
-                                }
+                                "width": "100%",
+                                "height": "100%",
+                                "alignItems": "center",
+                                "justifyContent": "start",
+                                "item": [
+                                    {
+                                        "type": "Text",
+                                        "textAlign": "center",
+                                        "text": "Build-Status"
+                                    },
+                                    {
+                                        "type": "Image",
+                                        "width": "100%",
+                                        "height": "100%",
+                                        "paddingBottom": "45",
+                                        "source": "${payload.data.q3.imageUrl}",
+                                        "scale": "best-fit"
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -124,11 +139,24 @@
                         "item": [
                             {
                                 "type": "Container",
-                                "item": {
-                                    "type": "Text",
-                                    "textAlign": "center",
-                                    "text": "Qualitätsmaß"
-                                }
+                                "width": "100%",
+                                "height": "100%",
+                                "justifyContent": "start",
+                                "item": [
+                                    {
+                                        "type": "Text",
+                                        "textAlign": "center",
+                                        "text": "Qualitätsmaß"
+                                    },
+                                    {
+                                        "type": "Image",
+                                        "width": "100%",
+                                        "height": "100%",
+                                        "paddingBottom": "45",
+                                        "source": "${payload.data.q4.imageUrl}",
+                                        "scale": "best-fit"
+                                    }
+                                ]
                             }
                         ]
                     }

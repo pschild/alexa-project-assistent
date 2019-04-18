@@ -25,6 +25,7 @@ import {
     excludeGameEngineDirectives
 } from './appUtils';
 import AggregateIntentHandler from '../handler/AggregateIntentHandler';
+import ProjectDashboardIntentHandler from '../handler/ProjectDashboardIntentHandler';
 
 dotenv.config();
 
@@ -79,6 +80,7 @@ const jiraIssueIntentHandler: JiraIssueIntentHandler = Container.get(JiraIssueIn
 const jiraChartIntentHandler: JiraChartIntentHandler = Container.get(JiraChartIntentHandler);
 const timeoutHandler: TimeoutHandler = Container.get(TimeoutHandler);
 const displayTestIntentHandler: DisplayTestIntentHandler = Container.get(DisplayTestIntentHandler);
+const projectDashboardIntentHandler: ProjectDashboardIntentHandler = Container.get(ProjectDashboardIntentHandler);
 
 alexaApp.launch(LaunchIntentHandler);
 
@@ -94,6 +96,9 @@ alexaApp.intent('JiraHelpIntent', JiraHelpIntentHandler);
 
 // 'zeige'
 alexaApp.intent('DisplayTestIntent', displayTestIntentHandler.handle.bind(displayTestIntentHandler));
+
+// 'gesamtstatus', 'übersicht', 'dashboard'
+alexaApp.intent('ProjectDashboardIntent', projectDashboardIntentHandler.handle.bind(projectDashboardIntentHandler));
 
 // 'starte pm assistent und öffne jira ticket'
 alexaApp.intent('JiraIssueIntent', jiraIssueIntentHandler.handle.bind(jiraIssueIntentHandler));

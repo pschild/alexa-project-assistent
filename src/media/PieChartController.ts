@@ -9,10 +9,12 @@ export interface IPieChartDataItem {
 export class PieChartController extends ChartControllerAbstract {
 
     protected chartName: string = `pie-chart-${new Date().getTime()}`;
+    protected chartWidth: number = 500;
+    protected chartHeight: number = 500;
 
     buildChart(data: IPieChartDataItem[]): D3Node {
         const styles = `
-            .arc text {font: 10px sans-serif; text-anchor: middle;}
+            .arc text {font: 30px sans-serif; text-anchor: middle;}
             .arc path {stroke: #fff;}
         `;
         const d3n = new D3Node({
@@ -23,7 +25,7 @@ export class PieChartController extends ChartControllerAbstract {
         const d3 = d3n.d3;
 
         const colorRange = undefined;
-        const radius = 200;
+        const radius = this.chartWidth / 2;
         const color = d3.scaleOrdinal(colorRange ? colorRange : d3.schemeCategory10);
 
         const arc = d3.arc()

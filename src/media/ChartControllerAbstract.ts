@@ -20,7 +20,7 @@ export abstract class ChartControllerAbstract {
 
     protected container: string = `<div id="chart"></div>`;
     protected selector: string = `#chart`;
-    protected chartWidth: number = 960;
+    protected chartWidth: number = 833;
     protected chartHeight: number = 500;
 
     async generateChart(data: IChartDataItem[]): Promise<string> {

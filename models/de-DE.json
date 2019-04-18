@@ -189,6 +189,15 @@
             "gib mir einen aktuellen status",
             "gib mir einen statusbericht"
           ]
+        },
+        {
+          "name": "ProjectDashboardIntent",
+          "slots": [],
+          "samples": [
+            "dashboard",
+            "übersicht",
+            "gesamtstatus"
+          ]
         }
       ],
       "types": [

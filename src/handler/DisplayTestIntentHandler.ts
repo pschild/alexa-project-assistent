@@ -1,5 +1,5 @@
 import * as alexa from 'alexa-app';
-import { buildDashboardDirective, buildImageDirective } from '../apl/datasources';
+import { buildImageDirective } from '../apl/datasources';
 
 import { Inject } from 'typescript-ioc';
 import { PieChartController, IPieChartDataItem } from '../media/PieChartController';
@@ -28,6 +28,5 @@ export default class DisplayTestIntentHandler {
                 logoUrl: 'https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png'
             }))
             .say('Triggered DisplayTestIntent');
-            // .directive(buildDashboardDirective())
     }
 }

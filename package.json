@@ -21,8 +21,10 @@
   "dependencies": {
     "alexa-app": "^4.2.3",
     "class-transformer": "^0.2.0",
+    "d3-node": "^2.1.0",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
+    "fs-extra": "^7.0.1",
     "growl": ">=1.10.0",
     "humanize-duration": "^3.15.3",
     "module-alias": "^2.1.0",
@@ -32,6 +34,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "ssml-builder": "^0.4.3",
+    "svg2png": "^4.1.1",
     "typescript-ioc": "^1.2.4"
   },
   "devDependencies": {

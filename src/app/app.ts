@@ -78,6 +78,7 @@ alexaApp.post = (request: alexa.request, response: alexa.response, type: string,
 const jiraIssueIntentHandler: JiraIssueIntentHandler = Container.get(JiraIssueIntentHandler);
 const jiraChartIntentHandler: JiraChartIntentHandler = Container.get(JiraChartIntentHandler);
 const timeoutHandler: TimeoutHandler = Container.get(TimeoutHandler);
+const displayTestIntentHandler: DisplayTestIntentHandler = Container.get(DisplayTestIntentHandler);
 
 alexaApp.launch(LaunchIntentHandler);
 
@@ -92,7 +93,7 @@ alexaApp.intent('JiraHelpIntent', JiraHelpIntentHandler);
 // TODO: add more HelpIntents
 
 // 'zeige'
-alexaApp.intent('DisplayTestIntent', DisplayTestIntentHandler);
+alexaApp.intent('DisplayTestIntent', displayTestIntentHandler.handle.bind(displayTestIntentHandler));
 
 // 'starte pm assistent und öffne jira ticket'
 alexaApp.intent('JiraIssueIntent', jiraIssueIntentHandler.handle.bind(jiraIssueIntentHandler));

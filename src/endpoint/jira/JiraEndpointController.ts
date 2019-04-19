@@ -108,7 +108,7 @@ export class JiraEndpointController extends EndpointController {
         for (const ts of Object.keys(result.changes)) {
             const entries = result.changes[ts];
             entries.forEach(entry => {
-                if (entry.statC && entry.statC.newValue) {
+                if (entry.statC) {
                     keyTimeMap.push({
                         key: entry.key,
                         time: entry.statC.newValue || 0
@@ -116,6 +116,7 @@ export class JiraEndpointController extends EndpointController {
                 }
             });
         }
+        console.log(keyTimeMap);
 
         let estTimeAtStart = 0;
         for (const ts of Object.keys(result.changes)) {
@@ -127,6 +128,7 @@ export class JiraEndpointController extends EndpointController {
                 }
             });
         }
+        console.log(estTimeAtStart);
 
         const graphEntries = [];
         graphEntries.push({ key: sprintStartTs, value: estTimeAtStart });
@@ -135,34 +137,42 @@ export class JiraEndpointController extends EndpointController {
         for (const ts of Object.keys(result.changes)) {
             const entries = result.changes[ts];
             entries.forEach(entry => {
-                const res = keyTimeMap.find(e => e.key === entry.key);
-                let time = 0;
-                if (res && res.time) {
-                    time = res.time;
-                }
-                if (entry.column) {
-                    if (entry.column.done === true) { // done
-                        currentSum -= time;
-                        console.log(ts + ': ' + entry.key + ' done => -' + time + ' => ' + currentSum);
-                        graphEntries.push({ key: +ts, value: currentSum });
-                    } else if (entry.column.done === false) { // reopened
-                        currentSum += time;
-                        console.log(ts + ': ' + entry.key + ' reopened => +' + time + ' => ' + currentSum);
-                        graphEntries.push({ key: +ts, value: currentSum });
+                if (+ts > sprintStartTs) { // only issues that changed after sprint started
+                    const res = keyTimeMap.find(e => e.key === entry.key);
+                    let time = 0;
+                    if (res && res.time) {
+                        time = res.time;
                     }
-                } else if (entry.added === true && +ts > sprintStartTs) { // added during sprint
-                    currentSum += time;
-                    console.log(ts + ': ' + entry.key + ' added => +' + time + ' => ' + currentSum);
-                    graphEntries.push({ key: +ts, value: currentSum });
-                } else if (entry.added === false && +ts > sprintStartTs) { // removed during sprint
-                    currentSum -= time;
-                    console.log(ts + ': ' + entry.key + ' removed => -' + time + ' => ' + currentSum);
-                    graphEntries.push({ key: +ts, value: currentSum });
-                } else if (entry.statC && entry.statC.newValue && entry.statC.oldValue) { // changed during sprint
-                    const diff = entry.statC.newValue - entry.statC.oldValue;
-                    currentSum += diff;
-                    console.log(ts + ': ' + entry.key + ' changed => ' + diff + ' => ' + currentSum);
-                    graphEntries.push({ key: +ts, value: currentSum });
+                    if (entry.column) {
+                        if (entry.column.done === true) { // done
+                            currentSum -= time;
+                            console.log(ts + ': ' + entry.key + ' done => -' + time + ' => ' + currentSum);
+                            graphEntries.push({ key: +ts, value: currentSum });
+                        } else if (entry.column.done === false) { // reopened
+                            currentSum += time;
+                            console.log(ts + ': ' + entry.key + ' reopened => +' + time + ' => ' + currentSum);
+                            graphEntries.push({ key: +ts, value: currentSum });
+                        }
+                    } else if (entry.added === true) { // added during sprint
+                        currentSum += time;
+                        console.log(ts + ': ' + entry.key + ' added => +' + time + ' => ' + currentSum);
+                        graphEntries.push({ key: +ts, value: currentSum });
+                    } else if (entry.added === false) { // removed during sprint
+                        currentSum -= time;
+                        console.log(ts + ': ' + entry.key + ' removed => -' + time + ' => ' + currentSum);
+                        graphEntries.push({ key: +ts, value: currentSum });
+                    } else if (entry.statC && entry.statC.newValue) { // changed during sprint
+                        let diff;
+                        if (entry.statC.oldValue) {
+                            diff = entry.statC.newValue - entry.statC.oldValue;
+                        } else {
+                            diff = entry.statC.newValue - time;
+                        }
+                        currentSum += diff;
+                        console.log(ts + ': ' + entry.key + ' changed => ' + diff + ' => ' + currentSum);
+                        graphEntries.push({ key: +ts, value: currentSum });
+                        res.time = entry.statC.newValue;
+                    }
                 }
             });
         }

@@ -1,0 +1,125 @@
+{
+    "type": "APL",
+    "version": "1.0",
+    "theme": "dark",
+    "import": [],
+    "resources": [
+        {
+            "description": "Colors dark to light",
+            "colors": {
+                "backgroundColor": "#343838"
+            }
+        }
+    ],
+    "styles": {},
+    "layouts": {
+        "ListItem": {
+            "parameters": [
+                "label",
+                "iconUrl"
+            ],
+            "item": [
+                {
+                    "type": "Container",
+                    "paddingBottom": "10",
+                    "direction": "row",
+                    "items": [
+                        {
+                            "type": "Image",
+                            "width": "50",
+                            "height": "50",
+                            "source": "${iconUrl}"
+                        },
+                        {
+                            "type": "Text",
+                            "paddingLeft": "20",
+                            "text": "${label}"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "width": "100vw",
+                "height": "100vh",
+                "item": [
+                    {
+                        "type": "Frame",
+                        "width": "100vw",
+                        "height": "100vh",
+                        "backgroundColor": "@backgroundColor",
+                        "position": "absolute"
+                    },
+                    {
+                        "type": "Text",
+                        "height": "10vh",
+                        "text": "${payload.data.ticketId} - ${payload.data.ticketDescription}"
+                    },
+                    {
+                        "type": "Container",
+                        "alignItems": "center",
+                        "direction": "row",
+                        "item": [
+                            {
+                                "type": "Text",
+                                "paddingRight": "20",
+                                "fontSize": "60dp",
+                                "text": "Gesamtstatus:"
+                            },
+                            {
+                                "type": "Image",
+                                "width": "70",
+                                "height": "70",
+                                "source": "${payload.data.globalStateIconUrl}"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Container",
+                        "width": "50vw",
+                        "paddingTop": "50",
+                        "item": [
+                            {
+                                "type": "Image",
+                                "width": "100%",
+                                "height": "500",
+                                "source": "${payload.data.imageUrl}",
+                                "scale": "best-fit"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Container",
+                        "width": "50vw",
+                        "height": "90vh",
+                        "position": "absolute",
+                        "left": "50vw",
+                        "top": "10vh",
+                        "items": [
+                            {
+                                "type": "Sequence",
+                                "width": "100%",
+                                "height": "100%",
+                                "data": "${payload.data.listData}",
+                                "item": [
+                                    {
+                                        "label": "${data.label}",
+                                        "iconUrl": "${data.iconUrl}",
+                                        "type": "ListItem"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

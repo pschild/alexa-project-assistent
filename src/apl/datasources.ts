@@ -9,6 +9,14 @@ export interface IImageDocumentPayload {
     imageUrl: string;
 }
 
+export interface IXrayStatusDocumentPayload {
+    ticketId: string;
+    ticketDescription: string;
+    globalStateIconUrl: string;
+    imageUrl: string;
+    listData: Array<{label: string; iconUrl: string}>;
+}
+
 export interface IDashboardDocumentPayload {
     q1: { bugs: number; progress: string; };
     q2: { imageUrl: string; };
@@ -55,6 +63,15 @@ export const buildImageDirective = (data: IImageDocumentPayload) => {
         type: 'Alexa.Presentation.APL.RenderDocument',
         token: 'imageDocument',
         document: require(`@apl/imageDocument.json`),
+        datasources: { data }
+    };
+};
+
+export const buildXrayStatusDirective = (data: IXrayStatusDocumentPayload) => {
+    return {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'xrayStatusDocument',
+        document: require(`@apl/xrayStatusDocument.json`),
         datasources: { data }
     };
 };

@@ -9,6 +9,7 @@ import { AutoWired, Singleton } from 'typescript-ioc';
 import { IssueType, IssueStatus, SprintStatus } from './domain/enum';
 import { JiraIssueSearchResult } from './domain/JiraIssueSearchResult';
 import { JiraSprint } from './domain/JiraSprint';
+import { JiraTestRun } from './domain/JiraTestRun';
 
 @AutoWired
 @Singleton
@@ -92,6 +93,14 @@ export class JiraEndpointController extends EndpointController {
                 + `&maxResults=1000`
         });
         return plainToClass(JiraIssueSearchResult, result as JiraIssueSearchResult);
+    }
+
+    public async getLatestTestrunByTestIssue(identifier: string): Promise<JiraTestRun> {
+        const result = await this.get({
+            uri: `${this.baseUrl}rest/raven/1.0/api/test/${identifier}/testruns`
+        });
+        const testRuns: JiraTestRun[] = (result as JiraTestRun[]).map((run) => plainToClass(JiraTestRun, run));
+        return testRuns.length ? testRuns[testRuns.length - 1] : undefined;
     }
 
     public async getBurndownData(rapidViewId: number, sprintId: number): Promise<any> {

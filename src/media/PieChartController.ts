@@ -12,6 +12,13 @@ export class PieChartController extends ChartControllerAbstract {
     protected chartWidth: number = 500;
     protected chartHeight: number = 500;
 
+    private colorRange: string[] = undefined;
+
+    setColors(colorRange: string[]): PieChartController {
+        this.colorRange = colorRange;
+        return this;
+    }
+
     buildChart(data: IPieChartDataItem[]): D3Node {
         const styles = `
             .arc text {font: 30px sans-serif; text-anchor: middle;}
@@ -24,9 +31,8 @@ export class PieChartController extends ChartControllerAbstract {
         });
         const d3 = d3n.d3;
 
-        const colorRange = undefined;
         const radius = this.chartWidth / 2;
-        const color = d3.scaleOrdinal(colorRange ? colorRange : d3.schemeCategory10);
+        const color = d3.scaleOrdinal(this.colorRange ? this.colorRange : d3.schemeCategory10);
 
         const arc = d3.arc()
             .outerRadius(radius - 10)

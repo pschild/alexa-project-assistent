@@ -26,6 +26,7 @@ import {
 } from './appUtils';
 import AggregateIntentHandler from '../handler/AggregateIntentHandler';
 import ProjectDashboardIntentHandler from '../handler/ProjectDashboardIntentHandler';
+import JiraXrayStatusIntentHandler from '../handler/jira/JiraXrayStatusIntentHandler';
 
 dotenv.config();
 
@@ -77,6 +78,7 @@ alexaApp.post = (request: alexa.request, response: alexa.response, type: string,
 };
 
 const jiraIssueIntentHandler: JiraIssueIntentHandler = Container.get(JiraIssueIntentHandler);
+const jiraXrayStatusIntentHandler: JiraXrayStatusIntentHandler = Container.get(JiraXrayStatusIntentHandler);
 const jiraChartIntentHandler: JiraChartIntentHandler = Container.get(JiraChartIntentHandler);
 const timeoutHandler: TimeoutHandler = Container.get(TimeoutHandler);
 const displayTestIntentHandler: DisplayTestIntentHandler = Container.get(DisplayTestIntentHandler);
@@ -102,6 +104,9 @@ alexaApp.intent('ProjectDashboardIntent', projectDashboardIntentHandler.handle.b
 
 // 'starte pm assistent und öffne jira ticket'
 alexaApp.intent('JiraIssueIntent', jiraIssueIntentHandler.handle.bind(jiraIssueIntentHandler));
+
+// 'starte pm assistent und teststatus INK 42'
+alexaApp.intent('JiraXrayStatusIntent', jiraXrayStatusIntentHandler.handle.bind(jiraXrayStatusIntentHandler));
 
 // 'starte pm assistent und zeige burndown chart'
 alexaApp.intent('JiraChartIntent', jiraChartIntentHandler.handle.bind(jiraChartIntentHandler));

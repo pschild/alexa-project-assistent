@@ -39,6 +39,14 @@ export enum TestCoverageStatus {
     UNCOVERED = 'UNCOVERED'
 }
 
+export enum TestRunStatus {
+    PASS = 'PASS',
+    TODO = 'TODO',
+    EXECUTING = 'EXECUTING',
+    FAIL = 'FAIL',
+    ABORTED = 'ABORTED'
+}
+
 export enum SwimlaneStatus {
     TODO = 'To Do',
     IN_PROGRESS = 'In Progress',

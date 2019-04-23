@@ -115,6 +115,31 @@
           ]
         },
         {
+          "name": "JiraXrayStatusIntent",
+          "slots": [
+            {
+              "name": "JiraTicketIdentifier",
+              "type": "JiraTicketIdentifier",
+              "samples": [
+                "ticket {JiraTicketIdentifier}",
+                "inkrement {JiraTicketIdentifier}",
+                "{JiraTicketIdentifier}"
+              ]
+            },
+            {
+              "name": "JiraTicketNumber",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "{JiraTicketNumber}"
+              ]
+            }
+          ],
+          "samples": [
+            "teststatus",
+            "teststatus {JiraTicketIdentifier} {JiraTicketNumber}"
+          ]
+        },
+        {
           "name": "JiraChartIntent",
           "slots": [
             {
@@ -240,7 +265,7 @@
             },
             {
               "name": {
-                "value": "EV"
+                "value": "INK"
               }
             }
           ]
@@ -286,6 +311,35 @@
                 }
               ]
             },
+            {
+              "name": "JiraTicketIdentifier",
+              "type": "JiraTicketIdentifier",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "JiraTicketIdentifier.Elicit.1"
+              },
+              "validations": [
+                {
+                  "type": "hasEntityResolutionMatch",
+                  "prompt": "JiraTicketIdentifier.Validation.1"
+                }
+              ]
+            },
+            {
+              "name": "JiraTicketNumber",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "JiraTicketNumber.Elicit.1"
+              }
+            }
+          ]
+        },
+        {
+          "name": "JiraXrayStatusIntent",
+          "slots": [
             {
               "name": "JiraTicketIdentifier",
               "type": "JiraTicketIdentifier",

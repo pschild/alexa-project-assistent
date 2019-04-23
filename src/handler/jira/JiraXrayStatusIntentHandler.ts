@@ -54,11 +54,11 @@ export default class JiraXrayStatusIntentHandler {
             { label: 'ABORTED', value: latestStatusMap.filter(item => item.status === TestRunStatus.ABORTED).length }
         ];
         const chartUrl = await this.pieChartController
-            .setColors(['#95C160', '#D45D52', '#A2A6AE', '#F1E069', '#111111'])
+            .setTextColor('#fff')
+            .setColorRange(['#95C160', '#D45D52', '#A2A6AE', '#F1E069', '#111111'])
             .generateChart(data).catch((e) => {
                 throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
             });
-        console.log(chartUrl);
 
         let ticketDescription = issue.fields.summary;
         if (ticketDescription.length > 50) {

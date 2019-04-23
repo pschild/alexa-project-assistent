@@ -8,7 +8,7 @@ export interface IBarChartDataItem {
 
 export class BarChartController extends ChartControllerAbstract {
 
-    protected chartName: string = `bar-chart-${new Date().getTime()}`;
+    protected chartName: string = `bar-chart`;
 
     buildChart(data: IBarChartDataItem[]): D3Node {
         const styles = `

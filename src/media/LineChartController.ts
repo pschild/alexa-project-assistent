@@ -8,7 +8,7 @@ export interface ILineChartDataItem {
 
 export class LineChartController extends ChartControllerAbstract {
 
-    protected chartName: string = `line-chart-${new Date().getTime()}`;
+    protected chartName: string = `line-chart`;
 
     buildChart(data: ILineChartDataItem[]): D3Node {
         const styles = `

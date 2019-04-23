@@ -16,7 +16,7 @@ export abstract class ChartControllerAbstract {
     protected appState: AppState;
 
     private mediaFolderPath: string = path.join(process.cwd(), 'media-gen');
-    protected abstract chartName: string = `generated-chart-${new Date().getTime()}`;
+    protected abstract chartName: string = `generated-chart`;
 
     protected container: string = `<div id="chart"></div>`;
     protected selector: string = `#chart`;
@@ -24,17 +24,18 @@ export abstract class ChartControllerAbstract {
     protected chartHeight: number = 500;
 
     async generateChart(data: IChartDataItem[]): Promise<string> {
+        const now = new Date().getTime();
         const htmlResult = this.buildChart(data);
         const svgBuffer = Buffer.from(htmlResult.svgString(), 'utf-8');
         return svg2png(svgBuffer)
-            .then((buffer) => fse.writeFile(path.join(this.mediaFolderPath, `${this.chartName}.png`), buffer))
+            .then((buffer) => fse.writeFile(path.join(this.mediaFolderPath, `${this.chartName}-${now}.png`), buffer))
             .catch((e) => console.error('ERR:', e))
             .then(() => {
-                return fse.exists(path.join(this.mediaFolderPath, `${this.chartName}.png`));
+                return fse.exists(path.join(this.mediaFolderPath, `${this.chartName}-${now}.png`));
             })
             .then((exists) => {
                 if (exists) {
-                    return this.appState.getBaseUrl() + `${this.chartName}.png`;
+                    return this.appState.getBaseUrl() + `${this.chartName}-${now}.png`;
                 }
                 throw new Error(`Could not find chart image`);
             });

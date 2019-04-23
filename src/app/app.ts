@@ -27,6 +27,7 @@ import {
 import AggregateIntentHandler from '../handler/AggregateIntentHandler';
 import ProjectDashboardIntentHandler from '../handler/ProjectDashboardIntentHandler';
 import JiraXrayStatusIntentHandler from '../handler/jira/JiraXrayStatusIntentHandler';
+import TestIntentHandler from '../handler/TestIntentHandler';
 
 dotenv.config();
 
@@ -37,6 +38,13 @@ app.use(express.static('media-gen'));
 app.use((req, res, next) => {
     appState.setHostname(req.hostname);
     return next();
+});
+
+app.get('/playground', (req, res) => {
+    const testIntentHandler: TestIntentHandler = Container.get(TestIntentHandler);
+    testIntentHandler.handle(req, res).then((x) => {
+        res.send('<img src="' + x + '"/>');
+    });
 });
 
 const alexaApp = new alexa.app(process.env.ALEXA_SKILL_NAME);

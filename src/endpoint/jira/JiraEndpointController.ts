@@ -106,144 +106,114 @@ export class JiraEndpointController extends EndpointController {
     public async getBurndownData(rapidViewId: number, sprintId: number): Promise<any> {
         const result = await this.get({
             uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/scopechangeburndownchart.json`
-                + `?rapidViewId=${rapidViewId}&sprintId=${sprintId}&statisticFieldId=field_timeoriginalestimate`
+                + `?rapidViewId=${rapidViewId}&sprintId=${sprintId}&statisticFieldId=field_timeestimate`
         });
 
         const sprintStartTs = result.startTime;
-        const sprintEndTs = result.endTime;
+        const nowTs = result.now;
         const sprintCompleteTs = result.completeTime;
+        const sprintEndTs = result.endTime;
 
         const keyTimeMap = [];
         for (const ts of Object.keys(result.changes)) {
             const entries = result.changes[ts];
             entries.forEach(entry => {
-                if (entry.statC) {
-                    keyTimeMap.push({
-                        key: entry.key,
-                        time: entry.statC.newValue || 0
-                    });
+                if (+ts < sprintStartTs) {
+                    const existingEntry = keyTimeMap.find(e => e.key === entry.key);
+                    if (existingEntry) {
+                        existingEntry.time = entry.timeC ? entry.timeC.newEstimate : 0;
+                    } else {
+                        keyTimeMap.push({
+                            key: entry.key,
+                            time: entry.timeC ? entry.timeC.newEstimate : 0,
+                            added: false
+                        });
+                    }
                 }
             });
         }
-        console.log(keyTimeMap);
-
-        let estTimeAtStart = 0;
-        for (const ts of Object.keys(result.changes)) {
-            const entries = result.changes[ts];
-            entries.forEach(entry => {
-                if (entry.added === true && +ts <= sprintStartTs) {
-                    const res = keyTimeMap.find(e => e.key === entry.key);
-                    estTimeAtStart += res ? res.time : 0;
-                }
-            });
-        }
-        console.log(estTimeAtStart);
+        // console.log(keyTimeMap);
 
         const graphEntries = [];
-        graphEntries.push({ key: sprintStartTs, value: estTimeAtStart });
-
-        let currentSum = estTimeAtStart;
+        let rte = 0;
+        let sprintCompleteRte = 0;
+        let afterStart = false;
+        let afterComplete = false;
         for (const ts of Object.keys(result.changes)) {
+            if (+ts >= sprintStartTs && !afterStart) {
+                console.log('SPRINT START');
+                afterStart = true;
+                graphEntries.push({ key: sprintStartTs, value: rte });
+            } else if (+ts >= sprintCompleteTs && !afterComplete) {
+                console.log('SPRINT COMPLETE');
+                afterComplete = true;
+                sprintCompleteRte = rte;
+                graphEntries.push({ key: sprintCompleteTs, value: rte });
+            }
             const entries = result.changes[ts];
             entries.forEach(entry => {
-                if (+ts > sprintStartTs) { // only issues that changed after sprint started
-                    const res = keyTimeMap.find(e => e.key === entry.key);
-                    let time = 0;
-                    if (res && res.time) {
-                        time = res.time;
+                const fromMap = keyTimeMap.find(e => e.key === entry.key);
+                if (fromMap) {
+                    if (entry.added === true && fromMap.added === false) {
+                        rte += fromMap.time;
+                        fromMap.added = true;
+                        if (afterStart && !afterComplete) {
+                            graphEntries.push({ key: +ts, value: rte });
+                        }
+                        console.log(`added ${entry.key} to sprint: ${fromMap.time}\trte=${rte}`);
+                    } else if (entry.added === false && fromMap.added === true) {
+                        rte -= fromMap.time;
+                        fromMap.added = false;
+                        if (afterStart && !afterComplete) {
+                            graphEntries.push({ key: +ts, value: rte });
+                        }
+                        console.log(`removed ${entry.key} from sprint: -${fromMap.time}\trte=${rte}`);
+                    } else if (entry.timeC) {
+                        const newEstimate = entry.timeC.newEstimate || 0;
+                        const oldEstimate = entry.timeC.oldEstimate || 0;
+                        if (fromMap.added === true) {
+                            const diff = newEstimate - oldEstimate;
+                            rte += diff;
+                            if (afterStart && !afterComplete) {
+                                graphEntries.push({ key: +ts, value: rte });
+                            }
+                            console.log(`changed ${entry.key}: ${diff}\trte=${rte}`);
+                        }
+                        fromMap.time = newEstimate;
                     }
-                    if (entry.column) {
-                        if (entry.column.done === true) { // done
-                            currentSum -= time;
-                            console.log(ts + ': ' + entry.key + ' done => -' + time + ' => ' + currentSum);
-                            graphEntries.push({ key: +ts, value: currentSum });
-                        } else if (entry.column.done === false) { // reopened
-                            currentSum += time;
-                            console.log(ts + ': ' + entry.key + ' reopened => +' + time + ' => ' + currentSum);
-                            graphEntries.push({ key: +ts, value: currentSum });
+                } else {
+                    if (entry.timeC) {
+                        console.log(`added ${entry.key} AFTER sprint started`);
+                        const time = entry.timeC.newEstimate || 0;
+                        let isAdded = false;
+                        if (entry.added === true) {
+                            isAdded = true;
+                            rte += time;
+                            if (afterStart && !afterComplete) {
+                                graphEntries.push({ key: +ts, value: rte });
+                            }
+                            console.log(`added ${entry.key} to sprint: ${time}\trte=${rte}`);
                         }
-                    } else if (entry.added === true) { // added during sprint
-                        currentSum += time;
-                        console.log(ts + ': ' + entry.key + ' added => +' + time + ' => ' + currentSum);
-                        graphEntries.push({ key: +ts, value: currentSum });
-                    } else if (entry.added === false) { // removed during sprint
-                        currentSum -= time;
-                        console.log(ts + ': ' + entry.key + ' removed => -' + time + ' => ' + currentSum);
-                        graphEntries.push({ key: +ts, value: currentSum });
-                    } else if (entry.statC && entry.statC.newValue) { // changed during sprint
-                        let diff;
-                        if (entry.statC.oldValue) {
-                            diff = entry.statC.newValue - entry.statC.oldValue;
-                        } else {
-                            diff = entry.statC.newValue - time;
-                        }
-                        currentSum += diff;
-                        console.log(ts + ': ' + entry.key + ' changed => ' + diff + ' => ' + currentSum);
-                        graphEntries.push({ key: +ts, value: currentSum });
-                        res.time = entry.statC.newValue;
+                        keyTimeMap.push({
+                            key: entry.key,
+                            time,
+                            added: isAdded
+                        });
                     }
                 }
             });
         }
+
         if (sprintCompleteTs) {
-            graphEntries.push({ key: sprintCompleteTs, value: currentSum });
+            graphEntries.push({ key: sprintCompleteTs, value: sprintCompleteRte });
             graphEntries.push({ key: sprintCompleteTs, value: undefined });
             graphEntries.push({ key: sprintEndTs, value: undefined });
         } else {
-            const lastEntry: any = graphEntries.slice(-1);
-            graphEntries.push({ key: lastEntry.key, value: undefined });
+            graphEntries.push({ key: nowTs, value: rte });
+            graphEntries.push({ key: nowTs, value: undefined });
             graphEntries.push({ key: sprintEndTs, value: undefined });
         }
 
         return graphEntries;
     }
-
-    /*public getBurndownChartUrl(boardId: number, sprintId: number): string {
-        // TODO: extract to MediaController (?)
-        const filename = `burndown-rapidView${boardId}-sprint${sprintId}`;
-        if (existsSync(path.join(process.cwd(), 'media-gen', `${filename}.${JiraEndpointController.SCREENSHOT_FORMAT}`))) {
-            return this.appState.getBaseUrl() + filename + '.' + JiraEndpointController.SCREENSHOT_FORMAT;
-        }
-        return undefined;
-    }
-
-    public async crawlBurndownChart(boardId: number, sprint: JiraSprint): Promise<string> {
-        // TODO: extract to MediaController (?)
-        const filename = `burndown-rapidView${boardId}-sprint${sprint.id}`;
-
-        // TODO: does it overwrite already existing images?
-        const options = {
-            delay: 5, // seconds
-            username: process.env.JIRA_USERNAME,
-            password: process.env.JIRA_PASSWORD,
-            selector: '#ghx-chart-wrap',
-            format: JiraEndpointController.SCREENSHOT_FORMAT,
-            filename
-        };
-        // TODO: extract to own helper class?
-        const result = await new Pageres(options)
-            .src(`${process.env.JIRA_BASE_URL}secure/RapidBoard.jspa`
-                + `?rapidView=${boardId}`
-                + `&view=reporting`
-                + `&chart=burndownChart`
-                + `&sprint=${sprint.id}`,
-                ['993x1080']
-            )
-            .dest(path.join(process.cwd(), 'media-gen'))
-            .run()
-            .catch((error) => {
-                throw new Error(`Error while crawling website: ${error.message}`);
-            });
-        if (result && result.length) {
-            this.appState.getNotificationState().add(
-                new Notification(NotificationType.BURNDOWNCHART_READY, {
-                    sprint,
-                    publicScreenshotUrl: this.appState.getBaseUrl() + result[0].filename
-                })
-            );
-
-            return Promise.resolve(this.appState.getBaseUrl() + result[0].filename);
-        }
-        return Promise.reject(`Screenshot could not be created.`);
-    }*/
 }

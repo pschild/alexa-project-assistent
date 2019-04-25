@@ -2,6 +2,12 @@ import * as D3Node from 'd3-node';
 import { ChartControllerAbstract } from './ChartControllerAbstract';
 
 export interface ILineChartDataItem {
+    name: string;
+    values: ILineChartDataValueItem[];
+    isStepped?: boolean;
+}
+
+export interface ILineChartDataValueItem {
     key: string | number | Date;
     value: string | number;
 }
@@ -9,6 +15,19 @@ export interface ILineChartDataItem {
 export class LineChartController extends ChartControllerAbstract {
 
     protected chartName: string = `line-chart`;
+
+    private lineColor: string = '#ccc';
+    private lineColors: string[] = ['#ccc'];
+
+    setLineColor(lineColor: string): LineChartController {
+        this.lineColor = lineColor;
+        return this;
+    }
+
+    setLineColors(lineColors: string[]): LineChartController {
+        this.lineColors = lineColors;
+        return this;
+    }
 
     buildChart(data: ILineChartDataItem[]): D3Node {
         const styles = `
@@ -28,14 +47,14 @@ export class LineChartController extends ChartControllerAbstract {
         const height = this.chartHeight - margin.top - margin.bottom;
 
         const lineWidth = 2.5;
-        const lineColor = 'steelblue';
-        const lineColors = ['steelblue'];
-        const isStepped = true;
         const tickSize = 5;
         const tickPadding = 5;
 
-        const minY = 0; // d3.min(data, d => d.value);
-        const maxY = d3.max(data, d => d.value);
+        const minY = d3.min(data, d => d3.min(d.values, v => v.value));
+        const maxY = d3.max(data, d => d3.max(d.values, v => v.value));
+
+        const minX = d3.min(data, d => d3.min(d.values, v => v.key));
+        const maxX = d3.max(data, d => d3.max(d.values, v => v.key));
 
         const svg = d3n.createSVG(this.chartWidth, this.chartHeight)
             .append('g')
@@ -43,16 +62,11 @@ export class LineChartController extends ChartControllerAbstract {
 
         const g = svg.append('g');
 
-        // const { allKeys } = data;
-        const allKeys = undefined;
         const xScale = d3.scaleTime()
-            .domain(allKeys ? d3.extent(allKeys) : d3.extent(data, d => d.key))
+            .domain([minX, maxX])
             .range([0, width]);
         const yScale = d3.scaleLinear()
-            .domain(allKeys ? [
-                d3.min(data, d => d3.min(d, v => v.value)),
-                d3.max(data, d => d3.max(d, v => v.value))
-            ] : [minY, maxY + 10])
+            .domain([minY, maxY + 10])
             .range([height, 0]);
         const xAxis = d3.axisBottom(xScale)
             .ticks(d3.timeDay.every(1))
@@ -62,13 +76,9 @@ export class LineChartController extends ChartControllerAbstract {
             .tickFormat(d => d + 'h')
             .tickPadding(tickPadding);
 
-        const lineChart = d3.line()
+        let lineChart = d3.line()
             .x(d => xScale(d.key))
             .y(d => yScale(d.value));
-
-        if (isStepped) {
-            lineChart.curve(d3.curveStepAfter);
-        }
 
         g.append('g')
             .attr('transform', `translate(0, ${height})`)
@@ -80,10 +90,18 @@ export class LineChartController extends ChartControllerAbstract {
             .attr('fill', 'none')
             .attr('stroke-width', lineWidth)
             .selectAll('path')
-            .data(allKeys ? data : [data])
-            .enter().append('path')
-            .attr('stroke', (d, i) => i < lineColors.length ? lineColors[i] : lineColor)
-            .attr('d', lineChart);
+            .data(data)
+            .enter()
+            .append('path')
+            .attr('stroke', (d, i) => i < this.lineColors.length ? this.lineColors[i] : this.lineColor)
+            .attr('d', d => {
+                if (d.isStepped) {
+                    lineChart = lineChart.curve(d3.curveStepAfter);
+                } else {
+                    lineChart = lineChart.curve(d3.curveLinear);
+                }
+                return lineChart(d.values);
+            });
 
         return d3n;
     }

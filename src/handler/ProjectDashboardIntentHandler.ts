@@ -5,7 +5,7 @@ import { Inject } from 'typescript-ioc';
 import { PieChartController, IPieChartDataItem } from '../media/PieChartController';
 import { HandlerError } from '../error/HandlerError';
 import { IBarChartDataItem, BarChartController } from '../media/BarChartController';
-import { LineChartController, ILineChartDataItem } from '../media/LineChartController';
+import { LineChartController, ILineChartDataItem, ILineChartDataValueItem } from '../media/LineChartController';
 
 export default class ProjectDashboardIntentHandler {
 
@@ -33,12 +33,14 @@ export default class ProjectDashboardIntentHandler {
             { key: 'Joe', value: '59' }
         ];
 
-        const lineData: ILineChartDataItem[] = [
+        const seriesData: ILineChartDataValueItem[] = [
             { key: 1554983612551, value: 272 },
             { key: 1555317138000, value: 248 }, // -3d
             { key: 1555401302000, value: 244 }, // -4h
             { key: 1555433701000, value: 240 } // -4h
         ];
+
+        const lineData: ILineChartDataItem[] = [{ name: 'test', values: seriesData }];
 
         const pieChartUrl = this.pieChartController.generateChart(pieData).catch((e) => {
             throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);

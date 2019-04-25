@@ -1,7 +1,7 @@
 import { Inject } from 'typescript-ioc';
 import { HandlerError } from '../error/HandlerError';
 import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
-import { LineChartController } from '../media/LineChartController';
+import { LineChartController, ILineChartDataItem } from '../media/LineChartController';
 import { BarChartController } from '../media/BarChartController';
 import { PieChartController, IPieChartDataItem } from '../media/PieChartController';
 import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
@@ -23,13 +23,37 @@ export default class TestIntentHandler {
     private jiraController: JiraEndpointController;
 
     public async handle(request, response): Promise<any> {
+        return this.getBdc();
+    }
+
+    private async getBdc() {
+        const burndownData = (await this.jiraController.getBurndownData(50, 54))
+            .map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
+        const idealData = [
+            { key: 1553857260000, value: 892800 },
+            { key: 1555002000000, value: 0 }
+        ].map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
+        const chartData: ILineChartDataItem[] = [
+            { name: 'burndownData', values: burndownData, isStepped: true },
+            { name: 'idealData', values: idealData }
+        ];
+        const chartUrl = await this.lineChartController
+            .setLineColors(['#d04437', '#999'])
+            .generateChart(chartData).catch((e) => {
+                throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
+            });
+        return chartUrl;
+    }
+
+    private async getXrayStatus() {
         const ticketIdentifierValue = 'INK';
         const ticketNumberValue = '50';
 
         const issue: JiraIssue = await this.jiraController.getIssue(`${ticketIdentifierValue}-${ticketNumberValue}`);
         const testKeys = issue.getTestCoverage().getAllTestKeys();
         if (!testKeys.length) {
-            return response.say(`Für ${sayJiraTicket(ticketIdentifierValue, ticketNumberValue)} sind keine Tests vorhanden.`);
+            console.log(`Für ${sayJiraTicket(ticketIdentifierValue, ticketNumberValue)} sind keine Tests vorhanden.`);
+            return;
         }
 
         const finalResult = await Promise.all(testKeys.map(key => this.jiraController.getLatestTestrunByTestIssue(key)));

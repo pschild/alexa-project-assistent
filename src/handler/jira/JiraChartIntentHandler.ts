@@ -5,7 +5,7 @@ import { buildImageDirective } from '../../apl/datasources';
 import { JiraSprint } from '../../endpoint/jira/domain/JiraSprint';
 import { HandlerError } from '../../error/HandlerError';
 import { elicitSlot, ElicitationStatus } from '../handlerUtils';
-import { ILineChartDataItem, LineChartController } from '../../media/LineChartController';
+import { ILineChartDataItem, LineChartController, ILineChartDataValueItem } from '../../media/LineChartController';
 
 export default class JiraChartIntentHandler {
 
@@ -51,7 +51,7 @@ export default class JiraChartIntentHandler {
         }
 
         if (loadedSprint) {
-            const lineData: ILineChartDataItem[] = [
+            const lineData: ILineChartDataValueItem[] = [
                 { key: 1551351187447, value: 1123200 },
                 { key: 1551448769000, value: 1094400 },
                 { key: 1551456613000, value: 1036800 },
@@ -68,7 +68,8 @@ export default class JiraChartIntentHandler {
                 { key: 1552474806555, value: 604800 },
                 { key: 1552539120000, value: 604800 }
             ].map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
-            const lineChartUrl = await this.lineChartController.generateChart(lineData).catch((e) => {
+            const data: ILineChartDataItem[] = [{ name: 'test', values: lineData }];
+            const lineChartUrl = await this.lineChartController.generateChart(data).catch((e) => {
                 throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
             });
             response

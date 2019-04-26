@@ -79,10 +79,10 @@
           "name": "JiraIssueIntent",
           "slots": [
             {
-              "name": "JiraTicketAction",
-              "type": "JiraTicketAction",
+              "name": "JiraIssueProperty",
+              "type": "JiraIssueProperty",
               "samples": [
-                "{JiraTicketAction}"
+                "{JiraIssueProperty}"
               ]
             },
             {
@@ -107,11 +107,11 @@
             "öffne jira ticket",
             "öffne ticket {JiraTicketIdentifier} {JiraTicketNumber}",
             "öffne jira ticket {JiraTicketIdentifier} {JiraTicketNumber}",
-            "{JiraTicketAction}",
-            "{JiraTicketAction} jira ticket",
-            "{JiraTicketAction} jira ticket {JiraTicketIdentifier} {JiraTicketNumber}",
-            "{JiraTicketAction} {JiraTicketIdentifier} {JiraTicketNumber}",
-            "Gib mir {JiraTicketAction} von Ticket {JiraTicketIdentifier} {JiraTicketNumber}"
+            "{JiraIssueProperty}",
+            "{JiraIssueProperty} jira ticket",
+            "{JiraIssueProperty} jira ticket {JiraTicketIdentifier} {JiraTicketNumber}",
+            "{JiraIssueProperty} {JiraTicketIdentifier} {JiraTicketNumber}",
+            "Gib mir {JiraIssueProperty} von Ticket {JiraTicketIdentifier} {JiraTicketNumber}"
           ]
         },
         {
@@ -231,7 +231,7 @@
           "values": []
         },
         {
-          "name": "JiraTicketAction",
+          "name": "JiraIssueProperty",
           "values": [
             {
               "name": {
@@ -267,6 +267,11 @@
               "name": {
                 "value": "INK"
               }
+            },
+            {
+              "name": {
+                "value": "AX"
+              }
             }
           ]
         },
@@ -297,17 +302,17 @@
           "name": "JiraIssueIntent",
           "slots": [
             {
-              "name": "JiraTicketAction",
-              "type": "JiraTicketAction",
+              "name": "JiraIssueProperty",
+              "type": "JiraIssueProperty",
               "confirmationRequired": false,
               "elicitationRequired": true,
               "prompts": {
-                "elicitation": "JiraTicketAction.Elicit.1"
+                "elicitation": "JiraIssueProperty.Elicit.1"
               },
               "validations": [
                 {
                   "type": "hasEntityResolutionMatch",
-                  "prompt": "JiraTicketAction.Validation.1"
+                  "prompt": "JiraIssueProperty.Validation.1"
                 }
               ]
             },
@@ -383,7 +388,7 @@
     },
     "prompts": [
       {
-        "id": "JiraTicketAction.Elicit.1",
+        "id": "JiraIssueProperty.Elicit.1",
         "variations": [
           {
             "type": "PlainText",
@@ -410,11 +415,11 @@
         ]
       },
       {
-        "id": "JiraTicketAction.Validation.1",
+        "id": "JiraIssueProperty.Validation.1",
         "variations": [
           {
             "type": "PlainText",
-            "value": "{JiraTicketAction} verstehe ich nicht."
+            "value": "{JiraIssueProperty} verstehe ich nicht."
           }
         ]
       },

@@ -14,8 +14,8 @@
                                 "name": "JiraTicketIdentifier",
                                 "confirmationStatus": "NONE"
                             },
-                            "JiraTicketAction": {
-                                "name": "JiraTicketAction",
+                            "JiraIssueProperty": {
+                                "name": "JiraIssueProperty",
                                 "confirmationStatus": "NONE"
                             },
                             "JiraTicketNumber": {

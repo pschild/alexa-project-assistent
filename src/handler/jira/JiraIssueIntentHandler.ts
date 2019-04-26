@@ -24,10 +24,10 @@ export default class JiraIssueIntentHandler {
             }
         }
 
-        const ticketActionValue = request.slot('JiraTicketAction');
+        const issueProperty = request.slot('JiraIssueProperty');
         const ticketIdentifierValue = request.slot('JiraTicketIdentifier') || request.getSession().get('jiraTicketId');
         const ticketNumberValue = request.slot('JiraTicketNumber') || request.getSession().get('jiraTicketNo');
-        console.log(ticketActionValue, ticketIdentifierValue, ticketNumberValue);
+        console.log(issueProperty, ticketIdentifierValue, ticketNumberValue);
 
         const issue: JiraIssue = await this.controller
             .getIssue(`${ticketIdentifierValue}-${ticketNumberValue}`)
@@ -48,14 +48,14 @@ export default class JiraIssueIntentHandler {
         request.getSession().set('jiraTicketId', ticketIdentifierValue);
         request.getSession().set('jiraTicketNo', ticketNumberValue);
 
-        if (ticketActionValue === 'bearbeiter') {
+        if (issueProperty === 'bearbeiter') {
             response.say(this.addAssigneeSpeech(issue));
             response.directive(this.addAssigneeDisplay(issue));
-        } else if (ticketActionValue === 'titel') {
+        } else if (issueProperty === 'titel') {
             response.say(this.addTitleSpeech(issue));
-        } else if (ticketActionValue === 'zeit') {
+        } else if (issueProperty === 'zeit') {
             response.say(this.addEstimationSpeech(issue));
-        } else if (ticketActionValue === 'zusammenfassung') {
+        } else if (issueProperty === 'zusammenfassung') {
             response.say(this.addAssigneeSpeech(issue));
             response.say(this.addTitleSpeech(issue));
             response.say(this.addEstimationSpeech(issue));

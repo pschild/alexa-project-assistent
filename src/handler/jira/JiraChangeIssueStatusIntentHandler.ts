@@ -14,7 +14,7 @@ import {
     ISlotElicitationResult
 } from '../handlerUtils';
 import { IssueTransitionStatus } from '../../endpoint/jira/domain/enum';
-import { buildErrorNotification } from '../../apl/datasources';
+import { buildErrorNotification, buildSuccessNotification } from '../../apl/datasources';
 
 export default class JiraChangeIssueStatusIntentHandler {
 
@@ -113,7 +113,16 @@ export default class JiraChangeIssueStatusIntentHandler {
                 } else if (this.intentConfirmationResult.status === ConfirmationStatus.CONFIRMED) { // intent confirmed!
                     this.issueKeysToChange.push(...subtasks.map(subtask => subtask.key));
                     await this.changeStatusOfIssues(this.issueKeysToChange, IssueTransitionStatus.DONE);
-                    return response.say(`OK, ich habe ticket und unteraufgaben geschlossen`);
+                    return response
+                        .say(
+                            `OK, ich habe ${sayJiraTicket(this.identifierValue, this.numberValue)} `
+                            + `und ${subtasks.length} Unteraufgaben geschlossen`
+                        )
+                        .directive(
+                            buildSuccessNotification(
+                                '',
+                                `${this.identifierValue}-${this.numberValue} und ${subtasks.length} Unteraufgaben geschlossen!`)
+                        );
                 } else { // intent denied
                     return response.say(`OK, dann nicht`);
                 }
@@ -128,7 +137,9 @@ export default class JiraChangeIssueStatusIntentHandler {
                 .shouldEndSession(false);
         } else if (this.intentConfirmationResult.status === ConfirmationStatus.CONFIRMED) { // intent confirmed!
             await this.changeStatusOfIssues(this.issueKeysToChange, IssueTransitionStatus.DONE);
-            return response.say(`OK, ich habe ticket geschlossen`);
+            return response
+                .say(`OK, ich habe ticket geschlossen`)
+                .directive(buildSuccessNotification('', `${this.identifierValue}-${this.numberValue} geschlossen!`));
         } else { // intent denied
             return response.say(`OK, dann nicht`);
         }
@@ -157,10 +168,16 @@ export default class JiraChangeIssueStatusIntentHandler {
                 } else if (this.intentConfirmationResult.status === ConfirmationStatus.CONFIRMED) { // intent confirmed
                     this.issueKeysToChange.push(parent.key);
                     await this.changeStatusOfIssues(this.issueKeysToChange, IssueTransitionStatus.IN_PROGRESS);
-                    return response.say(
-                        `Ich habe ${sayJiraTicket(this.identifierValue, this.numberValue)} `
-                        + `und das übergeordnete Ticket ${sayJiraTicket(parent.key)} in Bearbeitung genommen.`
-                    );
+                    return response
+                        .say(
+                            `Ich habe ${sayJiraTicket(this.identifierValue, this.numberValue)} `
+                            + `und das übergeordnete Ticket ${sayJiraTicket(parent.key)} in Bearbeitung genommen.`
+                        )
+                        .directive(
+                            buildSuccessNotification(
+                                '',
+                                `${this.identifierValue}-${this.numberValue} und ${parent.key} in Bearbeitung genommen!`)
+                        );
                 } else { // intent denied
                     return response.say(`OK, dann nicht`);
                 }
@@ -175,7 +192,9 @@ export default class JiraChangeIssueStatusIntentHandler {
                 .shouldEndSession(false);
         } else if (this.intentConfirmationResult.status === ConfirmationStatus.CONFIRMED) { // intent confirmed
             await this.changeStatusOfIssues(this.issueKeysToChange, IssueTransitionStatus.IN_PROGRESS);
-            return response.say(`OK, ich habe ${sayJiraTicket(this.identifierValue, this.numberValue)} in Bearbeitung genommen.`);
+            return response
+                .say(`OK, ich habe ${sayJiraTicket(this.identifierValue, this.numberValue)} in Bearbeitung genommen.`)
+                .directive(buildSuccessNotification('', `${this.identifierValue}-${this.numberValue} in Bearbeitung genommen!`));
         } else { // intent denied
             return response.say(`OK, dann nicht`);
         }

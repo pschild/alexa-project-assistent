@@ -109,19 +109,25 @@ export class JiraEndpointController extends EndpointController {
                 + `?rapidViewId=${rapidViewId}&sprintId=${sprintId}&statisticFieldId=field_timeestimate`
         });
 
-        const sprintStartTs = result.startTime;
-        const nowTs = result.now;
-        const sprintCompleteTs = result.completeTime;
-        const sprintEndTs = result.endTime;
+        return this.parseBurndownChartData(result);
+    }
+
+    private parseBurndownChartData(data) {
+        const sprintStartTs = data.startTime;
+        const nowTs = data.now;
+        const sprintCompleteTs = data.completeTime;
+        const sprintEndTs = data.endTime;
 
         const keyTimeMap = [];
-        for (const ts of Object.keys(result.changes)) {
-            const entries = result.changes[ts];
+        for (const ts of Object.keys(data.changes)) {
+            const entries = data.changes[ts];
             entries.forEach(entry => {
                 if (+ts < sprintStartTs) {
                     const existingEntry = keyTimeMap.find(e => e.key === entry.key);
                     if (existingEntry) {
-                        existingEntry.time = entry.timeC ? entry.timeC.newEstimate : 0;
+                        if (entry.timeC) {
+                            existingEntry.time = entry.timeC.newEstimate;
+                        }
                     } else {
                         keyTimeMap.push({
                             key: entry.key,
@@ -134,23 +140,25 @@ export class JiraEndpointController extends EndpointController {
         }
         // console.log(keyTimeMap);
 
-        const graphEntries = [];
+        const burndownData = [];
         let rte = 0;
+        let sprintStartRte = 0;
         let sprintCompleteRte = 0;
         let afterStart = false;
         let afterComplete = false;
-        for (const ts of Object.keys(result.changes)) {
+        for (const ts of Object.keys(data.changes)) {
             if (+ts >= sprintStartTs && !afterStart) {
                 console.log('SPRINT START');
                 afterStart = true;
-                graphEntries.push({ key: sprintStartTs, value: rte });
+                sprintStartRte = rte;
+                burndownData.push({ key: sprintStartTs, value: rte });
             } else if (+ts >= sprintCompleteTs && !afterComplete) {
                 console.log('SPRINT COMPLETE');
                 afterComplete = true;
                 sprintCompleteRte = rte;
-                graphEntries.push({ key: sprintCompleteTs, value: rte });
+                burndownData.push({ key: sprintCompleteTs, value: rte });
             }
-            const entries = result.changes[ts];
+            const entries = data.changes[ts];
             entries.forEach(entry => {
                 const fromMap = keyTimeMap.find(e => e.key === entry.key);
                 if (fromMap) {
@@ -158,14 +166,14 @@ export class JiraEndpointController extends EndpointController {
                         rte += fromMap.time;
                         fromMap.added = true;
                         if (afterStart && !afterComplete) {
-                            graphEntries.push({ key: +ts, value: rte });
+                            burndownData.push({ key: +ts, value: rte });
                         }
                         console.log(`added ${entry.key} to sprint: ${fromMap.time}\trte=${rte}`);
                     } else if (entry.added === false && fromMap.added === true) {
                         rte -= fromMap.time;
                         fromMap.added = false;
                         if (afterStart && !afterComplete) {
-                            graphEntries.push({ key: +ts, value: rte });
+                            burndownData.push({ key: +ts, value: rte });
                         }
                         console.log(`removed ${entry.key} from sprint: -${fromMap.time}\trte=${rte}`);
                     } else if (entry.timeC) {
@@ -175,22 +183,22 @@ export class JiraEndpointController extends EndpointController {
                             const diff = newEstimate - oldEstimate;
                             rte += diff;
                             if (afterStart && !afterComplete) {
-                                graphEntries.push({ key: +ts, value: rte });
+                                burndownData.push({ key: +ts, value: rte });
                             }
                             console.log(`changed ${entry.key}: ${diff}\trte=${rte}`);
                         }
                         fromMap.time = newEstimate;
                     }
                 } else {
+                    console.log(`added ${entry.key} AFTER sprint started`);
                     if (entry.timeC) {
-                        console.log(`added ${entry.key} AFTER sprint started`);
                         const time = entry.timeC.newEstimate || 0;
                         let isAdded = false;
                         if (entry.added === true) {
                             isAdded = true;
                             rte += time;
                             if (afterStart && !afterComplete) {
-                                graphEntries.push({ key: +ts, value: rte });
+                                burndownData.push({ key: +ts, value: rte });
                             }
                             console.log(`added ${entry.key} to sprint: ${time}\trte=${rte}`);
                         }
@@ -199,21 +207,32 @@ export class JiraEndpointController extends EndpointController {
                             time,
                             added: isAdded
                         });
+                    } else if (entry.added === true) {
+                        keyTimeMap.push({
+                            key: entry.key,
+                            time: 0,
+                            added: true
+                        });
                     }
                 }
             });
         }
 
         if (sprintCompleteTs) {
-            graphEntries.push({ key: sprintCompleteTs, value: sprintCompleteRte });
-            graphEntries.push({ key: sprintCompleteTs, value: undefined });
-            graphEntries.push({ key: sprintEndTs, value: undefined });
+            burndownData.push({ key: sprintCompleteTs, value: sprintCompleteRte });
+            burndownData.push({ key: sprintCompleteTs, value: undefined });
+            burndownData.push({ key: sprintEndTs, value: undefined });
         } else {
-            graphEntries.push({ key: nowTs, value: rte });
-            graphEntries.push({ key: nowTs, value: undefined });
-            graphEntries.push({ key: sprintEndTs, value: undefined });
+            burndownData.push({ key: nowTs, value: rte });
+            burndownData.push({ key: nowTs, value: undefined });
+            burndownData.push({ key: sprintEndTs, value: undefined });
         }
 
-        return graphEntries;
+        const idealData = [
+            { key: sprintStartTs, value: sprintStartRte },
+            { key: sprintEndTs, value: 0 }
+        ];
+
+        return { burndownData, idealData };
     }
 }

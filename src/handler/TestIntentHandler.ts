@@ -24,19 +24,19 @@ export default class TestIntentHandler {
 
     public async handle(request, response): Promise<any> {
         return this.getBdc();
+        // return this.getXrayStatus();
     }
 
     private async getBdc() {
-        const burndownData = (await this.jiraController.getBurndownData(50, 54))
-            .map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
-        const idealData = [
-            { key: 1553857260000, value: 892800 },
-            { key: 1555002000000, value: 0 }
-        ].map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
+        let { burndownData, idealData } = await this.jiraController.getBurndownData(48, 58);
+        burndownData = burndownData.map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
+        idealData = idealData.map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
+
         const chartData: ILineChartDataItem[] = [
             { name: 'burndownData', values: burndownData, isStepped: true },
             { name: 'idealData', values: idealData }
         ];
+
         const chartUrl = await this.lineChartController
             .setLineColors(['#d04437', '#999'])
             .generateChart(chartData).catch((e) => {

@@ -1,4 +1,4 @@
-import { get } from 'request-promise';
+import { get, post } from 'request-promise';
 import { CoreOptions, UriOptions, Headers } from 'request';
 import AppState from '../app/state/AppState';
 import { Inject } from 'typescript-ioc';
@@ -40,6 +40,11 @@ export class EndpointController {
     public async get(givenOptions: Partial<CoreOptions & UriOptions>) {
         const options = Object.assign(this.getDefaultOptions(), givenOptions);
         return await get(options);
+    }
+
+    public async post(givenOptions: Partial<CoreOptions & UriOptions>) {
+        const options = Object.assign(this.getDefaultOptions(), givenOptions);
+        return await post(options);
     }
 
     private getDefaultOptions(): CoreOptions & UriOptions {

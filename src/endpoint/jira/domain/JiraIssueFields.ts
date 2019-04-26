@@ -4,6 +4,7 @@ import { JiraIssueTimetracking } from './JiraIssueTimetracking';
 import { JiraIssueTestCoverage } from './JiraIssueTestCoverage';
 import { CF_TEST_COVERAGE } from './constants';
 import { IssueType, IssueStatus, IssuePriority } from './enum';
+import { JiraIssue } from './JiraIssue';
 
 export class JiraIssueFields {
     issuetype: {id: string, name: IssueType};
@@ -18,9 +19,14 @@ export class JiraIssueFields {
     @Type(() => JiraIssueTimetracking)
     timetracking: JiraIssueTimetracking;
 
-    // @Type(() => String)
     labels: string[];
 
     @Type(() => JiraIssueTestCoverage)
     [CF_TEST_COVERAGE]: JiraIssueTestCoverage[];
+
+    @Type(() => JiraIssue)
+    parent: JiraIssue;
+
+    @Type(() => JiraIssue)
+    subtasks: JiraIssue[];
 }

@@ -6,7 +6,7 @@ import { AutoWired, Singleton } from 'typescript-ioc';
 // import * as path from 'path';
 // import { existsSync } from 'fs';
 // import { NotificationType, Notification } from '../../app/state/NotificationState';
-import { IssueType, IssueStatus, SprintStatus } from './domain/enum';
+import { IssueType, IssueStatus, SprintStatus, IssueTransitionStatus } from './domain/enum';
 import { JiraIssueSearchResult } from './domain/JiraIssueSearchResult';
 import { JiraSprint } from './domain/JiraSprint';
 import { JiraTestRun } from './domain/JiraTestRun';
@@ -16,9 +16,6 @@ import { JiraTestRun } from './domain/JiraTestRun';
 export class JiraEndpointController extends EndpointController {
 
     public static API_VERSION: number = 2;
-
-    // TODO: extract to MediaController (?)
-    // public static SCREENSHOT_FORMAT: string = 'png';
 
     public config(baseUrl?: string, username?: string, password?: string) {
         return super.config(
@@ -101,6 +98,17 @@ export class JiraEndpointController extends EndpointController {
         });
         const testRuns: JiraTestRun[] = (result as JiraTestRun[]).map((run) => plainToClass(JiraTestRun, run));
         return testRuns.length ? testRuns[testRuns.length - 1] : undefined;
+    }
+
+    public async changeIssueStatus(identifier: string, newStatus: IssueTransitionStatus): Promise<any> {
+        return await this.post({
+            uri: `${this.baseUrl}rest/api/${JiraEndpointController.API_VERSION}/issue/${identifier}/transitions`,
+            body: {
+                transition: {
+                    id: newStatus
+                }
+            }
+        });
     }
 
     public async getBurndownData(rapidViewId: number, sprintId: number): Promise<any> {

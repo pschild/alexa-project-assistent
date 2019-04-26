@@ -45,4 +45,12 @@ export class JiraIssue {
                 throw new Error(`Unknwon status of jira ticket ${this.key}: ${this.fields.status.name}`);
         }
     }
+
+    getParent(): JiraIssue {
+        return this.fields.parent;
+    }
+
+    getSubtasks(): JiraIssue[] {
+        return this.fields.subtasks;
+    }
 }

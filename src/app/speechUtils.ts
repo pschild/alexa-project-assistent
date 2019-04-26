@@ -21,7 +21,12 @@ export const pause = (ms: number): string => {
     return new Speech().pause(`${ms}ms`).ssml(true);
 };
 
-export const sayJiraTicket = (ticketIdentifier: string, ticketNumber: string): string => {
+export const sayJiraTicket = (ticketIdentifier: string, ticketNumber?: string): string => {
+    if (!ticketNumber) {
+        const parts = ticketIdentifier.split('-');
+        ticketIdentifier = parts[0];
+        ticketNumber = parts[1];
+    }
     return new Speech()
         .sayAs({
             interpret: 'characters',

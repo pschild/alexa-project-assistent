@@ -28,6 +28,7 @@ import AggregateIntentHandler from '../handler/AggregateIntentHandler';
 import ProjectDashboardIntentHandler from '../handler/ProjectDashboardIntentHandler';
 import JiraXrayStatusIntentHandler from '../handler/jira/JiraXrayStatusIntentHandler';
 import TestIntentHandler from '../handler/TestIntentHandler';
+import JiraChangeIssueStatusIntentHandler from '../handler/jira/JiraChangeIssueStatusIntentHandler';
 
 dotenv.config();
 
@@ -86,6 +87,7 @@ alexaApp.post = (request: alexa.request, response: alexa.response, type: string,
 };
 
 const jiraIssueIntentHandler: JiraIssueIntentHandler = Container.get(JiraIssueIntentHandler);
+const jiraChangeIssueStatusIntentHandler: JiraChangeIssueStatusIntentHandler = Container.get(JiraChangeIssueStatusIntentHandler);
 const jiraXrayStatusIntentHandler: JiraXrayStatusIntentHandler = Container.get(JiraXrayStatusIntentHandler);
 const jiraChartIntentHandler: JiraChartIntentHandler = Container.get(JiraChartIntentHandler);
 const timeoutHandler: TimeoutHandler = Container.get(TimeoutHandler);
@@ -112,6 +114,9 @@ alexaApp.intent('ProjectDashboardIntent', projectDashboardIntentHandler.handle.b
 
 // 'starte pm assistent und öffne jira ticket'
 alexaApp.intent('JiraIssueIntent', jiraIssueIntentHandler.handle.bind(jiraIssueIntentHandler));
+
+// 'starte pm assistent und schließe jira ticket'
+alexaApp.intent('JiraChangeIssueStatusIntent', jiraChangeIssueStatusIntentHandler.handle.bind(jiraChangeIssueStatusIntentHandler));
 
 // 'starte pm assistent und teststatus INK 42'
 alexaApp.intent('JiraXrayStatusIntent', jiraXrayStatusIntentHandler.handle.bind(jiraXrayStatusIntentHandler));

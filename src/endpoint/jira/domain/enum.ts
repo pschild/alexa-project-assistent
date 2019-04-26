@@ -15,6 +15,12 @@ export enum IssuePriority {
     LOWEST = 'Lowest'
 }
 
+export enum IssueTransitionStatus {
+    TODO = 11,
+    IN_PROGRESS = 21,
+    DONE = 31
+}
+
 export enum IssueStatus {
     OPEN = 'Offen',
     NEW = 'Neu',

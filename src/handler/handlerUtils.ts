@@ -52,7 +52,18 @@ export const elicitSlot = (
                 };
             }
         } else {
-            return { status: ElicitationStatus.SUCCESS, value: slot.value };
+            if (slot.value === '?') {
+                return {
+                    status: ElicitationStatus.MISSING,
+                    directive: {
+                        type: 'Dialog.ElicitSlot',
+                        slotToElicit: slotName,
+                        updatedIntent
+                    }
+                };
+            } else {
+                return { status: ElicitationStatus.SUCCESS, value: slot.value };
+            }
         }
     } else {
         return {

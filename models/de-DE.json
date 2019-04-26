@@ -115,6 +115,36 @@
           ]
         },
         {
+          "name": "JiraChangeIssueStatusIntent",
+          "slots": [
+            {
+              "name": "JiraIssueStatus",
+              "type": "JiraIssueStatus",
+              "samples": [
+                "{JiraIssueStatus}"
+              ]
+            },
+            {
+              "name": "JiraTicketIdentifier",
+              "type": "JiraTicketIdentifier",
+              "samples": [
+                "ticket {JiraTicketIdentifier}",
+                "{JiraTicketIdentifier}"
+              ]
+            },
+            {
+              "name": "JiraTicketNumber",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "{JiraTicketNumber}"
+              ]
+            }
+          ],
+          "samples": [
+            "ändere den status von {JiraTicketIdentifier} {JiraTicketNumber} auf {JiraIssueStatus}"
+          ]
+        },
+        {
           "name": "JiraXrayStatusIntent",
           "slots": [
             {
@@ -271,6 +301,25 @@
             {
               "name": {
                 "value": "AX"
+              }
+            }
+          ]
+        },
+        {
+          "name": "JiraIssueStatus",
+          "values": [
+            {
+              "id": "close",
+              "name": {
+                "value": "schließe",
+                "synonyms": ["schließen", "geschlossen", "erledigt", "erledige", "fertig", "done"]
+              }
+            },
+            {
+              "id": "in_progress",
+              "name": {
+                "value": "starte",
+                "synonyms": ["bearbeite", "in arbeit setzen", "starte die arbeit", "nimm in bearbeitung", "in bearbeitung"]
               }
             }
           ]

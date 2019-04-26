@@ -5,7 +5,7 @@ import { Inject } from 'typescript-ioc';
 import { PieChartController, IPieChartDataItem } from '../media/PieChartController';
 import { HandlerError } from '../error/HandlerError';
 import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
-import { LineChartController } from '../media/LineChartController';
+import { LineChartController, ILineChartDataItem } from '../media/LineChartController';
 
 export default class DisplayTestIntentHandler {
 
@@ -25,8 +25,15 @@ export default class DisplayTestIntentHandler {
         //     throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
         // });
 
-        const burndownData = await this.jiraController.getBurndownData(48, 58);
-        const chartData = burndownData.map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
+        let { burndownData, idealData } = await this.jiraController.getBurndownData(48, 58);
+        burndownData = burndownData.map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
+        idealData = idealData.map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
+
+        const chartData: ILineChartDataItem[] = [
+            { name: 'burndownData', values: burndownData, isStepped: true },
+            { name: 'idealData', values: idealData }
+        ];
+
         const chartUrl = await this.lineChartController.generateChart(chartData).catch((e) => {
             throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
         });

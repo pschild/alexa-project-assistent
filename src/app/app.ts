@@ -148,6 +148,23 @@ alexaApp.on('Alexa.Presentation.APL.UserEvent', (request: alexa.request, respons
             default:
                 return response.say(`Diese Hilfe ist noch nicht implementiert.`);
         }
+    } else if (action === 'XRayTestSelected') {
+        return request.getRouter().intent('DisplayTestIntent');
+        // return response
+        //     .directive({
+        //         type: 'Dialog.Delegate',
+        //         updatedIntent: {
+        //             name: 'JiraXRayTestDetailsIntent',
+        //             confirmationStatus: 'NONE',
+        //             slots: {
+        //                 Nummer: {
+        //                     name: 'Nummer',
+        //                     value: '999'
+        //                 }
+        //             }
+        //           }
+        //     })
+        //     .say(`${selectedItemIdentifier} ausgewählt`);
     }
 });
 

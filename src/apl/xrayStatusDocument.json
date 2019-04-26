@@ -25,15 +25,43 @@
                     "direction": "row",
                     "items": [
                         {
-                            "type": "Image",
-                            "width": "50",
-                            "height": "50",
-                            "source": "${iconUrl}"
+                            "type": "TouchWrapper",
+                            "onPress": [
+                                {
+                                    "type": "SendEvent",
+                                    "arguments": [
+                                        "XRayTestSelected",
+                                        "${label}"
+                                    ]
+                                }
+                            ],
+                            "item": [
+                                {
+                                    "type": "Image",
+                                    "width": "50",
+                                    "height": "50",
+                                    "source": "${iconUrl}"
+                                }
+                            ]
                         },
                         {
-                            "type": "Text",
-                            "paddingLeft": "20",
-                            "text": "${label}"
+                            "type": "TouchWrapper",
+                            "onPress": [
+                                {
+                                    "type": "SendEvent",
+                                    "arguments": [
+                                        "XRayTestSelected",
+                                        "${label}"
+                                    ]
+                                }
+                            ],
+                            "item": [
+                                {
+                                    "type": "Text",
+                                    "paddingLeft": "20",
+                                    "text": "${label}"
+                                }
+                            ]
                         }
                     ]
                 }

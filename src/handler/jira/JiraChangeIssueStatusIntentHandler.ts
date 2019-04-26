@@ -3,9 +3,8 @@ import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointControll
 import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
 import { Inject } from 'typescript-ioc';
 import { HandlerError } from '../../error/HandlerError';
-import { buildErrorNotification } from '../../apl/datasources';
-import { sayJiraTicket, pause, sayAsDuration } from '../../app/speechUtils';
-import { elicitSlot, ElicitationStatus, confirmSlot, ConfirmationStatus } from '../handlerUtils';
+import { sayJiraTicket } from '../../app/speechUtils';
+import { elicitSlot, ElicitationStatus, confirmSlot, ConfirmationStatus, confirmIntent } from '../handlerUtils';
 import { IssueTransitionStatus } from '../../endpoint/jira/domain/enum';
 
 export default class JiraChangeIssueStatusIntentHandler {
@@ -14,6 +13,7 @@ export default class JiraChangeIssueStatusIntentHandler {
     private controller: JiraEndpointController;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
+        const intentConfirmationResult = confirmIntent(request);
         const identifierElicitationResult = elicitSlot(request, 'JiraTicketIdentifier', true);
         const numberElicitationResult = elicitSlot(request, 'JiraTicketNumber');
         const newStatusElicitationResult = elicitSlot(request, 'JiraIssueStatus', true);
@@ -28,6 +28,7 @@ export default class JiraChangeIssueStatusIntentHandler {
                 throw new HandlerError(`Du kannst momentan nur Tickets mit der Bezeichnung A.X. ändern.`);
             }
         }
+        const identifierValue = identifierElicitationResult.value;
 
         if (numberElicitationResult.status !== ElicitationStatus.SUCCESS) {
             return response
@@ -35,19 +36,19 @@ export default class JiraChangeIssueStatusIntentHandler {
                 .directive(numberElicitationResult.directive)
                 .shouldEndSession(false);
         }
+        const numberValue = numberElicitationResult.value;
 
         if (newStatusElicitationResult.status !== ElicitationStatus.SUCCESS) {
             return response
-                .say(`Was ist damit?`)
+                .say(`In welchen Status soll ich ${sayJiraTicket(identifierValue, numberValue)}`)
                 .directive(newStatusElicitationResult.directive)
                 .shouldEndSession(false);
         }
+        const newStatusValue = request.slots.JiraIssueStatus.resolution().first().id;
 
-        const identifierValue = identifierElicitationResult.value;
-        const numberValue = numberElicitationResult.value;
-        const actionValue = request.slots.JiraIssueStatus.resolution().first().id;
         const issue: JiraIssue = await this.controller.getIssue(`${identifierValue}-${numberValue}`);
-        switch (actionValue) {
+        const issueKeysToChange = [`${identifierValue}-${numberValue}`];
+        switch (newStatusValue) {
             case 'close':
                 const subtasks: JiraIssue[] = issue.getSubtasks();
                 if (subtasks.length > 0) {
@@ -63,18 +64,34 @@ export default class JiraChangeIssueStatusIntentHandler {
                             .shouldEndSession(false);
 
                     } else if (subtaskConfirmation.status === ConfirmationStatus.CONFIRMED) {
-                        await this.controller.changeIssueStatus(`${identifierValue}-${numberValue}`, IssueTransitionStatus.DONE);
-                        await Promise.all(
-                            subtasks.map(subtask => this.controller.changeIssueStatus(subtask.key, IssueTransitionStatus.DONE))
-                        );
-                        return response
-                            .say(`Ich habe ${sayJiraTicket(identifierValue, numberValue)} und die Untertickets geschlossen.`);
+                        if (intentConfirmationResult.status === ConfirmationStatus.NONE) {
+                            return response
+                                .say(`Ich schließe ${sayJiraTicket(identifierValue, numberValue)} und die Untertickets.`)
+                                .say(`Sicher?`)
+                                .directive(intentConfirmationResult.directive)
+                                .shouldEndSession(false);
+                        } else if (intentConfirmationResult.status === ConfirmationStatus.CONFIRMED) {
+                            issueKeysToChange.push(...subtasks.map(subtask => subtask.key));
+                            await this.changeStatusOfIssues(issueKeysToChange, IssueTransitionStatus.DONE);
+                            return response.say(`OK, ich habe ticket und unteraufgaben geschlossen`);
+                        } else {
+                            return response.say(`OK, dann nicht`);
+                        }
                     }
                 }
 
-                await this.controller.changeIssueStatus(`${identifierValue}-${numberValue}`, IssueTransitionStatus.DONE);
-                return response
-                    .say(`Ich habe ${sayJiraTicket(identifierValue, numberValue)} geschlossen.`);
+                if (intentConfirmationResult.status === ConfirmationStatus.NONE) {
+                    return response
+                        .say(`Ich schließe nur ${sayJiraTicket(identifierValue, numberValue)}.`)
+                        .say(`Sicher?`)
+                        .directive(intentConfirmationResult.directive)
+                        .shouldEndSession(false);
+                } else if (intentConfirmationResult.status === ConfirmationStatus.CONFIRMED) {
+                    await this.changeStatusOfIssues(issueKeysToChange, IssueTransitionStatus.DONE);
+                    return response.say(`OK, ich habe ticket geschlossen`);
+                } else {
+                    return response.say(`OK, dann nicht`);
+                }
 
             case 'in_progress':
                 const parent: JiraIssue = issue.getParent();
@@ -87,21 +104,48 @@ export default class JiraChangeIssueStatusIntentHandler {
                             .shouldEndSession(false);
 
                     } else if (parentConfirmation.status === ConfirmationStatus.CONFIRMED) {
-                        await this.controller.changeIssueStatus(`${identifierValue}-${numberValue}`, IssueTransitionStatus.IN_PROGRESS);
-                        await this.controller.changeIssueStatus(parent.key, IssueTransitionStatus.IN_PROGRESS);
-                        return response
-                            .say(
+                        if (intentConfirmationResult.status === ConfirmationStatus.NONE) {
+                            return response
+                                .say(
+                                    `Ich nehme ${sayJiraTicket(identifierValue, numberValue)} `
+                                    + `und das übergeordnete Ticket ${sayJiraTicket(parent.key)} in Bearbeitung. `
+                                    + `Sicher?`
+                                )
+                                .directive(intentConfirmationResult.directive)
+                                .shouldEndSession(false);
+                        } else if (intentConfirmationResult.status === ConfirmationStatus.CONFIRMED) {
+                            issueKeysToChange.push(parent.key);
+                            await this.changeStatusOfIssues(issueKeysToChange, IssueTransitionStatus.IN_PROGRESS);
+                            return response.say(
                                 `Ich habe ${sayJiraTicket(identifierValue, numberValue)} `
                                 + `und das übergeordnete Ticket ${sayJiraTicket(parent.key)} in Bearbeitung genommen.`
                             );
+                        } else {
+                            return response.say(`OK, dann nicht`);
+                        }
                     }
                 }
 
-                await this.controller.changeIssueStatus(`${identifierValue}-${numberValue}`, IssueTransitionStatus.IN_PROGRESS);
-                return response
-                    .say(`Ich habe ${sayJiraTicket(identifierValue, numberValue)} in Bearbeitung genommen.`);
+                if (intentConfirmationResult.status === ConfirmationStatus.NONE) {
+                    return response
+                        .say(`Ich nehme ${sayJiraTicket(identifierValue, numberValue)} in Bearbeitung.`)
+                        .say(`Sicher?`)
+                        .directive(intentConfirmationResult.directive)
+                        .shouldEndSession(false);
+                } else if (intentConfirmationResult.status === ConfirmationStatus.CONFIRMED) {
+                    await this.changeStatusOfIssues(issueKeysToChange, IssueTransitionStatus.IN_PROGRESS);
+                    return response.say(`OK, ich habe ${sayJiraTicket(identifierValue, numberValue)} in Bearbeitung genommen.`);
+                } else {
+                    return response.say(`OK, dann nicht`);
+                }
             default:
                 throw new HandlerError(`Unbekannter Status.`);
         }
+    }
+
+    private async changeStatusOfIssues(issueKeys: string[], newStatus: IssueTransitionStatus) {
+        return Promise.all(
+            issueKeys.map(key => this.controller.changeIssueStatus(key, newStatus))
+        );
     }
 }

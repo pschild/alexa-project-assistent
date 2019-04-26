@@ -23,6 +23,11 @@ export interface ISlotConfirmationResult {
     directive?: any;
 }
 
+export interface IIntentConfirmationResult {
+    status: ConfirmationStatus;
+    directive?: any;
+}
+
 export const elicitSlot = (
     request: alexa.request,
     slotName: string,
@@ -101,6 +106,28 @@ export const confirmSlot = (request: alexa.request, slotName: string): ISlotConf
                     slotToElicit: slotName,
                     updatedIntent
                 }
+            };
+        }
+    }
+};
+
+export const confirmIntent = (request: alexa.request): IIntentConfirmationResult => {
+    const updatedIntent = request.data.request.intent;
+
+    if (request.isConfirmed()) {
+        return { status: ConfirmationStatus.CONFIRMED };
+    } else {
+        if (request.confirmationStatus === 'NONE') {
+            return {
+                status: ConfirmationStatus.NONE,
+                directive: {
+                    type: 'Dialog.ConfirmIntent',
+                    updatedIntent
+                }
+            };
+        } else if (request.confirmationStatus === 'DENIED') {
+            return {
+                status: ConfirmationStatus.DENIED
             };
         }
     }

@@ -177,6 +177,13 @@
           ]
         },
         {
+          "name": "JiraSprintProgressIntent",
+          "slots": [],
+          "samples": [
+            "zeige den sprint fortschritt"
+          ]
+        },
+        {
           "name": "JiraChartIntent",
           "slots": [
             {

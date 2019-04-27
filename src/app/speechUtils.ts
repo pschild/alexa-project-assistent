@@ -5,7 +5,20 @@ export const sayInEnglish = (text: string): string => {
     return `<lang xml:lang="en-US">${text}</lang>`;
 };
 
-export const sayAsDecimal = (decNumber: number): string => {
+export const sayAsDate = (date: Date): string => {
+    return new Speech()
+        .sayAs({
+            interpret: 'date',
+            format: 'dmy',
+            word: `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
+        })
+        .ssml(true);
+};
+
+export const sayAsDecimal = (decNumber: number | string): string => {
+    if (typeof decNumber === 'string') {
+        decNumber = +decNumber;
+    }
     return decNumber.toString().replace('.', ',');
 };
 
@@ -32,7 +45,7 @@ export const sayJiraTicket = (ticketIdentifier: string, ticketNumber?: string): 
             interpret: 'characters',
             word: ticketIdentifier
         })
-        .pause('20ms')
+        .pause('10ms')
         .sayAs({
             interpret: 'digits',
             word: ticketNumber

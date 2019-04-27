@@ -27,6 +27,17 @@ export interface IDashboardDocumentPayload {
     q4: { imageUrl: string; };
 }
 
+export interface ISprintProgressDocumentPayload {
+    backgroundImageUrl?: string;
+    sprintName: string;
+    sprintGoal?: string;
+    sprintFrom: string;
+    sprintTo: string;
+    workableIssuesProgressImageUrl: string;
+    timeProgressImageUrl: string;
+    taskProgressImageUrl: string;
+}
+
 export interface ITouchableTextDocumentPayload {
     text: string;
 }
@@ -83,6 +94,15 @@ export const buildDashboardDirective = (data: IDashboardDocumentPayload) => {
         type: 'Alexa.Presentation.APL.RenderDocument',
         token: 'dashboardDocument',
         document: require(`@apl/dashboardDocument.json`),
+        datasources: { data }
+    };
+};
+
+export const buildSprintProgressDirective = (data: ISprintProgressDocumentPayload) => {
+    return {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'sprintProgressDocument',
+        document: require(`@apl/sprintProgressDocument.json`),
         datasources: { data }
     };
 };

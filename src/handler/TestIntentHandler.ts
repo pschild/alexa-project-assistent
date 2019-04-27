@@ -5,8 +5,9 @@ import { LineChartController, ILineChartDataItem } from '../media/LineChartContr
 import { BarChartController, IBarChartDataItem } from '../media/BarChartController';
 import { PieChartController, IPieChartDataItem } from '../media/PieChartController';
 import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
-import { TestRunStatus } from '../endpoint/jira/domain/enum';
+import { TestRunStatus, IssueType, IssueStatus, SwimlaneStatus } from '../endpoint/jira/domain/enum';
 import { sayJiraTicket } from '../app/speechUtils';
+import { ProgressBarChartController } from '../media/ProgressBarChartController';
 
 export default class TestIntentHandler {
 
@@ -20,12 +21,50 @@ export default class TestIntentHandler {
     private barChartController: BarChartController;
 
     @Inject
+    private progressBarChartController: ProgressBarChartController;
+
+    @Inject
     private jiraController: JiraEndpointController;
 
     public async handle(request, response): Promise<any> {
-        return this.getVel();
+        return this.getSprintProgress();
+        // return this.getVel();
         // return this.getBdc();
         // return this.getXrayStatus();
+    }
+
+    private async getSprintProgress() {
+        const activeSprint = await this.jiraController.getCurrentSprint();
+        const issuesOfSprint = await this.jiraController.getIssuesOfSprint(activeSprint.id);
+
+        const nonSubtasks = issuesOfSprint.issues.filter((i: JiraIssue) => i.fields.issuetype.name !== IssueType.SUBTASK);
+        const workableIssues = issuesOfSprint.issues.filter((i: JiraIssue) => (
+            i.fields.issuetype.name === IssueType.BUG || // Bugs
+            i.fields.issuetype.name === IssueType.SUBTASK || // Subtasks
+            (i.fields.issuetype.name === IssueType.TASK && (!i.getSubtasks() || !i.getSubtasks().length)) // Tasks without subtasks
+        ));
+
+        console.log(activeSprint);
+        console.log(issuesOfSprint.total);
+
+        const todoWorkableIssues = workableIssues.filter((i: JiraIssue) => i.getSwimlaneStatus() === SwimlaneStatus.TODO).length;
+        const doingWorkableIssues = workableIssues.filter((i: JiraIssue) => i.getSwimlaneStatus() === SwimlaneStatus.IN_PROGRESS).length;
+        const doneWorkableIssues = workableIssues.filter((i: JiraIssue) => i.getSwimlaneStatus() === SwimlaneStatus.DONE).length;
+        const sprintTaskProgress = doneWorkableIssues / workableIssues.length;
+        console.log(todoWorkableIssues, doingWorkableIssues, doneWorkableIssues);
+        console.log(sprintTaskProgress);
+
+        const sprintTimeProgress = activeSprint.getProgress();
+        console.log(sprintTimeProgress);
+
+        let sumOriginalEst = 0;
+        let sumRemainingEst = 0;
+        nonSubtasks.forEach((issue: JiraIssue) => {
+            sumOriginalEst += issue.getOriginalEstimateSeconds() || 0;
+            sumRemainingEst += issue.getRemainingEstimateSeconds() || 0;
+        });
+        const taskTimeProgress = 1 - (sumRemainingEst / sumOriginalEst);
+        console.log(taskTimeProgress);
     }
 
     private async getVel() {

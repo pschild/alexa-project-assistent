@@ -35,4 +35,14 @@ export class JiraSprint {
         const endTime = this.endDate.getTime();
         return (endTime - now) / (1000 * 60 * 60);
     }
+
+    getDurationHours(): number {
+        const startTime = this.startDate.getTime();
+        const endTime = this.endDate.getTime();
+        return (endTime - startTime) / (1000 * 60 * 60);
+    }
+
+    getProgress(): number {
+        return this.getPassedHours() / this.getDurationHours();
+    }
 }

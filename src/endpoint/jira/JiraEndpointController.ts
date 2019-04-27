@@ -86,7 +86,7 @@ export class JiraEndpointController extends EndpointController {
     public async getIssuesOfSprint(sprintId: number): Promise<JiraIssueSearchResult> {
         const result = await this.get({
             uri: `${this.baseUrl}rest/agile/1.0/sprint/${sprintId}/issue`
-                + `?fields=resolution,issuetype,assignee,status,summary,timetracking`
+                + `?fields=resolution,issuetype,assignee,status,summary,timetracking,subtasks`
                 + `&maxResults=1000`
         });
         return plainToClass(JiraIssueSearchResult, result as JiraIssueSearchResult);

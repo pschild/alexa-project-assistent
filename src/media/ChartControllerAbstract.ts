@@ -7,8 +7,9 @@ import * as svg2png from 'svg2png';
 import { IPieChartDataItem } from './PieChartController';
 import { IBarChartDataItem } from './BarChartController';
 import { ILineChartDataItem } from './LineChartController';
+import { IProgressBarChartDataItem } from './ProgressBarChartController';
 
-export type IChartDataItem = IPieChartDataItem | IBarChartDataItem | ILineChartDataItem;
+export type IChartDataItem = IPieChartDataItem | IBarChartDataItem | ILineChartDataItem | IProgressBarChartDataItem;
 
 export abstract class ChartControllerAbstract {
 

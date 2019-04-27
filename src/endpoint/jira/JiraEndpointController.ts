@@ -111,6 +111,39 @@ export class JiraEndpointController extends EndpointController {
         });
     }
 
+    public async getVelocityData(rapidViewId: number) {
+        const result = await this.get({
+            uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/velocity.json?rapidViewId=${rapidViewId}`
+        });
+        return this.parseVelocityChartData(result, 5);
+    }
+
+    private parseVelocityChartData(data: any, latestSprints: number) {
+        const allSprints = [];
+        for (const sprintId of Object.keys(data.velocityStatEntries)) {
+            const sprintData = data.velocityStatEntries[sprintId];
+            if (sprintData && sprintData.completed) {
+                const sprint = data.sprints.find(s => s.id === +sprintId);
+                if (sprint) {
+                    allSprints.push({ key: sprint.name, value: sprintData.completed.value });
+                }
+            }
+        }
+
+        const result = allSprints.slice(0, latestSprints);
+
+        let completedSum = 0;
+        let completedCounter = 0;
+        result.forEach(row => {
+            completedSum += row.value;
+            completedCounter++;
+        });
+
+        const velocity = completedSum / completedCounter;
+        result.push({ key: 'nächster Sprint', value: velocity, styles: { color: '#bbb' } });
+        return result;
+    }
+
     public async getBurndownData(rapidViewId: number, sprintId: number): Promise<any> {
         const result = await this.get({
             uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/scopechangeburndownchart.json`

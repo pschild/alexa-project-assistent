@@ -2,7 +2,7 @@ import { Inject } from 'typescript-ioc';
 import { HandlerError } from '../error/HandlerError';
 import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
 import { LineChartController, ILineChartDataItem } from '../media/LineChartController';
-import { BarChartController } from '../media/BarChartController';
+import { BarChartController, IBarChartDataItem } from '../media/BarChartController';
 import { PieChartController, IPieChartDataItem } from '../media/PieChartController';
 import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
 import { TestRunStatus } from '../endpoint/jira/domain/enum';
@@ -23,8 +23,20 @@ export default class TestIntentHandler {
     private jiraController: JiraEndpointController;
 
     public async handle(request, response): Promise<any> {
-        return this.getBdc();
+        return this.getVel();
+        // return this.getBdc();
         // return this.getXrayStatus();
+    }
+
+    private async getVel() {
+        const data: IBarChartDataItem[] = await this.jiraController.getVelocityData(48);
+        const chartData = data.map(bar => ({ key: bar.key, value: (+bar.value / 3600 / 8), styles: bar.styles}));
+        const chartUrl = await this.barChartController
+            .setYAxisUnit('PT')
+            .generateChart(chartData).catch((e) => {
+                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+            });
+        return chartUrl;
     }
 
     private async getBdc() {

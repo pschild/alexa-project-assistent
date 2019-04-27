@@ -170,6 +170,13 @@
           ]
         },
         {
+          "name": "JiraVelocityIntent",
+          "slots": [],
+          "samples": [
+            "zeige die velocity"
+          ]
+        },
+        {
           "name": "JiraChartIntent",
           "slots": [
             {

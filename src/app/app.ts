@@ -29,6 +29,7 @@ import ProjectDashboardIntentHandler from '../handler/ProjectDashboardIntentHand
 import JiraXrayStatusIntentHandler from '../handler/jira/JiraXrayStatusIntentHandler';
 import TestIntentHandler from '../handler/TestIntentHandler';
 import JiraChangeIssueStatusIntentHandler from '../handler/jira/JiraChangeIssueStatusIntentHandler';
+import JiraVelocityIntentHandler from '../handler/jira/JiraVelocityIntentHandler';
 
 dotenv.config();
 
@@ -90,6 +91,7 @@ const jiraIssueIntentHandler: JiraIssueIntentHandler = Container.get(JiraIssueIn
 const jiraChangeIssueStatusIntentHandler: JiraChangeIssueStatusIntentHandler = Container.get(JiraChangeIssueStatusIntentHandler);
 const jiraXrayStatusIntentHandler: JiraXrayStatusIntentHandler = Container.get(JiraXrayStatusIntentHandler);
 const jiraChartIntentHandler: JiraChartIntentHandler = Container.get(JiraChartIntentHandler);
+const jiraVelocityIntentHandler: JiraVelocityIntentHandler = Container.get(JiraVelocityIntentHandler);
 const timeoutHandler: TimeoutHandler = Container.get(TimeoutHandler);
 const displayTestIntentHandler: DisplayTestIntentHandler = Container.get(DisplayTestIntentHandler);
 const projectDashboardIntentHandler: ProjectDashboardIntentHandler = Container.get(ProjectDashboardIntentHandler);
@@ -123,6 +125,9 @@ alexaApp.intent('JiraXrayStatusIntent', jiraXrayStatusIntentHandler.handle.bind(
 
 // 'starte pm assistent und zeige burndown chart'
 alexaApp.intent('JiraChartIntent', jiraChartIntentHandler.handle.bind(jiraChartIntentHandler));
+
+// 'starte pm assistent und zeige die velocity'
+alexaApp.intent('JiraVelocityIntent', jiraVelocityIntentHandler.handle.bind(jiraVelocityIntentHandler));
 
 // 'starte pm assistent und suche nach offenen jira bugs'
 alexaApp.intent('JiraSearchIssuesIntent', JiraSearchIssuesIntentHandler);

@@ -7,8 +7,12 @@ import { buildXrayStatusDirective } from '../../apl/datasources';
 import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
 import { sayJiraTicket } from '../../app/speechUtils';
 import { TestRunStatus } from '../../endpoint/jira/domain/enum';
+import AppState from '../../app/state/AppState';
 
 export default class JiraXrayStatusIntentHandler {
+
+    @Inject
+    protected appState: AppState;
 
     @Inject
     private controller: JiraEndpointController;
@@ -92,11 +96,11 @@ export default class JiraXrayStatusIntentHandler {
     }
 
     private getIconUrlByStatus(status: TestRunStatus): string {
-        const passIconUrl = 'https://www.materialui.co/materialIcons/toggle/check_box_black_192x192.png';
-        const failIconUrl = 'https://www.materialui.co/materialIcons/alert/error_red_192x192.png';
-        const todoIconUrl = 'https://www.materialui.co/materialIcons/action/hourglass_empty_black_192x192.png';
-        const executingIconUrl = 'https://www.materialui.co/materialIcons/image/timelapse_black_192x192.png';
-        const abortedIconUrl = 'https://www.materialui.co/materialIcons/navigation/cancel_black_108x108.png';
+        const passIconUrl = this.appState.getBaseUrl() + `static/success.png`;
+        const failIconUrl = this.appState.getBaseUrl() + `static/error.png`;
+        const todoIconUrl = this.appState.getBaseUrl() + `static/todo.png`;
+        const executingIconUrl = this.appState.getBaseUrl() + `static/in_progress.png`;
+        const abortedIconUrl = this.appState.getBaseUrl() + `static/abort.png`;
 
         switch (status) {
             case TestRunStatus.PASS:

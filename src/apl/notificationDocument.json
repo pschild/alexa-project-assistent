@@ -1,123 +1,40 @@
 {
     "type": "APL",
     "version": "1.0",
-    "theme": "dark",
-    "import": [
-        {
-            "name": "alexa-layouts",
-            "version": "1.0.0"
-        }
-    ],
+    "theme": "light",
+    "import": [],
     "resources": [
         {
-            "description": "Stock color for the light theme",
+            "description": "Colors dark to light",
             "colors": {
-                "colorTextPrimary": "#151920"
-            }
-        },
-        {
-            "description": "Stock color for the dark theme",
-            "when": "${viewport.theme == 'dark'}",
-            "colors": {
-                "colorTextPrimary": "#f0f1ef"
-            }
-        },
-        {
-            "description": "Standard font sizes",
-            "dimensions": {
-                "textSizeBody": 48,
-                "textSizePrimary": 27,
-                "textSizeSecondary": 23,
-                "textSizeSecondaryHint": 25
-            }
-        },
-        {
-            "description": "Common spacing values",
-            "dimensions": {
-                "spacingThin": 6,
-                "spacingSmall": 12,
-                "spacingMedium": 24,
-                "spacingLarge": 48,
-                "spacingExtraLarge": 72
-            }
-        },
-        {
-            "description": "Common margins and padding",
-            "dimensions": {
-                "marginTop": 40,
-                "marginLeft": 60,
-                "marginRight": 60,
-                "marginBottom": 40
+                "backgroundColor": "#ececec"
             }
         }
     ],
-    "styles": {
-        "textStyleBase": {
-            "description": "Base font description; set color and core font family",
-            "values": [
+    "styles": {},
+    "layouts": {
+        "Background": {
+            "item": [
                 {
-                    "color": "@colorTextPrimary",
-                    "fontFamily": "Amazon Ember"
+                    "type": "Frame",
+                    "when": "${!payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "backgroundColor": "@backgroundColor",
+                    "position": "absolute"
+                },
+                {
+                    "type": "Image",
+                    "when": "${payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "source": "${payload.data.backgroundImageUrl}",
+                    "scale": "best-fill",
+                    "position": "absolute"
                 }
             ]
-        },
-        "textStyleBase0": {
-            "description": "Thin version of basic font",
-            "extend": "textStyleBase",
-            "values": {
-                "fontWeight": "100"
-            }
-        },
-        "textStyleBase1": {
-            "description": "Light version of basic font",
-            "extend": "textStyleBase",
-            "values": {
-                "fontWeight": "300"
-            }
-        },
-        "mixinBody": {
-            "values": {
-                "fontSize": "@textSizeBody"
-            }
-        },
-        "mixinPrimary": {
-            "values": {
-                "fontSize": "@textSizePrimary"
-            }
-        },
-        "mixinSecondary": {
-            "values": {
-                "fontSize": "@textSizeSecondary"
-            }
-        },
-        "textStylePrimary": {
-            "extend": [
-                "textStyleBase1",
-                "mixinPrimary"
-            ]
-        },
-        "textStyleSecondary": {
-            "extend": [
-                "textStyleBase0",
-                "mixinSecondary"
-            ]
-        },
-        "textStyleBody": {
-            "extend": [
-                "textStyleBase1",
-                "mixinBody"
-            ]
-        },
-        "textStyleSecondaryHint": {
-            "values": {
-                "fontFamily": "Bookerly",
-                "fontStyle": "italic",
-                "fontSize": "@textSizeSecondaryHint",
-                "color": "@colorTextPrimary"
-            }
         }
     },
-    "layouts": {},
     "mainTemplate": {
         "parameters": [
             "payload"
@@ -125,59 +42,29 @@
         "items": [
             {
                 "type": "Container",
+                "width": "100vw",
                 "height": "100vh",
-                "items": [
+                "alignItems": "center",
+                "justifyContent": "center",
+                "item": [
+                    {
+                        "type": "Background"
+                    },
                     {
                         "type": "Image",
-                        "source": "${payload.data.backgroundImageUrl}",
-                        "position": "absolute",
-                        "width": "100vw",
-                        "height": "100vh",
+                        "width": "100",
+                        "height": "100",
+                        "source": "${payload.data.iconUrl}",
                         "scale": "best-fill"
                     },
                     {
-                        "type": "AlexaHeader",
-                        "headerTitle": "${payload.data.title}",
-                        "headerAttributionImage": "${payload.data.logoUrl}"
-                    },
-                    {
-                        "type": "Container",
-                        "height": "80vh",
-                        "alignItems": "center",
-                        "justifyContent": "center",
-                        "items": [
-                            {
-                                "when": "${payload.data.type == 'success'}",
-                                "type": "Image",
-                                "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Echo_mention-success.svg/2000px-Echo_mention-success.svg.png",
-                                "width": "100",
-                                "height": "100",
-                                "scale": "best-fill"
-                            },
-                            {
-                                "when": "${payload.data.type == 'error'}",
-                                "type": "Image",
-                                "source": "https://www.materialui.co/materialIcons/alert/error_red_192x192.png",
-                                "width": "100",
-                                "height": "100",
-                                "scale": "best-fill"
-                            },
-                            {
-                                "when": "${payload.data.type == 'warning'}",
-                                "type": "Image",
-                                "source": "https://www.materialui.co/materialIcons/alert/warning_amber_384x384.png",
-                                "width": "100",
-                                "height": "100",
-                                "scale": "best-fill"
-                            },
-                            {
-                                "type": "Text",
-                                "text": "${payload.data.textContent.primaryText.text}",
-                                "fontSize": "@textSizeBody",
-                                "spacing": "@spacingSmall",
-                                "style": "textStyleBody"
-                            }
-                        ]
+                        "type": "Text",
+                        "paddingLeft": "50",
+                        "paddingTop": "50",
+                        "paddingRight": "50",
+                        "textAlign": "center",
+                        "fontSize": "50dp",
+                        "text": "${payload.data.text}"
                     }
                 ]
             }

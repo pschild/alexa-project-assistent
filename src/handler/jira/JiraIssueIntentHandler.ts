@@ -3,10 +3,13 @@ import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointControll
 import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
 import { Inject } from 'typescript-ioc';
 import { HandlerError } from '../../error/HandlerError';
-import { buildErrorNotification } from '../../apl/datasources';
 import { sayJiraTicket, pause, sayAsDuration } from '../../app/speechUtils';
+import { NotificationBuilder } from '../../apl/NotificationBuilder';
 
 export default class JiraIssueIntentHandler {
+
+    @Inject
+    private notificationBuilder: NotificationBuilder;
 
     @Inject
     private controller: JiraEndpointController;
@@ -34,14 +37,18 @@ export default class JiraIssueIntentHandler {
             .catch((error) => {
                 throw new HandlerError(
                     `Ich konnte das Ticket ${sayJiraTicket(ticketIdentifierValue, ticketNumberValue)} nicht laden.`,
-                    buildErrorNotification('Fehler', `Fehler beim Laden des Tickets ${ticketIdentifierValue}-${ticketNumberValue}`)
+                    this.notificationBuilder.buildErrorNotification(
+                        `Fehler beim Laden des Tickets ${ticketIdentifierValue}-${ticketNumberValue}`
+                    )
                 );
             });
 
         if (!issue) {
             throw new HandlerError(
                 `Ich habe Probleme, das Ticket ${sayJiraTicket(ticketIdentifierValue, ticketNumberValue)} auszuwerten.`,
-                buildErrorNotification('Fehler', `Fehler beim Auswerten des Tickets ${ticketIdentifierValue}-${ticketNumberValue}`)
+                this.notificationBuilder.buildErrorNotification(
+                    `Fehler beim Auswerten des Tickets ${ticketIdentifierValue}-${ticketNumberValue}`
+                )
             );
         }
 

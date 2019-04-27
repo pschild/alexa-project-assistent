@@ -5,11 +5,13 @@ export enum NotificationType {
 }
 
 export interface IImageDocumentPayload {
+    backgroundImageUrl?: string;
     title: string;
     imageUrl: string;
 }
 
 export interface IXrayStatusDocumentPayload {
+    backgroundImageUrl?: string;
     ticketId: string;
     ticketDescription: string;
     globalStateIconUrl: string;
@@ -18,6 +20,7 @@ export interface IXrayStatusDocumentPayload {
 }
 
 export interface IDashboardDocumentPayload {
+    backgroundImageUrl?: string;
     q1: { bugs: number; progress: string; };
     q2: { imageUrl: string; };
     q3: { imageUrl: string; };
@@ -36,11 +39,10 @@ export interface ITextSamplesDocumentPayload {
 }
 
 export interface INotificationDocumentPayload {
-    title: string;
     backgroundImageUrl?: string;
-    logoUrl: string;
     type: NotificationType;
-    textContent: {primaryText: any};
+    iconUrl: string;
+    text: string;
 }
 
 export interface IListItem {
@@ -51,10 +53,10 @@ export interface IListItem {
 }
 
 export interface IListDocumentPayload {
+    backgroundImageUrl?: string;
     title: string;
     logoUrl: string;
     hintText?: string;
-    backgroundImageUrl?: string;
     listItems: IListItem[];
 }
 
@@ -137,30 +139,4 @@ export const buildListItem = (identifier: string, primaryText: string, secondary
         imageUrl,
         token: identifier
     };
-};
-
-export const buildSuccessNotification = (title: string, text: string) => {
-    return buildNotification(NotificationType.SUCCESS, title, text);
-};
-
-export const buildWarningNotification = (title: string, text: string) => {
-    return buildNotification(NotificationType.WARNING, title, text);
-};
-
-export const buildErrorNotification = (title: string, text: string) => {
-    return buildNotification(NotificationType.ERROR, title, text);
-};
-
-const buildNotification = (type: NotificationType, title: string, text: string) => {
-    return buildNotificationDirective({
-        type,
-        title,
-        logoUrl: '',
-        textContent: {
-            primaryText: {
-                type: 'PlainText',
-                text
-            }
-        }
-    });
 };

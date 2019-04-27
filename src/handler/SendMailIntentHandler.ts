@@ -3,15 +3,17 @@ import { Container } from 'typescript-ioc';
 import MailController from '../mail/MailController';
 import AppState from '../app/state/AppState';
 import EmployeeState from '../app/state/EmployeeState';
-import { buildSuccessNotification, buildErrorNotification, buildWarningNotification } from '../apl/datasources';
 import { HandlerError } from '../error/HandlerError';
 import { elicitSlot, ElicitationStatus, confirmSlot, ConfirmationStatus } from './handlerUtils';
+import { NotificationBuilder } from '../apl/NotificationBuilder';
 
 export default async (request: alexa.request, response: alexa.response): Promise<alexa.response> => {
     const appState: AppState = Container.get(AppState);
     const employeeState: EmployeeState = appState.getEmployeeState();
     let activeEmployee = employeeState.getActive();
     const controller: MailController = Container.get(MailController);
+
+    const notificationBuilder: NotificationBuilder = Container.get(NotificationBuilder);
 
     const contentElicitationResult = elicitSlot(request, 'MailContent');
     if (contentElicitationResult.status === ElicitationStatus.MISSING) {
@@ -56,8 +58,7 @@ export default async (request: alexa.request, response: alexa.response): Promise
     } catch (error) {
         throw new HandlerError(
             `${recipientElicitationResult.value} wurde nicht in der Liste der Mitarbeiter gefunden.`,
-            buildWarningNotification(
-                'Mitarbeiter nicht gefunden',
+            notificationBuilder.buildWarningNotification(
                 `${recipientElicitationResult.value} wurde nicht in der Liste der Mitarbeiter gefunden.`
             )
         );
@@ -66,12 +67,12 @@ export default async (request: alexa.request, response: alexa.response): Promise
     if (!activeEmployee.email) {
         throw new HandlerError(
             `Für ${activeEmployee.name} ist keine E-Mail-Adresse hinterlegt.`,
-            buildWarningNotification('Hinweis', `Für ${activeEmployee.name} ist keine E-Mail-Adresse hinterlegt.`)
+            notificationBuilder.buildWarningNotification(`Für ${activeEmployee.name} ist keine E-Mail-Adresse hinterlegt.`)
         );
     } else if (!activeEmployee.enableEmail) {
         throw new HandlerError(
             `Für ${activeEmployee.name} ist der Versand von E-Mails deaktiviert.`,
-            buildWarningNotification('Hinweis', `Für ${activeEmployee.name} ist der Versand von E-Mails deaktiviert.`)
+            notificationBuilder.buildWarningNotification(`Für ${activeEmployee.name} ist der Versand von E-Mails deaktiviert.`)
         );
     }
 
@@ -80,10 +81,10 @@ export default async (request: alexa.request, response: alexa.response): Promise
     } catch (error) {
         throw new HandlerError(
             `Beim Senden der Mail ist etwas schief gelaufen.`,
-            buildErrorNotification('Fehler beim Senden der Mail', 'E-Mail konnte nicht versendet werden')
+            notificationBuilder.buildErrorNotification('E-Mail konnte nicht versendet werden')
         );
     }
     response
-        .directive(buildSuccessNotification('E-Mail versendet', `An ${activeEmployee.email} versendet!`))
+        .directive(notificationBuilder.buildSuccessNotification(`An ${activeEmployee.email} versendet!`))
         .say(`Die Mail wurde erfolgreich an ${activeEmployee.email} versendet.`);
 };

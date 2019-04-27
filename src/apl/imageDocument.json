@@ -1,18 +1,40 @@
 {
     "type": "APL",
     "version": "1.0",
-    "theme": "dark",
+    "theme": "light",
     "import": [],
     "resources": [
         {
             "description": "Colors dark to light",
             "colors": {
-                "backgroundColor": "#343838"
+                "backgroundColor": "#ececec"
             }
         }
     ],
     "styles": {},
-    "layouts": {},
+    "layouts": {
+        "Background": {
+            "item": [
+                {
+                    "type": "Frame",
+                    "when": "${!payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "backgroundColor": "@backgroundColor",
+                    "position": "absolute"
+                },
+                {
+                    "type": "Image",
+                    "when": "${payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "source": "${payload.data.backgroundImageUrl}",
+                    "scale": "best-fill",
+                    "position": "absolute"
+                }
+            ]
+        }
+    },
     "mainTemplate": {
         "parameters": [
             "payload"
@@ -24,11 +46,7 @@
                 "height": "100vh",
                 "item": [
                     {
-                        "type": "Frame",
-                        "width": "100vw",
-                        "height": "100vh",
-                        "backgroundColor": "@backgroundColor",
-                        "position": "absolute"
+                        "type": "Background"
                     },
                     {
                         "type": "Text",

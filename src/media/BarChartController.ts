@@ -69,7 +69,7 @@ export class BarChartController extends ChartControllerAbstract {
 
         bars.append('text')
             .attr('class', 'bar-label')
-            .text(d => `${d.value.toFixed(0)} ${this.yAxisUnit}`)
+            .text(d => `${(+d.value).toFixed(0)} ${this.yAxisUnit}`)
             .attr('x', x.bandwidth() / 2)
             .attr('y', (d) => {
                 return y(d.value) > 10 ? y(d.value) - 10 : y(d.value) + 30;

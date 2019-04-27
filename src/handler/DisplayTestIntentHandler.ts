@@ -6,6 +6,7 @@ import { PieChartController, IPieChartDataItem } from '../media/PieChartControll
 import { HandlerError } from '../error/HandlerError';
 import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
 import { LineChartController, ILineChartDataItem } from '../media/LineChartController';
+import { NotificationBuilder } from '../apl/NotificationBuilder';
 
 export default class DisplayTestIntentHandler {
 
@@ -14,6 +15,9 @@ export default class DisplayTestIntentHandler {
 
     @Inject
     private jiraController: JiraEndpointController;
+
+    @Inject
+    private notificationBuilder: NotificationBuilder;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         // const data: IPieChartDataItem[] = [
@@ -44,5 +48,7 @@ export default class DisplayTestIntentHandler {
                 imageUrl: chartUrl
             }))
             .say('Triggered DisplayTestIntent');
+
+        // return response.say('jjasd').directive(this.notificationBuilder.buildWarningNotification('cool!'));
     }
 }

@@ -3,9 +3,9 @@ import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointControll
 import { Inject } from 'typescript-ioc';
 import { HandlerError } from '../../error/HandlerError';
 import { PieChartController, IPieChartDataItem } from '../../media/PieChartController';
-import { buildXrayStatusDirective, buildErrorNotification } from '../../apl/datasources';
+import { buildXrayStatusDirective } from '../../apl/datasources';
 import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
-import { sayJiraTicket, sayInEnglish } from '../../app/speechUtils';
+import { sayJiraTicket } from '../../app/speechUtils';
 import { TestRunStatus } from '../../endpoint/jira/domain/enum';
 
 export default class JiraXrayStatusIntentHandler {

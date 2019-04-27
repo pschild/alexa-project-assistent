@@ -36,6 +36,7 @@ dotenv.config();
 const appState: AppState = Container.get(AppState);
 
 const app = express();
+app.use('/static', express.static('media-static'));
 app.use(express.static('media-gen'));
 app.use((req, res, next) => {
     appState.setHostname(req.hostname);

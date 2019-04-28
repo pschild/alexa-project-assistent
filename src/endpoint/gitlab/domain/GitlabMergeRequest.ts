@@ -1,6 +1,7 @@
 import { GitlabUser } from './GitlabUser';
 import { Type } from 'class-transformer';
 import { MergeRequestState, MergeStatus } from './enum';
+import { GitlabPipeline } from './GitlabPipeline';
 
 export class GitlabMergeRequest {
     id: number;
@@ -26,4 +27,7 @@ export class GitlabMergeRequest {
 
     @Type(() => GitlabUser)
     assignee: GitlabUser;
+
+    @Type(() => GitlabPipeline)
+    pipeline: GitlabPipeline;
 }

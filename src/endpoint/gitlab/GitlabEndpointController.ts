@@ -7,6 +7,7 @@ import { MergeRequestState, MergeRequestScope } from './domain/enum';
 import { GitlabBranch } from './domain/GitlabBranch';
 import { GitlabCommit } from './domain/GitlabCommit';
 import { GitlabPipeline } from './domain/GitlabPipeline';
+import { GitlabJob } from './domain/GitlabJob';
 
 @AutoWired
 @Singleton
@@ -39,6 +40,16 @@ export class GitlabEndpointController extends EndpointController {
         return plainToClass(GitlabProject, result as GitlabProject);
     }
 
+    public async getOpenMergeRequestsByProject(projectId: number): Promise<GitlabMergeRequest[]> {
+        const result = await this.get({
+            uri: [
+                `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${projectId}/merge_requests`,
+                `?state=${MergeRequestState.OPENED}`
+            ].join('')
+        });
+        return (result as GitlabMergeRequest[]).map((mergeRequest) => plainToClass(GitlabMergeRequest, mergeRequest));
+    }
+
     public async getAllOpenMergeRequests(): Promise<GitlabMergeRequest[]> {
         const result = await this.get({
             uri: [
@@ -48,6 +59,13 @@ export class GitlabEndpointController extends EndpointController {
             ].join('')
         });
         return (result as GitlabMergeRequest[]).map((mergeRequest) => plainToClass(GitlabMergeRequest, mergeRequest));
+    }
+
+    public async getMergeRequest(projectId: number, mergeRequestId: number): Promise<GitlabMergeRequest> {
+        const result = await this.get({
+            uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${projectId}/merge_requests/${mergeRequestId}`
+        });
+        return plainToClass(GitlabMergeRequest, result as GitlabMergeRequest);
     }
 
     public async getBranchesOfProject(id: number): Promise<GitlabBranch[]> {
@@ -64,9 +82,17 @@ export class GitlabEndpointController extends EndpointController {
         return (result as GitlabCommit[]).map((commit) => plainToClass(GitlabCommit, commit));
     }
 
-    public async getPipelinesOfProject(id: number): Promise<GitlabPipeline[]> {
+    public async getPipelinesOfProject(
+        id: number, attributes?: {branchName?: string, groupByBranch?: boolean, limit?: number}
+    ): Promise<GitlabPipeline[]> {
         const result = await this.get({
-            uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${id}/pipelines`
+            uri: [
+                `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${id}/pipelines`,
+                `?per_page=${attributes.limit || 10}`,
+                attributes.branchName ? `&ref=${attributes.branchName}` : ``,
+                attributes.groupByBranch ? `&scope=branches` : ``
+            ].join('')
+
         });
         return (result as GitlabPipeline[]).map((pipeline) => plainToClass(GitlabPipeline, pipeline));
     }
@@ -76,6 +102,13 @@ export class GitlabEndpointController extends EndpointController {
             uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${projectId}/pipelines/${pipelineId}`
         });
         return plainToClass(GitlabPipeline, result as GitlabPipeline);
+    }
+
+    public async getJobsOfPipeline(projectId: number, pipelineId: number): Promise<GitlabJob[]> {
+        const result = await this.get({
+            uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${projectId}/pipelines/${pipelineId}/jobs`
+        });
+        return (result as GitlabJob[]).map((job) => plainToClass(GitlabJob, job));
     }
 
     public groupMergeRequestsByAssignee(mergeRequests: GitlabMergeRequest[]) {

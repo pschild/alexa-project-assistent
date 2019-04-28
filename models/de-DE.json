@@ -184,6 +184,22 @@
           ]
         },
         {
+          "name": "GitLabBuildStatusIntent",
+          "slots": [
+            {
+              "name": "GitLabProjectName",
+              "type": "GitLabProject",
+              "samples": [
+                "{GitLabProjectName}"
+              ]
+            }
+          ],
+          "samples": [
+            "zeige build status",
+            "zeige build status von projekt {GitLabProjectName}"
+          ]
+        },
+        {
           "name": "JiraChartIntent",
           "slots": [
             {
@@ -273,6 +289,29 @@
         {
           "name": "EmployeeName",
           "values": []
+        },
+        {
+          "name": "GitLabProject",
+          "values": [
+            {
+              "id": "36",
+              "name": {
+                "value": "Auftragsverwaltung"
+              }
+            },
+            {
+              "id": "136",
+              "name": {
+                "value": "MDK Client Workspace"
+              }
+            },
+            {
+              "id": "146",
+              "name": {
+                "value": "Alexa Test"
+              }
+            }
+          ]
         },
         {
           "name": "JiraIssueProperty",

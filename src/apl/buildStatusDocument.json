@@ -1,0 +1,207 @@
+{
+    "type": "APL",
+    "version": "1.0",
+    "theme": "light",
+    "import": [],
+    "resources": [
+        {
+            "description": "Colors dark to light",
+            "colors": {
+                "backgroundColor": "#ececec"
+            }
+        }
+    ],
+    "styles": {},
+    "layouts": {
+        "Background": {
+            "item": [
+                {
+                    "type": "Frame",
+                    "when": "${!payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "backgroundColor": "@backgroundColor",
+                    "position": "absolute"
+                },
+                {
+                    "type": "Image",
+                    "when": "${payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "source": "${payload.data.backgroundImageUrl}",
+                    "scale": "best-fill",
+                    "position": "absolute"
+                }
+            ]
+        },
+        "PipelineItem": {
+            "parameters": [
+                "finishedAt",
+                "stages",
+                "branchOrProject",
+                "statusImageUrl"
+            ],
+            "item": [
+                {
+                    "type": "Container",
+                    "alignItems": "center",
+                    "direction": "row",
+                    "spacing": "50",
+                    "item": [
+                        {
+                            "type": "Container",
+                            "width": "50%",
+                            "maxWidth": "50%",
+                            "alignItems": "center",
+                            "direction": "row",
+                            "item": [
+                                {
+                                    "type": "Container",
+                                    "width": "80%",
+                                    "item": [
+                                        {
+                                            "type": "Text",
+                                            "when": "${branchOrProject}",
+                                            "text": "${branchOrProject}"
+                                        },
+                                        {
+                                            "type": "Text",
+                                            "fontSize": "30dp",
+                                            "text": "${finishedAt}"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Container",
+                                    "paddingRight": "10",
+                                    "alignItems": "center",
+                                    "item": [
+                                        {
+                                            "type": "Text",
+                                            "fontSize": "20dp",
+                                            "text": "Gesamt"
+                                        },
+                                        {
+                                            "type": "Image",
+                                            "width": "80",
+                                            "height": "80",
+                                            "paddingLeft": "10",
+                                            "paddingRight": "10",
+                                            "source": "${statusImageUrl}"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Frame",
+                                    "width": "2",
+                                    "height": "90",
+                                    "backgroundColor": "#555"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Sequence",
+                            "width": "50%",
+                            "data": "${stages}",
+                            "numbered": true,
+                            "scrollDirection": "horizontal",
+                            "item": [
+                                {
+                                    "statusImageUrl": "${data.statusImageUrl}",
+                                    "stageCount": "${length}",
+                                    "stageName": "${data.name}",
+                                    "type": "StageItem"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "StageItem": {
+            "parameters": [
+                "statusImageUrl",
+                "stageCount",
+                "stageName"
+            ],
+            "item": [
+                {
+                    "type": "Container",
+                    "alignItems": "center",
+                    "direction": "row",
+                    "item": [
+                        {
+                            "type": "Container",
+                            "alignItems": "center",
+                            "item": [
+                                {
+                                    "type": "Text",
+                                    "fontSize": "20dp",
+                                    "text": "${stageName}"
+                                },
+                                {
+                                    "type": "Image",
+                                    "width": "80",
+                                    "height": "80",
+                                    "paddingLeft": "10",
+                                    "paddingRight": "10",
+                                    "source": "${statusImageUrl}"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Frame",
+                            "width": "25",
+                            "height": "${ordinal < stageCount ? '2' : '0'}",
+                            "backgroundColor": "#555"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "width": "100vw",
+                "height": "100vh",
+                "alignItems": "center",
+                "item": [
+                    {
+                        "type": "Background"
+                    },
+                    {
+                        "type": "Text",
+                        "when": "${payload.data.projectName}",
+                        "height": "12vh",
+                        "paddingTop": "40",
+                        "text": "${payload.data.projectName}"
+                    },
+                    {
+                        "type": "Sequence",
+                        "width": "90vw",
+                        "height": "88vh",
+                        "paddingTop": "20",
+                        "paddingBottom": "20",
+                        "data": "${payload.data.pipelines}",
+                        "item": [
+                            {
+                                "finishedAt": "${data.finishedAt}",
+                                "stages": "${data.stages}",
+                                "branchOrProject": "${data.branchOrProject}",
+                                "statusImageUrl": "${data.statusImageUrl}",
+                                "type": "PipelineItem",
+                                "branchName": "${data.branchName}",
+                                "projectName": "${data.projectName}"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

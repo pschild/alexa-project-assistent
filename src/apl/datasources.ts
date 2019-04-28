@@ -38,6 +38,24 @@ export interface ISprintProgressDocumentPayload {
     taskProgressImageUrl: string;
 }
 
+export interface IBuildStatusDocumentPayload {
+    backgroundImageUrl?: string;
+    projectName?: string;
+    pipelines: IPipelinePayload[];
+}
+
+export interface IPipelinePayload {
+    finishedAt: string;
+    branchOrProject?: string;
+    statusImageUrl: string;
+    stages: IStagePayload[];
+}
+
+export interface IStagePayload {
+    name: string;
+    statusImageUrl: string;
+}
+
 export interface ITouchableTextDocumentPayload {
     text: string;
 }
@@ -103,6 +121,15 @@ export const buildSprintProgressDirective = (data: ISprintProgressDocumentPayloa
         type: 'Alexa.Presentation.APL.RenderDocument',
         token: 'sprintProgressDocument',
         document: require(`@apl/sprintProgressDocument.json`),
+        datasources: { data }
+    };
+};
+
+export const buildBuildStatusDirective = (data: IBuildStatusDocumentPayload) => {
+    return {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'buildStatusProgressDocument',
+        document: require(`@apl/buildStatusDocument.json`),
         datasources: { data }
     };
 };

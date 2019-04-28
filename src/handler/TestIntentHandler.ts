@@ -8,6 +8,10 @@ import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
 import { TestRunStatus, IssueType, IssueStatus, SwimlaneStatus } from '../endpoint/jira/domain/enum';
 import { sayJiraTicket } from '../app/speechUtils';
 import { ProgressBarChartController } from '../media/ProgressBarChartController';
+import { GitlabEndpointController } from '../endpoint/gitlab/GitlabEndpointController';
+import { GitlabPipeline } from '../endpoint/gitlab/domain/GitlabPipeline';
+import { GitlabJob } from '../endpoint/gitlab/domain/GitlabJob';
+import { JobState } from '../endpoint/gitlab/domain/enum';
 
 export default class TestIntentHandler {
 
@@ -26,11 +30,114 @@ export default class TestIntentHandler {
     @Inject
     private jiraController: JiraEndpointController;
 
+    @Inject
+    private gitLabController: GitlabEndpointController;
+
     public async handle(request, response): Promise<any> {
-        return this.getSprintProgress();
+        return this.getAllBranchBuildsByProject();
+        // return this.getMasterBuildsByProject();
+        // return this.getSprintProgress();
         // return this.getVel();
         // return this.getBdc();
         // return this.getXrayStatus();
+    }
+
+    private async getAllBranchBuildsByProject() {
+        const projectIds = [136, 36, 130];
+        const [projectDetails, pipelines] = await Promise.all([
+            Promise.all(projectIds.map(id => this.gitLabController.getProject(id))),
+            Promise.all(projectIds.map(id => this.gitLabController.getPipelinesOfProject(id, { branchName: 'master', limit: 1 })))
+        ]);
+
+        const result = [];
+        for (let i = 0; i < projectIds.length; i++) {
+            const pipelineId = pipelines[i][0].id;
+            const jobsResult = await this.gitLabController.getJobsOfPipeline(projectIds[i], pipelines[i][0].id);
+            const pipelineDetails = await this.gitLabController.getPipeline(projectIds[i], pipelines[i][0].id);
+            const pipelineStages: Array<{ name: string; status: JobState }> = [];
+            jobsResult.map(job => {
+                const existing = pipelineStages.find(entry => entry.name === job.stage);
+                if (existing) {
+                    if (job.status === JobState.FAILED) {
+                        existing.status = JobState.FAILED;
+                    } else if (job.status === JobState.CANCELED) {
+                        existing.status = JobState.CANCELED;
+                    } else {
+                        existing.status = job.status;
+                    }
+                } else {
+                    pipelineStages.push({ name: job.stage, status: job.status });
+                }
+            });
+
+            if (pipelineDetails.finished_at) {
+                result.push({
+                    pipelineId,
+                    finishedAt: pipelineDetails.finished_at.toLocaleString('de-DE'),
+                    statusImageUrl: pipelines[i][0].status,
+                    branchOrProject: projectDetails[i].name,
+                    stages: pipelineStages.map(stage => ({ name: stage.name, statusImageUrl: stage.status }))
+                });
+            }
+        }
+        console.log(result);
+        // const projectId = 136;
+        // const pipelines: GitlabPipeline[] = await this.gitLabController.getPipelinesOfProject(projectId, { groupByBranch: true });
+        // const jobsResult = await Promise.all(pipelines.map(p => this.gitLabController.getJobsOfPipeline(projectId, p.id)));
+        // const pipelineDetails = await Promise.all(pipelines.map(p => this.gitLabController.getPipeline(projectId, p.id)));
+        // for (let i = 0; i < pipelines.length; i++) {
+        //     const pipelineId = pipelines[i].id;
+        //     const pipelineJobs: GitlabJob[] = jobsResult[i];
+        //     const stages: Array<{stage: string; status: JobState}> = [];
+        //     pipelineJobs.map(job => {
+        //         const existing = stages.find(entry => entry.stage === job.stage);
+        //         if (existing) {
+        //             if (job.status === JobState.FAILED) {
+        //                 existing.status = JobState.FAILED;
+        //             } else if (job.status === JobState.CANCELED) {
+        //                 existing.status = JobState.CANCELED;
+        //             } else {
+        //                 existing.status = job.status;
+        //             }
+        //         } else {
+        //             stages.push({ stage: job.stage, status: job.status });
+        //         }
+        //     });
+        //     const pipelineStages = stages;
+        //     console.log(`${pipelineId} ${pipelineDetails[i].finished_at} (${pipelines[i].ref}, ${pipelines[i].status}): ${pipelineStages.map(s => s.stage + ', ' + s.status)}`);
+        //     // ...
+        //     // 19462 (success): build, success
+        //     // 19456 (failed): build, failed
+        // }
+    }
+
+    private async getMasterBuildsByProject() {
+        const projectId = 136;
+        const pipelines: GitlabPipeline[] = await this.gitLabController.getPipelinesOfProject(projectId, { branchName: 'master' });
+        const jobsResult = await Promise.all(pipelines.map(p => this.gitLabController.getJobsOfPipeline(projectId, p.id)));
+        const pipelineDetails = await Promise.all(pipelines.map(p => this.gitLabController.getPipeline(projectId, p.id)));
+        for (let i = 0; i < pipelines.length; i++) {
+            const pipelineId = pipelines[i].id;
+            const pipelineJobs: GitlabJob[] = jobsResult[i];
+            const stages: Array<{ stage: string; status: JobState }> = [];
+            pipelineJobs.map(job => {
+                const existing = stages.find(entry => entry.stage === job.stage);
+                if (existing) {
+                    if (job.status === JobState.FAILED) {
+                        existing.status = JobState.FAILED;
+                    } else {
+                        existing.status = job.status;
+                    }
+                } else {
+                    stages.push({ stage: job.stage, status: job.status });
+                }
+            });
+            const pipelineStages = stages;
+            console.log(`${pipelineId} ${pipelineDetails[i].finished_at} (${pipelines[i].status}): ${pipelineStages.map(s => s.stage + ', ' + s.status)}`);
+            // ...
+            // 19462 (success): build, success
+            // 19456 (failed): build, failed
+        }
     }
 
     private async getSprintProgress() {
@@ -69,7 +176,7 @@ export default class TestIntentHandler {
 
     private async getVel() {
         const data: IBarChartDataItem[] = await this.jiraController.getVelocityData(48);
-        const chartData = data.map(bar => ({ key: bar.key, value: (+bar.value / 3600 / 8), styles: bar.styles}));
+        const chartData = data.map(bar => ({ key: bar.key, value: (+bar.value / 3600 / 8), styles: bar.styles }));
         const chartUrl = await this.barChartController
             .setYAxisUnit('PT')
             .generateChart(chartData).catch((e) => {

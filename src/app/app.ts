@@ -31,6 +31,7 @@ import TestIntentHandler from '../handler/TestIntentHandler';
 import JiraChangeIssueStatusIntentHandler from '../handler/jira/JiraChangeIssueStatusIntentHandler';
 import JiraVelocityIntentHandler from '../handler/jira/JiraVelocityIntentHandler';
 import JiraSprintProgressIntentHandler from '../handler/jira/JiraSprintProgressIntentHandler';
+import GitLabBuildStatusIntentHandler from '../handler/gitlab/GitLabBuildStatusIntentHandler';
 
 dotenv.config();
 
@@ -98,6 +99,7 @@ const jiraSprintProgressIntentHandler: JiraSprintProgressIntentHandler = Contain
 const timeoutHandler: TimeoutHandler = Container.get(TimeoutHandler);
 const displayTestIntentHandler: DisplayTestIntentHandler = Container.get(DisplayTestIntentHandler);
 const projectDashboardIntentHandler: ProjectDashboardIntentHandler = Container.get(ProjectDashboardIntentHandler);
+const gitlabBuildStatusIntentHandler: GitLabBuildStatusIntentHandler = Container.get(GitLabBuildStatusIntentHandler);
 
 alexaApp.launch(LaunchIntentHandler);
 
@@ -137,6 +139,9 @@ alexaApp.intent('JiraSprintProgressIntent', jiraSprintProgressIntentHandler.hand
 
 // 'starte pm assistent und suche nach offenen jira bugs'
 alexaApp.intent('JiraSearchIssuesIntent', JiraSearchIssuesIntentHandler);
+
+// 'starte pm assistent und zeige build status von projekt {GitLabProjectName}'
+alexaApp.intent('GitLabBuildStatusIntent', gitlabBuildStatusIntentHandler.handle.bind(gitlabBuildStatusIntentHandler));
 
 // 'starte pm assistent und zeige jenkins status'
 alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler);

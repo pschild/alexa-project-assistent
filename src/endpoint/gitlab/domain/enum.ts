@@ -25,5 +25,14 @@ export enum MergeStatus {
 export enum PipelineState {
     SUCCESS = 'success',
     FAILED = 'failed',
-    SKIPPED = 'skipped'
+    SKIPPED = 'skipped',
+    CANCELED = 'canceled'
+}
+
+export enum JobState {
+    SUCCESS = 'success',
+    FAILED = 'failed',
+    SKIPPED = 'skipped',
+    CANCELED = 'canceled',
+    MANUAL = 'manual'
 }

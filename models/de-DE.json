@@ -200,6 +200,14 @@
           ]
         },
         {
+          "name": "GitLabMergeRequestsIntent",
+          "slots": [],
+          "samples": [
+            "zeige merge requests",
+            "zeige offene merge requests"
+          ]
+        },
+        {
           "name": "JiraChartIntent",
           "slots": [
             {

@@ -1,5 +1,5 @@
 import * as alexa from 'alexa-app';
-import { buildImageDirective, buildBuildStatusDirective } from '../apl/datasources';
+import { buildImageDirective, buildBuildStatusDirective, buildMergeRequestsDirective } from '../apl/datasources';
 
 import { Inject } from 'typescript-ioc';
 import { PieChartController, IPieChartDataItem } from '../media/PieChartController';
@@ -8,6 +8,9 @@ import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController'
 import { LineChartController, ILineChartDataItem } from '../media/LineChartController';
 import { NotificationBuilder } from '../apl/NotificationBuilder';
 import AppState from '../app/state/AppState';
+import * as humanizeDuration from 'humanize-duration';
+import { GitlabEndpointController } from '../endpoint/gitlab/GitlabEndpointController';
+import { GitlabMergeRequest } from '../endpoint/gitlab/domain/GitlabMergeRequest';
 
 export default class DisplayTestIntentHandler {
 
@@ -19,6 +22,9 @@ export default class DisplayTestIntentHandler {
 
     @Inject
     private jiraController: JiraEndpointController;
+
+    @Inject
+    private gitLabController: GitlabEndpointController;
 
     @Inject
     private notificationBuilder: NotificationBuilder;

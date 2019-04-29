@@ -1,0 +1,153 @@
+{
+    "type": "APL",
+    "version": "1.0",
+    "theme": "light",
+    "import": [],
+    "resources": [
+        {
+            "description": "Colors dark to light",
+            "colors": {
+                "backgroundColor": "#ececec"
+            }
+        }
+    ],
+    "styles": {},
+    "layouts": {
+        "Background": {
+            "item": [
+                {
+                    "type": "Frame",
+                    "when": "${!payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "backgroundColor": "@backgroundColor",
+                    "position": "absolute"
+                },
+                {
+                    "type": "Image",
+                    "when": "${payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "source": "${payload.data.backgroundImageUrl}",
+                    "scale": "best-fill",
+                    "position": "absolute"
+                }
+            ]
+        },
+        "ProjectItem": {
+            "parameters": [
+                "projectName",
+                "mrCount",
+                "mergeRequests"
+            ],
+            "item": [
+                {
+                    "type": "Container",
+                    "when": "${mrCount > 0}",
+                    "paddingTop": "20",
+                    "paddingBottom": "20",
+                    "item": [
+                        {
+                            "type": "Container",
+                            "alignItems": "center",
+                            "direction": "row",
+                            "item": [
+                                {
+                                    "type": "Text",
+                                    "width": "50%",
+                                    "text": "${projectName}: ${mrCount}"
+                                },
+                                {
+                                    "type": "Text",
+                                    "when": "${data.mrCount > 0}",
+                                    "fontSize": "30dp",
+                                    "text": "zugewiesen an",
+                                    "fontWeight": "bold"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Sequence",
+                            "height": "100%",
+                            "data": "${mergeRequests}",
+                            "item": [
+                                {
+                                    "age": "${data.age}",
+                                    "assigneeName": "${data.assigneeName}",
+                                    "type": "MergeRequestItem"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "MergeRequestItem": {
+            "parameters": [
+                "age",
+                "assigneeName"
+            ],
+            "item": [
+                {
+                    "type": "Container",
+                    "paddingTop": "5",
+                    "paddingBottom": "5",
+                    "direction": "row",
+                    "item": [
+                        {
+                            "type": "Text",
+                            "width": "50%",
+                            "fontSize": "30dp",
+                            "text": "vor ${age}"
+                        },
+                        {
+                            "type": "Text",
+                            "fontSize": "30dp",
+                            "text": "${assigneeName ? assigneeName : \"nicht zugewiesen\"}"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "width": "100vw",
+                "height": "100vh",
+                "alignItems": "center",
+                "item": [
+                    {
+                        "type": "Background"
+                    },
+                    {
+                        "type": "Text",
+                        "height": "12vh",
+                        "paddingTop": "40",
+                        "text": "Offene Merge Requests"
+                    },
+                    {
+                        "type": "Sequence",
+                        "width": "90vw",
+                        "height": "88vh",
+                        "paddingTop": "20",
+                        "paddingBottom": "20",
+                        "data": "${payload.data.projects}",
+                        "item": [
+                            {
+                                "projectName": "${data.projectName}",
+                                "mrCount": "${data.mrCount}",
+                                "mergeRequests": "${data.mergeRequests}",
+                                "type": "ProjectItem"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

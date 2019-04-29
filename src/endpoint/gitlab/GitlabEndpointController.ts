@@ -55,7 +55,8 @@ export class GitlabEndpointController extends EndpointController {
             uri: [
                 `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/merge_requests`,
                 `?scope=${MergeRequestScope.ALL}`,
-                `&state=${MergeRequestState.OPENED}`
+                `&state=${MergeRequestState.OPENED}`,
+                `&per_page=500`
             ].join('')
         });
         return (result as GitlabMergeRequest[]).map((mergeRequest) => plainToClass(GitlabMergeRequest, mergeRequest));

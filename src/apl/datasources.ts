@@ -38,6 +38,22 @@ export interface ISprintProgressDocumentPayload {
     taskProgressImageUrl: string;
 }
 
+export interface IMergeRequestsDocumentPayload {
+    backgroundImageUrl?: string;
+    projects: IProjectPayload[];
+}
+
+export interface IProjectPayload {
+    projectName: string;
+    mrCount: number;
+    mergeRequests?: IMergeRequestPayload[];
+}
+
+export interface IMergeRequestPayload {
+    age: string;
+    assigneeName?: string;
+}
+
 export interface IBuildStatusDocumentPayload {
     backgroundImageUrl?: string;
     projectName?: string;
@@ -130,6 +146,15 @@ export const buildBuildStatusDirective = (data: IBuildStatusDocumentPayload) => 
         type: 'Alexa.Presentation.APL.RenderDocument',
         token: 'buildStatusProgressDocument',
         document: require(`@apl/buildStatusDocument.json`),
+        datasources: { data }
+    };
+};
+
+export const buildMergeRequestsDirective = (data: IMergeRequestsDocumentPayload) => {
+    return {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'mergeRequestsDocument',
+        document: require(`@apl/mergeRequestsDocument.json`),
         datasources: { data }
     };
 };

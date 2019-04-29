@@ -8,7 +8,7 @@ import LaunchIntentHandler from '../handler/builtin/LaunchIntentHandler';
 import StopIntentHandler from '../handler/builtin/StopIntentHandler';
 import HelpIntentHandler from '../handler/builtin/HelpIntentHandler';
 import JiraIssueIntentHandler from '../handler/jira/JiraIssueIntentHandler';
-import JiraChartIntentHandler from '../handler/jira/JiraChartIntentHandler';
+import JiraBurndownChartIntentHandler from '../handler/jira/JiraBurndownChartIntentHandler';
 import JiraHelpIntentHandler from '../handler/jira/JiraHelpIntentHandler';
 import JiraSearchIssuesIntentHandler from '../handler/jira/JiraSearchIssuesIntentHandler';
 import DisplayTestIntentHandler from '../handler/DisplayTestIntentHandler';
@@ -94,7 +94,7 @@ alexaApp.post = (request: alexa.request, response: alexa.response, type: string,
 const jiraIssueIntentHandler: JiraIssueIntentHandler = Container.get(JiraIssueIntentHandler);
 const jiraChangeIssueStatusIntentHandler: JiraChangeIssueStatusIntentHandler = Container.get(JiraChangeIssueStatusIntentHandler);
 const jiraXrayStatusIntentHandler: JiraXrayStatusIntentHandler = Container.get(JiraXrayStatusIntentHandler);
-const jiraChartIntentHandler: JiraChartIntentHandler = Container.get(JiraChartIntentHandler);
+const jiraBurndownChartIntentHandler: JiraBurndownChartIntentHandler = Container.get(JiraBurndownChartIntentHandler);
 const jiraVelocityIntentHandler: JiraVelocityIntentHandler = Container.get(JiraVelocityIntentHandler);
 const jiraSprintProgressIntentHandler: JiraSprintProgressIntentHandler = Container.get(JiraSprintProgressIntentHandler);
 const timeoutHandler: TimeoutHandler = Container.get(TimeoutHandler);
@@ -131,7 +131,7 @@ alexaApp.intent('JiraChangeIssueStatusIntent', jiraChangeIssueStatusIntentHandle
 alexaApp.intent('JiraXrayStatusIntent', jiraXrayStatusIntentHandler.handle.bind(jiraXrayStatusIntentHandler));
 
 // 'starte pm assistent und zeige burndown chart'
-alexaApp.intent('JiraChartIntent', jiraChartIntentHandler.handle.bind(jiraChartIntentHandler));
+alexaApp.intent('JiraBurndownChartIntent', jiraBurndownChartIntentHandler.handle.bind(jiraBurndownChartIntentHandler));
 
 // 'starte pm assistent und zeige die velocity'
 alexaApp.intent('JiraVelocityIntent', jiraVelocityIntentHandler.handle.bind(jiraVelocityIntentHandler));

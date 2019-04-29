@@ -208,7 +208,7 @@
           ]
         },
         {
-          "name": "JiraChartIntent",
+          "name": "JiraBurndownChartIntent",
           "slots": [
             {
               "name": "BurndownChartSprintNumber",

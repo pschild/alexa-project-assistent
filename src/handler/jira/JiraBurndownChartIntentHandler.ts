@@ -7,7 +7,7 @@ import { HandlerError } from '../../error/HandlerError';
 import { elicitSlot, ElicitationStatus } from '../handlerUtils';
 import { ILineChartDataItem, LineChartController } from '../../media/LineChartController';
 
-export default class JiraChartIntentHandler {
+export default class JiraBurndownChartIntentHandler {
 
     @Inject
     private controller: JiraEndpointController;

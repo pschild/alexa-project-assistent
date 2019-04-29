@@ -5,7 +5,7 @@ import { buildImageDirective } from '../../apl/datasources';
 import { JiraSprint } from '../../endpoint/jira/domain/JiraSprint';
 import { HandlerError } from '../../error/HandlerError';
 import { elicitSlot, ElicitationStatus } from '../handlerUtils';
-import { ILineChartDataItem, LineChartController, ILineChartDataValueItem } from '../../media/LineChartController';
+import { ILineChartDataItem, LineChartController } from '../../media/LineChartController';
 
 export default class JiraChartIntentHandler {
 
@@ -51,50 +51,27 @@ export default class JiraChartIntentHandler {
         }
 
         if (loadedSprint) {
-            const lineData: ILineChartDataValueItem[] = [
-                { key: 1551351187447, value: 1123200 },
-                { key: 1551448769000, value: 1094400 },
-                { key: 1551456613000, value: 1036800 },
-                { key: 1551975627000, value: 1008000 },
-                { key: 1552044726000, value: 921600 },
-                { key: 1552054312000, value: 835200 },
-                { key: 1552054674000, value: 777600 },
-                { key: 1552313060000, value: 792000 },
-                { key: 1552405962000, value: 763200 },
-                { key: 1552465083000, value: 676800 },
-                { key: 1552472876000, value: 705600 },
-                { key: 1552472888000, value: 691200 },
-                { key: 1552474192000, value: 604800 },
-                { key: 1552474806555, value: 604800 },
-                { key: 1552539120000, value: 604800 }
-            ].map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
-            const data: ILineChartDataItem[] = [{ name: 'test', values: lineData }];
-            const lineChartUrl = await this.lineChartController.generateChart(data).catch((e) => {
-                throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
-            });
+            console.log(loadedSprint);
+            let { burndownData, idealData } = await this.controller.getBurndownData(48, 58);
+            burndownData = burndownData.map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
+            idealData = idealData.map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
+
+            const chartData: ILineChartDataItem[] = [
+                { name: 'burndownData', values: burndownData, isStepped: true },
+                { name: 'idealData', values: idealData }
+            ];
+            const lineChartUrl = await this.lineChartController
+                .setLineColors(['#d04437', '#999'])
+                .generateChart(chartData).catch((e) => {
+                    throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
+                });
             response
                 .say(`Hier ist das Burndown Chart von Sprint ${loadedSprint.getSprintNumber()}.`)
                 .directive(buildImageDirective({
-                        title: `Burndownchart von Sprint ${loadedSprint.getSprintNumber()}`,
-                        imageUrl: lineChartUrl
-                    })
+                    title: `Burndownchart von Sprint ${loadedSprint.getSprintNumber()}`,
+                    imageUrl: lineChartUrl
+                })
                 );
-            /*const publicScreenshotUrl = this.controller.getBurndownChartUrl(36, loadedSprint.id);
-            if (publicScreenshotUrl) {
-                response
-                    .say(`Hier ist das Burndown Chart von Sprint ${loadedSprint.getSprintNumber()}.`)
-                    .directive(buildImageDirective({
-                        title: `Burndownchart von Sprint ${loadedSprint.getSprintNumber()}`,
-                        subtitle: loadedSprint.goal,
-                        imageUrl: publicScreenshotUrl,
-                        logoUrl: 'https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png'
-                    })
-                );
-            } else {
-                this.controller.crawlBurndownChart(36, loadedSprint);
-                response
-                    .say(`Ich suche das Burndown Chart von Sprint ${loadedSprint.getSprintNumber()} heraus und sage dir gleich bescheid.`);
-            }*/
         } else {
             throw new HandlerError(`Ich konnte den angeforderten Sprint nicht laden.`);
         }

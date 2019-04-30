@@ -12,6 +12,7 @@ import { GitlabEndpointController } from '../endpoint/gitlab/GitlabEndpointContr
 import { GitlabPipeline } from '../endpoint/gitlab/domain/GitlabPipeline';
 import { GitlabJob } from '../endpoint/gitlab/domain/GitlabJob';
 import { JobState } from '../endpoint/gitlab/domain/enum';
+import * as dateFormat from 'dateformat';
 
 export default class TestIntentHandler {
 
@@ -73,7 +74,7 @@ export default class TestIntentHandler {
             if (pipelineDetails.finished_at) {
                 result.push({
                     pipelineId,
-                    finishedAt: pipelineDetails.finished_at.toLocaleString('de-DE'),
+                    finishedAt: dateFormat(pipelineDetails.finished_at, 'dd.mm.yyyy HH:MM'),
                     statusImageUrl: pipelines[i][0].status,
                     branchOrProject: projectDetails[i].name,
                     stages: pipelineStages.map(stage => ({ name: stage.name, statusImageUrl: stage.status }))

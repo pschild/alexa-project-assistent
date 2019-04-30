@@ -5,6 +5,7 @@ import { buildEffortForReleaseDirective } from '../../apl/datasources';
 import { ProgressBarChartController } from '../../media/ProgressBarChartController';
 import { HandlerError } from '../../error/HandlerError';
 import { JiraRelease } from '../../endpoint/jira/domain/JiraRelease';
+import * as dateFormat from 'dateformat';
 
 export default class JiraEffortForReleaseIntentHandler {
 
@@ -44,7 +45,7 @@ export default class JiraEffortForReleaseIntentHandler {
 
         console.log({
             releaseName: 'Testrelease',
-            releaseDate: release.releaseDate.toLocaleDateString('de-DE'),
+            releaseDate: dateFormat(release.releaseDate, 'dd.mm.yyyy'),
             epicCount: epicsOfRelease.total,
             originalSeconds: originalSecondsSum,
             remainingSeconds: remainingSecondsSum
@@ -55,7 +56,7 @@ export default class JiraEffortForReleaseIntentHandler {
             .directive(buildEffortForReleaseDirective({
                 releaseName,
                 epicCount: epicsOfRelease.total,
-                releaseDate: release.releaseDate.toLocaleDateString('de-DE'),
+                releaseDate: dateFormat(release.releaseDate, 'dd.mm.yyyy'),
                 originalSeconds: originalSecondsSum,
                 remainingSeconds: remainingSecondsSum,
                 remainingWorkLabel: `ca. ${(remainingSecondsSum / 3600 / 8).toFixed(0)} PT`,

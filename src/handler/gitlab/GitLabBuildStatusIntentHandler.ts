@@ -6,6 +6,7 @@ import AppState from '../../app/state/AppState';
 import { JobState, PipelineState } from '../../endpoint/gitlab/domain/enum';
 import { GitlabJob } from '../../endpoint/gitlab/domain/GitlabJob';
 import { elicitSlot, ElicitationStatus } from '../handlerUtils';
+import * as dateFormat from 'dateformat';
 
 export default class GitLabBuildStatusIntentHandler {
 
@@ -53,7 +54,7 @@ export default class GitLabBuildStatusIntentHandler {
             if (pipelineDetails[i].finished_at) {
                 result.push({
                     pipelineId,
-                    finishedAt: pipelineDetails[i].finished_at.toLocaleString('de-DE'),
+                    finishedAt: dateFormat(pipelineDetails[i].finished_at, 'dd.mm.yyyy HH:MM'),
                     statusImageUrl: this.getIconUrlByPipelineStatus(pipelines[i].status),
                     branchOrProject: 'master',
                     stages: pipelineStages.map(stage => ({ name: stage.name, statusImageUrl: this.getIconUrlByJobStatus(stage.status) }))
@@ -81,7 +82,7 @@ export default class GitLabBuildStatusIntentHandler {
             if (pipelineDetails.finished_at) {
                 result.push({
                     pipelineId,
-                    finishedAt: pipelineDetails.finished_at.toLocaleString('de-DE'),
+                    finishedAt: dateFormat(pipelineDetails.finished_at, 'dd.mm.yyyy HH:MM'),
                     statusImageUrl: this.getIconUrlByPipelineStatus(pipelines[i][0].status),
                     branchOrProject: projectDetails[i].name,
                     stages: pipelineStages.map(stage => ({ name: stage.name, statusImageUrl: this.getIconUrlByJobStatus(stage.status) }))

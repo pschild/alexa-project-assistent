@@ -7,6 +7,7 @@ import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
 import { sayAsDecimal, sayAsDate } from '../../app/speechUtils';
 import { HandlerError } from '../../error/HandlerError';
 import { ProgressBarChartController } from '../../media/ProgressBarChartController';
+import * as dateFormat from 'dateformat';
 
 export default class JiraSprintProgressIntentHandler {
 
@@ -70,8 +71,8 @@ export default class JiraSprintProgressIntentHandler {
             .directive(buildSprintProgressDirective({
                 sprintName: activeSprint.name,
                 sprintGoal: activeSprint.goal,
-                sprintFrom: activeSprint.startDate.toLocaleDateString('de-DE'),
-                sprintTo: activeSprint.endDate.toLocaleDateString('de-DE'),
+                sprintFrom: dateFormat(activeSprint.startDate, 'dd.mm.yyyy HH:MM'),
+                sprintTo: dateFormat(activeSprint.endDate, 'dd.mm.yyyy HH:MM'),
                 workableIssuesProgressImageUrl: workableIssuesProgressChartUrl,
                 timeProgressImageUrl: timeProgressChartUrl,
                 taskProgressImageUrl: taskProgressChartUrl

@@ -1,0 +1,88 @@
+{
+    "type": "APL",
+    "version": "1.0",
+    "theme": "light",
+    "import": [],
+    "resources": [
+        {
+            "description": "Colors dark to light",
+            "colors": {
+                "backgroundColor": "#ececec"
+            }
+        }
+    ],
+    "styles": {},
+    "layouts": {
+        "Background": {
+            "item": [
+                {
+                    "type": "Frame",
+                    "when": "${!payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "backgroundColor": "@backgroundColor",
+                    "position": "absolute"
+                },
+                {
+                    "type": "Image",
+                    "when": "${payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "source": "${payload.data.backgroundImageUrl}",
+                    "scale": "best-fill",
+                    "position": "absolute"
+                }
+            ]
+        }
+    },
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "width": "100vw",
+                "height": "100vh",
+                "alignItems": "center",
+                "justifyContent": "spaceEvenly",
+                "item": [
+                    {
+                        "type": "Background"
+                    },
+                    {
+                        "type": "Text",
+                        "text": "Epics von \"${payload.data.releaseName}\": ${payload.data.epicCount}"
+                    },
+                    {
+                        "type": "Text",
+                        "text": "Release Datum: ${payload.data.releaseDate}"
+                    },
+                    {
+                        "type": "Container",
+                        "paddingTop": "50",
+                        "alignItems": "center",
+                        "direction": "row",
+                        "item": [
+                            {
+                                "type": "Text",
+                                "width": "380",
+                                "text": "Fortschritt:"
+                            },
+                            {
+                                "type": "Image",
+                                "width": "800",
+                                "height": "100",
+                                "source": "${payload.data.taskProgressImageUrl}"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Text",
+                        "text": "Verbleibender Aufwand: ${payload.data.remainingWorkLabel}"
+                    }
+                ]
+            }
+        ]
+    }
+}

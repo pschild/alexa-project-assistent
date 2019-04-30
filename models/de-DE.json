@@ -184,6 +184,13 @@
           ]
         },
         {
+          "name": "JiraEffortForReleaseIntent",
+          "slots": [],
+          "samples": [
+            "zeige den aufwand für das nächste release"
+          ]
+        },
+        {
           "name": "GitLabBuildStatusIntent",
           "slots": [
             {

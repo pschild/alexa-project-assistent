@@ -10,6 +10,7 @@ import { IssueType, IssueStatus, SprintStatus, IssueTransitionStatus } from './d
 import { JiraIssueSearchResult } from './domain/JiraIssueSearchResult';
 import { JiraSprint } from './domain/JiraSprint';
 import { JiraTestRun } from './domain/JiraTestRun';
+import { JiraRelease } from './domain/JiraRelease';
 
 @AutoWired
 @Singleton
@@ -25,11 +26,37 @@ export class JiraEndpointController extends EndpointController {
         );
     }
 
+    public async getProjectVersions(projectIdentifier: string): Promise<JiraRelease[]> {
+        const result = await this.get({
+            uri: `${this.baseUrl}rest/api/${JiraEndpointController.API_VERSION}/project/${projectIdentifier}/versions`
+        });
+        return (result as JiraRelease[]).map((sprint) => plainToClass(JiraRelease, sprint));
+    }
+
     public async getIssue(identifier: string): Promise<JiraIssue> {
         const result = await this.get({
             uri: `${this.baseUrl}rest/api/${JiraEndpointController.API_VERSION}/issue/${identifier}`
         });
         return plainToClass(JiraIssue, result as JiraIssue);
+    }
+
+    public async getEpicsOfRelease(releaseName: string): Promise<JiraIssueSearchResult> {
+        const jql = `project = AX AND issuetype = Epic AND fixVersion = ${releaseName}`;
+        const result = await this.get({
+            uri: `${this.baseUrl}rest/api/${JiraEndpointController.API_VERSION}/search`
+                + `?jql=${encodeURIComponent(jql)}`
+        });
+        return plainToClass(JiraIssueSearchResult, result as JiraIssueSearchResult);
+    }
+
+    public async getIssuesByEpicLink(epicName: string): Promise<JiraIssueSearchResult> {
+        const jql = `Epic-Verknüpfung = ${epicName}`;
+        const result = await this.get({
+            uri: `${this.baseUrl}rest/api/${JiraEndpointController.API_VERSION}/search`
+                + `?jql=${encodeURIComponent(jql)}`
+                + '&fields=timetracking'
+        });
+        return plainToClass(JiraIssueSearchResult, result as JiraIssueSearchResult);
     }
 
     public async getSprintsOfBoard(boardId: number, stateFilter?: SprintStatus[]): Promise<JiraSprint[]> {

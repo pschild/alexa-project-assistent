@@ -72,6 +72,17 @@ export interface IStagePayload {
     statusImageUrl: string;
 }
 
+export interface IEffortForReleaseDocumentPayload {
+    backgroundImageUrl?: string;
+    releaseName: string;
+    releaseDate: string;
+    epicCount: number;
+    originalSeconds: number;
+    remainingSeconds: number;
+    remainingWorkLabel: string;
+    taskProgressImageUrl: string;
+}
+
 export interface ITouchableTextDocumentPayload {
     text: string;
 }
@@ -155,6 +166,15 @@ export const buildMergeRequestsDirective = (data: IMergeRequestsDocumentPayload)
         type: 'Alexa.Presentation.APL.RenderDocument',
         token: 'mergeRequestsDocument',
         document: require(`@apl/mergeRequestsDocument.json`),
+        datasources: { data }
+    };
+};
+
+export const buildEffortForReleaseDirective = (data: IEffortForReleaseDocumentPayload) => {
+    return {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'effortForReleaseDocument',
+        document: require(`@apl/effortForReleaseDocument.json`),
         datasources: { data }
     };
 };

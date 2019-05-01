@@ -21,6 +21,24 @@
           ]
         },
         {
+          "name": "GitlabHelpIntent",
+          "samples": [
+            "gitlab hilfe",
+            "hilfe für gitlab",
+            "öffne gitlab hilfe",
+            "öffne die hilfe für gitlab"
+          ]
+        },
+        {
+          "name": "SonarQubeHelpIntent",
+          "samples": [
+            "sonar cube hilfe",
+            "hilfe für sonar cube",
+            "öffne sonar cube hilfe",
+            "öffne die hilfe für sonar cube"
+          ]
+        },
+        {
           "name": "AMAZON.StopIntent",
           "samples": []
         },

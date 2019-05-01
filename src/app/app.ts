@@ -34,6 +34,8 @@ import JiraSprintProgressIntentHandler from '../handler/jira/JiraSprintProgressI
 import GitLabBuildStatusIntentHandler from '../handler/gitlab/GitLabBuildStatusIntentHandler';
 import GitLabMergeRequestsIntentHandler from '../handler/gitlab/GitLabMergeRequestsIntentHandler';
 import JiraEffortForReleaseIntentHandler from '../handler/jira/JiraEffortForReleaseIntentHandler';
+import GitlabHelpIntentHandler from '../handler/gitlab/GitLabHelpIntentHandler';
+import SonarQubeHelpIntentHandler from '../handler/sonarqube/SonarQubeHelpIntentHandler';
 
 dotenv.config();
 
@@ -94,6 +96,8 @@ alexaApp.post = (request: alexa.request, response: alexa.response, type: string,
 
 const helpIntentHandler: HelpIntentHandler = Container.get(HelpIntentHandler);
 const jiraHelpIntentHandler: JiraHelpIntentHandler = Container.get(JiraHelpIntentHandler);
+const gitlabHelpIntentHandler: GitlabHelpIntentHandler = Container.get(GitlabHelpIntentHandler);
+const sonarQubeHelpIntentHandler: SonarQubeHelpIntentHandler = Container.get(SonarQubeHelpIntentHandler);
 const jiraIssueIntentHandler: JiraIssueIntentHandler = Container.get(JiraIssueIntentHandler);
 const jiraChangeIssueStatusIntentHandler: JiraChangeIssueStatusIntentHandler = Container.get(JiraChangeIssueStatusIntentHandler);
 const jiraXrayStatusIntentHandler: JiraXrayStatusIntentHandler = Container.get(JiraXrayStatusIntentHandler);
@@ -116,6 +120,12 @@ alexaApp.intent('AMAZON.HelpIntent', helpIntentHandler.handle.bind(helpIntentHan
 
 // 'jira hilfe'
 alexaApp.intent('JiraHelpIntent', jiraHelpIntentHandler.handle.bind(jiraHelpIntentHandler));
+
+// 'gitlab hilfe'
+alexaApp.intent('GitlabHelpIntent', gitlabHelpIntentHandler.handle.bind(gitlabHelpIntentHandler));
+
+// 'sonarqube hilfe'
+alexaApp.intent('SonarQubeHelpIntent', sonarQubeHelpIntentHandler.handle.bind(sonarQubeHelpIntentHandler));
 
 // TODO: add more HelpIntents
 
@@ -176,7 +186,9 @@ alexaApp.on('Alexa.Presentation.APL.UserEvent', (request: alexa.request, respons
             case 'jira':
                 return request.getRouter().intent('JiraHelpIntent');
             case 'gitlab':
+                return request.getRouter().intent('GitlabHelpIntent');
             case 'sonarqube':
+                return request.getRouter().intent('SonarQubeHelpIntent');
             default:
                 return response.say(`Diese Hilfe ist noch nicht implementiert.`);
         }

@@ -221,6 +221,7 @@
           ],
           "samples": [
             "zeige build status",
+            "zeige alle build status",
             "zeige build status von projekt {GitLabProjectName}"
           ]
         },

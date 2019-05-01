@@ -20,8 +20,9 @@ export default class GitlabHelpIntentHandler {
             .directive(buildHelpDetailDirective({
                 imageUrl: this.appState.getBaseUrl() + 'static/gitlab.png',
                 hints: [
-                    'zeige build status von projekt {GitLabProjectName}',
-                    'zeige offene merge requests'
+                    'Zeige alle Buildstatus',
+                    'Zeige Buildstatus von Projekt Alexa Test',
+                    'Zeige offene Merge Requests'
                 ]
             }))
             .shouldEndSession(false);

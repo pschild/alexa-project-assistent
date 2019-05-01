@@ -20,9 +20,10 @@ export default class JiraHelpIntentHandler {
             .directive(buildHelpDetailDirective({
                 imageUrl: this.appState.getBaseUrl() + 'static/jira.png',
                 hints: [
-                    'ändere den status von {JiraTicketIdentifier} {JiraTicketNumber} auf {JiraIssueStatus}',
-                    'zeige den aufwand für das nächste release',
-                    'zeige den sprint fortschritt'
+                    'Andere den Status von AX-2 auf geschlossen!',
+                    'Zeige den Aufwand für das nächste Release!',
+                    'Zeige den Sprint Fortschritt!',
+                    'Zeige mir das Burn Down Chart!'
                 ]
             }))
             .shouldEndSession(false);

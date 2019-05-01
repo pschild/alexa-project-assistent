@@ -1,0 +1,84 @@
+{
+    "type": "APL",
+    "version": "1.0",
+    "theme": "light",
+    "import": [],
+    "resources": [
+        {
+            "description": "Colors dark to light",
+            "colors": {
+                "backgroundColor": "#ececec"
+            }
+        }
+    ],
+    "styles": {},
+    "layouts": {
+        "Background": {
+            "item": [
+                {
+                    "type": "Frame",
+                    "when": "${!payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "backgroundColor": "@backgroundColor",
+                    "position": "absolute"
+                },
+                {
+                    "type": "Image",
+                    "when": "${payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "source": "${payload.data.backgroundImageUrl}",
+                    "scale": "best-fill",
+                    "position": "absolute"
+                }
+            ]
+        }
+    },
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "width": "100vw",
+                "height": "100vh",
+                "alignItems": "center",
+                "justifyContent": "center",
+                "item": [
+                    {
+                        "type": "Background"
+                    },
+                    {
+                        "type": "Image",
+                        "width": "350",
+                        "height": "350",
+                        "source": "${payload.data.logoUrl}"
+                    },
+                    {
+                        "type": "Text",
+                        "paddingTop": "20",
+                        "fontSize": "60dp",
+                        "text": "PM Assistent",
+                        "fontWeight": "bold"
+                    },
+                    {
+                        "type": "Text",
+                        "fontStyle": "italic",
+                        "fontSize": "30dp",
+                        "text": "\"${payload.data.randomCommand}\""
+                    },
+                    {
+                        "type": "Text",
+                        "fontSize": "30dp",
+                        "text": "Entwicklung: Philippe Schild",
+                        "position": "absolute",
+                        "right": "20",
+                        "bottom": "20"
+                    }
+                ]
+            }
+        ]
+    }
+}

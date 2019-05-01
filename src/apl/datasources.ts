@@ -4,6 +4,12 @@ export enum NotificationType {
     ERROR = 'error'
 }
 
+export interface IHomeDocumentPayload {
+    backgroundImageUrl?: string;
+    logoUrl: string;
+    randomCommand: string;
+}
+
 export interface IImageDocumentPayload {
     backgroundImageUrl?: string;
     title: string;
@@ -108,6 +114,15 @@ export interface IHelpItem {
     hints: string[];
     imageUrl: string;
 }
+
+export const buildHomeScreenDirective = (data: IHomeDocumentPayload) => {
+    return {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'homeDocument',
+        document: require(`@apl/homeDocument.json`),
+        datasources: { data }
+    };
+};
 
 export const buildHelpDirective = (data: IHelpDocumentPayload) => {
     return {

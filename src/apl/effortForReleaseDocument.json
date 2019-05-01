@@ -52,11 +52,19 @@
                     },
                     {
                         "type": "Text",
-                        "text": "Epics von \"${payload.data.releaseName}\": ${payload.data.epicCount}"
+                        "text": "Release \"${payload.data.releaseName}\""
                     },
                     {
                         "type": "Text",
                         "text": "Release Datum: ${payload.data.releaseDate}"
+                    },
+                    {
+                        "type": "Text",
+                        "text": "Erledigte Epics: ${payload.data.doneEpicCount}/${payload.data.epicCount}"
+                    },
+                    {
+                        "type": "Text",
+                        "text": "Verbleibender Aufwand: ${payload.data.remainingWorkLabel}"
                     },
                     {
                         "type": "Container",
@@ -76,10 +84,6 @@
                                 "source": "${payload.data.taskProgressImageUrl}"
                             }
                         ]
-                    },
-                    {
-                        "type": "Text",
-                        "text": "Verbleibender Aufwand: ${payload.data.remainingWorkLabel}"
                     }
                 ]
             }

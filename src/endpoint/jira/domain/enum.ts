@@ -29,7 +29,8 @@ export enum IssueStatus {
     IN_PROGRESS = 'In Progress',
     FINISHED = 'Fertig',
     RESOLVED = 'Resolved',
-    REOPENED = 'Reopened'
+    REOPENED = 'Reopened',
+    TODO = 'To Do'
 }
 
 export enum SprintStatus {

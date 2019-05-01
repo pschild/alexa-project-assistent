@@ -77,6 +77,7 @@ export interface IEffortForReleaseDocumentPayload {
     releaseName: string;
     releaseDate: string;
     epicCount: number;
+    doneEpicCount: number;
     originalSeconds: number;
     remainingSeconds: number;
     remainingWorkLabel: string;

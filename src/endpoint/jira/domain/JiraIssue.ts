@@ -35,6 +35,7 @@ export class JiraIssue {
         switch (this.fields.status.name) {
             case IssueStatus.OPEN:
             case IssueStatus.REOPENED:
+            case IssueStatus.TODO:
                 return SwimlaneStatus.TODO;
             case IssueStatus.IN_PROGRESS:
                 return SwimlaneStatus.IN_PROGRESS;

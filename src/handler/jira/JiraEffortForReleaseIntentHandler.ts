@@ -6,6 +6,8 @@ import { ProgressBarChartController } from '../../media/ProgressBarChartControll
 import { HandlerError } from '../../error/HandlerError';
 import { JiraRelease } from '../../endpoint/jira/domain/JiraRelease';
 import * as dateFormat from 'dateformat';
+import { SwimlaneStatus } from '../../endpoint/jira/domain/enum';
+import { sayAsDate } from '../../app/speechUtils';
 
 export default class JiraEffortForReleaseIntentHandler {
 
@@ -22,6 +24,8 @@ export default class JiraEffortForReleaseIntentHandler {
         const release = releasesOfProjects.find(r => r.name === releaseName);
 
         const epicsOfRelease = await this.controller.getEpicsOfRelease(releaseName);
+        const doneEpics = epicsOfRelease.issues.filter(epic => epic.getSwimlaneStatus() === SwimlaneStatus.DONE);
+
         const issuesOfEpics = await Promise.all(epicsOfRelease.issues.map(epic => this.controller.getIssuesByEpicLink(epic.key)));
         let originalSecondsSum = 0;
         let remainingSecondsSum = 0;
@@ -43,23 +47,24 @@ export default class JiraEffortForReleaseIntentHandler {
             throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
         });
 
-        console.log({
-            releaseName: 'Testrelease',
-            releaseDate: dateFormat(release.releaseDate, 'dd.mm.yyyy'),
-            epicCount: epicsOfRelease.total,
-            originalSeconds: originalSecondsSum,
-            remainingSeconds: remainingSecondsSum
-        });
+        const remainingPt = (remainingSecondsSum / 3600 / 8).toFixed(0);
+        const doneEpicCount = doneEpics.length || 0;
+        const remainingEpicCount = epicsOfRelease.total - doneEpicCount;
 
         return response
-            .say('halla')
+            .say(
+                `Das Release ${releaseName} steht am ${sayAsDate(release.releaseDate)} an. `
+                + `Bis dahin sind noch ${remainingEpicCount} Epics `
+                + `mit einem Restaufwand von circa ${remainingPt} P.T. zu erledigen.`
+            )
             .directive(buildEffortForReleaseDirective({
                 releaseName,
                 epicCount: epicsOfRelease.total,
+                doneEpicCount,
                 releaseDate: dateFormat(release.releaseDate, 'dd.mm.yyyy'),
                 originalSeconds: originalSecondsSum,
                 remainingSeconds: remainingSecondsSum,
-                remainingWorkLabel: `ca. ${(remainingSecondsSum / 3600 / 8).toFixed(0)} PT`,
+                remainingWorkLabel: `ca. ${remainingPt} PT`,
                 taskProgressImageUrl: taskProgressChartUrl
             }));
     }

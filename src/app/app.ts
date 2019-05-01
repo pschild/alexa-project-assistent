@@ -92,6 +92,8 @@ alexaApp.post = (request: alexa.request, response: alexa.response, type: string,
     }
 };
 
+const helpIntentHandler: HelpIntentHandler = Container.get(HelpIntentHandler);
+const jiraHelpIntentHandler: JiraHelpIntentHandler = Container.get(JiraHelpIntentHandler);
 const jiraIssueIntentHandler: JiraIssueIntentHandler = Container.get(JiraIssueIntentHandler);
 const jiraChangeIssueStatusIntentHandler: JiraChangeIssueStatusIntentHandler = Container.get(JiraChangeIssueStatusIntentHandler);
 const jiraXrayStatusIntentHandler: JiraXrayStatusIntentHandler = Container.get(JiraXrayStatusIntentHandler);
@@ -110,10 +112,10 @@ alexaApp.launch(LaunchIntentHandler);
 alexaApp.intent('AMAZON.StopIntent', StopIntentHandler);
 
 // 'hilfe'
-alexaApp.intent('AMAZON.HelpIntent', HelpIntentHandler);
+alexaApp.intent('AMAZON.HelpIntent', helpIntentHandler.handle.bind(helpIntentHandler));
 
 // 'jira hilfe'
-alexaApp.intent('JiraHelpIntent', JiraHelpIntentHandler);
+alexaApp.intent('JiraHelpIntent', jiraHelpIntentHandler.handle.bind(jiraHelpIntentHandler));
 
 // TODO: add more HelpIntents
 
@@ -173,7 +175,6 @@ alexaApp.on('Alexa.Presentation.APL.UserEvent', (request: alexa.request, respons
         switch (selectedItemIdentifier) {
             case 'jira':
                 return request.getRouter().intent('JiraHelpIntent');
-            case 'confluence':
             case 'gitlab':
             case 'sonarqube':
             default:

@@ -1,0 +1,88 @@
+{
+    "type": "APL",
+    "version": "1.0",
+    "theme": "light",
+    "import": [],
+    "resources": [
+        {
+            "description": "Colors dark to light",
+            "colors": {
+                "backgroundColor": "#ececec"
+            }
+        }
+    ],
+    "styles": {},
+    "layouts": {
+        "Background": {
+            "item": [
+                {
+                    "type": "Frame",
+                    "when": "${!payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "backgroundColor": "@backgroundColor",
+                    "position": "absolute"
+                },
+                {
+                    "type": "Image",
+                    "when": "${payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "source": "${payload.data.backgroundImageUrl}",
+                    "scale": "best-fill",
+                    "position": "absolute"
+                }
+            ]
+        },
+        "HintItem": {
+            "parameters": [
+                "text"
+            ],
+            "item": [
+                {
+                    "type": "Text",
+                    "width": "100%",
+                    "fontSize": "30dp",
+                    "text": "${text}"
+                }
+            ]
+        }
+    },
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "width": "100vw",
+                "height": "100vh",
+                "alignItems": "center",
+                "justifyContent": "center",
+                "item": [
+                    {
+                        "type": "Background"
+                    },
+                    {
+                        "type": "Image",
+                        "width": "250",
+                        "height": "250",
+                        "source": "${payload.data.imageUrl}"
+                    },
+                    {
+                        "type": "Sequence",
+                        "height": "50vh",
+                        "paddingTop": "50",
+                        "data": "${payload.data.hints}",
+                        "item": [
+                            {
+                                "text": "${data}",
+                                "type": "HintItem"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,157 @@
+{
+    "type": "APL",
+    "version": "1.0",
+    "theme": "light",
+    "import": [],
+    "resources": [
+        {
+            "description": "Colors dark to light",
+            "colors": {
+                "backgroundColor": "#ececec"
+            }
+        }
+    ],
+    "styles": {},
+    "layouts": {
+        "Background": {
+            "item": [
+                {
+                    "type": "Frame",
+                    "when": "${!payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "backgroundColor": "@backgroundColor",
+                    "position": "absolute"
+                },
+                {
+                    "type": "Image",
+                    "when": "${payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "source": "${payload.data.backgroundImageUrl}",
+                    "scale": "best-fill",
+                    "position": "absolute"
+                }
+            ]
+        },
+        "ListItem": {
+            "parameters": [
+                "identifier",
+                "title",
+                "hints",
+                "imageUrl"
+            ],
+            "item": [
+                {
+                    "type": "TouchWrapper",
+                    "onPress": [
+                        {
+                            "type": "SendEvent",
+                            "arguments": [
+                                "HelpItemSelected",
+                                "${identifier}"
+                            ]
+                        }
+                    ],
+                    "item": [
+                        {
+                            "type": "Container",
+                            "paddingTop": "30",
+                            "paddingBottom": "30",
+                            "direction": "row",
+                            "items": [
+                                {
+                                    "type": "Image",
+                                    "width": "200",
+                                    "height": "200",
+                                    "source": "${imageUrl}"
+                                },
+                                {
+                                    "type": "Container",
+                                    "paddingLeft": "30",
+                                    "items": [
+                                        {
+                                            "type": "Text",
+                                            "text": "<b>${title}</b>"
+                                        },
+                                        {
+                                            "type": "Sequence",
+                                            "height": "100%",
+                                            "data": "${hints}",
+                                            "item": [
+                                                {
+                                                    "text": "${data}",
+                                                    "type": "HintItem"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "List": {
+            "parameters": [
+                "listItems"
+            ],
+            "items": [
+                {
+                    "type": "Sequence",
+                    "width": "90vw",
+                    "height": "100vh",
+                    "paddingTop": "20",
+                    "paddingBottom": "20",
+                    "data": "${payload.data.items}",
+                    "numbered": true,
+                    "item": [
+                        {
+                            "identifier": "${data.identifier}",
+                            "title": "${data.title}",
+                            "hints": "${data.hints}",
+                            "imageUrl": "${data.imageUrl}",
+                            "type": "ListItem"
+                        }
+                    ]
+                }
+            ]
+        },
+        "HintItem": {
+            "parameters": [
+                "text"
+            ],
+            "item": [
+                {
+                    "type": "Text",
+                    "width": "100%",
+                    "fontSize": "30dp",
+                    "text": "${text}"
+                }
+            ]
+        }
+    },
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "width": "100vw",
+                "height": "100vh",
+                "alignItems": "center",
+                "item": [
+                    {
+                        "type": "Background"
+                    },
+                    {
+                        "listItems": "${payload.data.items}",
+                        "type": "List"
+                    }
+                ]
+            }
+        ]
+    }
+}

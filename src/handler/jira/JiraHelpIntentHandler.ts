@@ -1,30 +1,30 @@
+import { Inject } from 'typescript-ioc';
 import * as alexa from 'alexa-app';
-import { buildTextSamplesDirective } from '../../apl/datasources';
 import { sayJiraTicket, sayInEnglish, pause } from '../../app/speechUtils';
+import { buildHelpDetailDirective } from '../../apl/datasources';
+import AppState from '../../app/state/AppState';
 
-export default (request: alexa.request, response: alexa.response): void => {
-    const speech = `Du kannst mich nach Informationen aus ${sayInEnglish('jira')} Tickets fragen. Frage zum Beispiel:`
-        + `${pause(500)}`
-        + `Gib mir eine Zusammenfassung von Ticket ${sayJiraTicket('MDK', '2871')}`;
+export default class JiraHelpIntentHandler {
 
-    response
-        .say(speech)
-        .reprompt(speech)
-        .directive(buildTextSamplesDirective({
-            title: 'Hilfe für Jira',
-            logoUrl: 'https://d2o906d8ln7ui1.cloudfront.net/images/cheeseskillicon.png',
-            textContent: {
-                primaryText: {
-                    type: 'PlainText',
-                    text: `
-                        "Öffne Ticket"
-                        <br><br>
-                        "Öffne Ticket MDK 400"
-                        <br><br>
-                        "Gib mir eine Zusammenfassung von Ticket MDK 2871"
-                    `
-                }
-            }
-        }))
-        .shouldEndSession(false);
-};
+    @Inject
+    private appState: AppState;
+
+    public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
+        const speech = `Du kannst mich nach Informationen aus ${sayInEnglish('jira')} Tickets fragen. Frage zum Beispiel:`
+            + `${pause(500)}`
+            + `Gib mir eine Zusammenfassung von Ticket ${sayJiraTicket('MDK', '2871')}`;
+
+        return response
+            .say(speech)
+            .reprompt(speech)
+            .directive(buildHelpDetailDirective({
+                imageUrl: this.appState.getBaseUrl() + 'static/jira.png',
+                hints: [
+                    'ändere den status von {JiraTicketIdentifier} {JiraTicketNumber} auf {JiraIssueStatus}',
+                    'zeige den aufwand für das nächste release',
+                    'zeige den sprint fortschritt'
+                ]
+            }))
+            .shouldEndSession(false);
+    }
+}

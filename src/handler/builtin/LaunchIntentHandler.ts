@@ -26,6 +26,7 @@ export default class LaunchIntentHandler {
             .say(speech)
             .reprompt(`Wie kann ich dir weiterhelfen? Wenn du dir nicht sicher bist, sage: Hilfe.`)
             .directive(buildHomeScreenDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/birnen70.png',
                 logoUrl: this.appState.getBaseUrl() + 'static/logo.png',
                 randomCommand: 'test'
             }))

@@ -3,9 +3,9 @@ import { buildDashboardDirective } from '../apl/datasources';
 
 import { Inject } from 'typescript-ioc';
 import { PieChartController, IPieChartDataItem } from '../media/PieChartController';
-import { HandlerError } from '../error/HandlerError';
 import { IBarChartDataItem, BarChartController } from '../media/BarChartController';
 import { LineChartController, ILineChartDataItem, ILineChartDataValueItem } from '../media/LineChartController';
+import { HandlerError } from './error/HandlerError';
 
 export default class ProjectDashboardIntentHandler {
 

@@ -2,9 +2,9 @@ import * as alexa from 'alexa-app';
 import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointController';
 import { Inject } from 'typescript-ioc';
 import { buildImageDirective } from '../../apl/datasources';
-import { HandlerError } from '../../error/HandlerError';
 import { BarChartController, IBarChartDataItem } from '../../media/BarChartController';
 import { sayInEnglish, sayAsDecimal } from '../../app/speechUtils';
+import { HandlerError } from '../error/HandlerError';
 
 export default class JiraVelocityIntentHandler {
 

@@ -3,7 +3,7 @@ import { buildImageDirective, buildBuildStatusDirective, buildMergeRequestsDirec
 
 import { Inject } from 'typescript-ioc';
 import { PieChartController, IPieChartDataItem } from '../media/PieChartController';
-import { HandlerError } from '../error/HandlerError';
+import { HandlerError } from '../handler/error/HandlerError';
 import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
 import { LineChartController, ILineChartDataItem } from '../media/LineChartController';
 import { NotificationBuilder } from '../apl/NotificationBuilder';

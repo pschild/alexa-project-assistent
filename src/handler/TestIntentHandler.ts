@@ -1,5 +1,4 @@
 import { Inject } from 'typescript-ioc';
-import { HandlerError } from '../error/HandlerError';
 import { JiraEndpointController } from '../endpoint/jira/JiraEndpointController';
 import { LineChartController, ILineChartDataItem } from '../media/LineChartController';
 import { BarChartController, IBarChartDataItem } from '../media/BarChartController';
@@ -13,6 +12,7 @@ import { GitlabPipeline } from '../endpoint/gitlab/domain/GitlabPipeline';
 import { GitlabJob } from '../endpoint/gitlab/domain/GitlabJob';
 import { JobState } from '../endpoint/gitlab/domain/enum';
 import * as dateFormat from 'dateformat';
+import { HandlerError } from './error/HandlerError';
 
 export default class TestIntentHandler {
 

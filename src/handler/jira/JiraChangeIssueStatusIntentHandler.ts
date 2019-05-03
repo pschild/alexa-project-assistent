@@ -2,7 +2,6 @@ import * as alexa from 'alexa-app';
 import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointController';
 import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
 import { Inject } from 'typescript-ioc';
-import { HandlerError } from '../../error/HandlerError';
 import { sayJiraTicket } from '../../app/speechUtils';
 import {
     elicitSlot,
@@ -15,6 +14,7 @@ import {
 } from '../handlerUtils';
 import { IssueTransitionStatus } from '../../endpoint/jira/domain/enum';
 import { NotificationBuilder } from '../../apl/NotificationBuilder';
+import { HandlerError } from '../error/HandlerError';
 
 export default class JiraChangeIssueStatusIntentHandler {
 

@@ -1,7 +1,7 @@
 import AppState from '../app/state/AppState';
 import { Inject } from 'typescript-ioc';
 import { NotificationType, buildNotificationDirective } from './datasources';
-import { HandlerError } from '../error/HandlerError';
+import { HandlerError } from '../handler/error/HandlerError';
 
 export class NotificationBuilder {
 

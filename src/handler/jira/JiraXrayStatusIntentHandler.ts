@@ -1,13 +1,13 @@
 import * as alexa from 'alexa-app';
 import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointController';
 import { Inject } from 'typescript-ioc';
-import { HandlerError } from '../../error/HandlerError';
 import { PieChartController, IPieChartDataItem } from '../../media/PieChartController';
 import { buildXrayStatusDirective } from '../../apl/datasources';
 import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
 import { sayJiraTicket } from '../../app/speechUtils';
 import { TestRunStatus } from '../../endpoint/jira/domain/enum';
 import AppState from '../../app/state/AppState';
+import { HandlerError } from '../error/HandlerError';
 
 export default class JiraXrayStatusIntentHandler {
 

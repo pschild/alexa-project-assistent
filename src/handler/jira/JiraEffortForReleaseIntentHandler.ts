@@ -3,11 +3,11 @@ import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointControll
 import { Inject } from 'typescript-ioc';
 import { buildEffortForReleaseDirective } from '../../apl/datasources';
 import { ProgressBarChartController } from '../../media/ProgressBarChartController';
-import { HandlerError } from '../../error/HandlerError';
 import { JiraRelease } from '../../endpoint/jira/domain/JiraRelease';
 import * as dateFormat from 'dateformat';
 import { SwimlaneStatus } from '../../endpoint/jira/domain/enum';
 import { sayAsDate } from '../../app/speechUtils';
+import { HandlerError } from '../error/HandlerError';
 
 export default class JiraEffortForReleaseIntentHandler {
 

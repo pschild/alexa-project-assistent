@@ -5,9 +5,9 @@ import { buildSprintProgressDirective } from '../../apl/datasources';
 import { IssueType, SwimlaneStatus } from '../../endpoint/jira/domain/enum';
 import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
 import { sayAsDecimal, sayAsDate } from '../../app/speechUtils';
-import { HandlerError } from '../../error/HandlerError';
 import { ProgressBarChartController } from '../../media/ProgressBarChartController';
 import * as dateFormat from 'dateformat';
+import { HandlerError } from '../error/HandlerError';
 
 export default class JiraSprintProgressIntentHandler {
 

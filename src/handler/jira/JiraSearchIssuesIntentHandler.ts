@@ -4,7 +4,7 @@ import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointControll
 import { JiraIssueSearchResult } from '../../endpoint/jira/domain/JiraIssueSearchResult';
 import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
 import { IssuePriority } from '../../endpoint/jira/domain/enum';
-import { sayInEnglish } from '../../app/speechUtils';
+import { sayInEnglish } from '../utils/speechUtils';
 
 export default async (request: alexa.request, response: alexa.response): Promise<alexa.response> => {
     const controller: JiraEndpointController = Container.get(JiraEndpointController);

@@ -5,7 +5,7 @@ import { BarChartController, IBarChartDataItem } from '../media/BarChartControll
 import { PieChartController, IPieChartDataItem } from '../media/PieChartController';
 import { JiraIssue } from '../endpoint/jira/domain/JiraIssue';
 import { TestRunStatus, IssueType, IssueStatus, SwimlaneStatus } from '../endpoint/jira/domain/enum';
-import { sayJiraTicket } from '../app/speechUtils';
+import { sayJiraTicket } from './utils/speechUtils';
 import { ProgressBarChartController } from '../media/ProgressBarChartController';
 import { GitlabEndpointController } from '../endpoint/gitlab/GitlabEndpointController';
 import { GitlabPipeline } from '../endpoint/gitlab/domain/GitlabPipeline';

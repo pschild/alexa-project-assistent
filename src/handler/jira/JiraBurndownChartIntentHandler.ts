@@ -3,7 +3,7 @@ import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointControll
 import { Inject } from 'typescript-ioc';
 import { buildImageDirective } from '../../apl/datasources';
 import { JiraSprint } from '../../endpoint/jira/domain/JiraSprint';
-import { elicitSlot, ElicitationStatus } from '../handlerUtils';
+import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
 import { ILineChartDataItem, LineChartController } from '../../media/LineChartController';
 import { HandlerError } from '../error/HandlerError';
 

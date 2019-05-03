@@ -1,8 +1,8 @@
 import { Inject } from 'typescript-ioc';
 import * as alexa from 'alexa-app';
-import { sayInEnglish, pause } from '../../app/speechUtils';
 import { buildHelpDetailDirective } from '../../apl/datasources';
 import AppState from '../../app/state/AppState';
+import { sayInEnglish, pause } from '../utils/speechUtils';
 
 export default class GitlabHelpIntentHandler {
 

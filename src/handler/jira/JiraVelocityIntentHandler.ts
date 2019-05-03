@@ -3,7 +3,7 @@ import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointControll
 import { Inject } from 'typescript-ioc';
 import { buildImageDirective } from '../../apl/datasources';
 import { BarChartController, IBarChartDataItem } from '../../media/BarChartController';
-import { sayInEnglish, sayAsDecimal } from '../../app/speechUtils';
+import { sayInEnglish, sayAsDecimal } from '../utils/speechUtils';
 import { HandlerError } from '../error/HandlerError';
 
 export default class JiraVelocityIntentHandler {

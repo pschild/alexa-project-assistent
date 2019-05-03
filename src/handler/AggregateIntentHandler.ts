@@ -1,7 +1,7 @@
 import * as alexa from 'alexa-app';
 import { TestAggregator } from '../aggregator/TestAggregator';
 import { Container } from 'typescript-ioc';
-import { sayInEnglish, sayAsDecimal } from '../app/speechUtils';
+import { sayAsDecimal, sayInEnglish } from './utils/speechUtils';
 
 export default async (request: alexa.request, response: alexa.response): Promise<alexa.response> => {
     const aggregator: TestAggregator = Container.get(TestAggregator);

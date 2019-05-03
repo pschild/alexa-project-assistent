@@ -1,8 +1,8 @@
 import { Inject } from 'typescript-ioc';
 import * as alexa from 'alexa-app';
 import AppState from '../../app/state/AppState';
-import { sayInEnglish } from '../../app/speechUtils';
 import { buildHomeScreenDirective } from '../../apl/datasources';
+import { sayInEnglish } from '../utils/speechUtils';
 
 export default class LaunchIntentHandler {
 
@@ -14,7 +14,7 @@ export default class LaunchIntentHandler {
         if (this.appState.isFirstStart()) {
             this.appState.setFirstStart(false);
             // speech = `Hallo und willkommen. Du kannst mir Fragen zu folgenden Systemen stellen: `
-            //     + `${sayInEnglish('jira')}, ${sayInEnglish('confluence')}, ${sayInEnglish('gitlab')} und ${sayInEnglish('sonarcube')}. `
+            // + `${sayInEnglish('jira')}, ${sayInEnglish('confluence')}, ${sayInEnglish('gitlab')} und ${sayInEnglish('sonarcube')}. `
             //     + `Um die allgemeine Hilfe zu öffnen, sage: Hilfe. `
             //     + `Für eine detaillierte Hilfe, sage zum Beispiel Hilfe für ${sayInEnglish('jira')}. `;
             speech = 'Was tun?';

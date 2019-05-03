@@ -5,8 +5,8 @@ import { buildBuildStatusDirective } from '../../apl/datasources';
 import AppState from '../../app/state/AppState';
 import { JobState, PipelineState } from '../../endpoint/gitlab/domain/enum';
 import { GitlabJob } from '../../endpoint/gitlab/domain/GitlabJob';
-import { elicitSlot, ElicitationStatus } from '../handlerUtils';
 import * as dateFormat from 'dateformat';
+import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
 
 export default class GitLabBuildStatusIntentHandler {
 

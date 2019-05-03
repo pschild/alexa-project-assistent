@@ -1,8 +1,8 @@
 import * as alexa from 'alexa-app';
-import { sayInEnglish } from '../../app/speechUtils';
 import { buildHelpDirective } from '../../apl/datasources';
 import { Inject } from 'typescript-ioc';
 import AppState from '../../app/state/AppState';
+import { sayInEnglish } from '../utils/speechUtils';
 
 export default class HelpIntentHandler {
 
@@ -11,8 +11,8 @@ export default class HelpIntentHandler {
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         const speech = `Du kannst mir Fragen zu folgenden Systemen stellen: `
-            + `${sayInEnglish('jira')}, ${sayInEnglish('gitlab')} und ${sayInEnglish('sonarcube')}.`
-            + `Für eine detaillierte Hilfe zu einem System sage zum Beispiel Hilfe für ${sayInEnglish('jira')}.`;
+            + `${sayInEnglish('jira')}, ${sayInEnglish('gitlab')} und ${sayInEnglish('sonarcube')}. `
+            + `Für eine detaillierte Hilfe zu einem System sage zum Beispiel Hilfe für ${sayInEnglish('jira')}. `;
         const reprompt = `Du kannst auch auf das jeweilige Logo tippen, um Hilfe zu einem System zu erhalten.`;
 
         return response

@@ -4,7 +4,7 @@ import { Inject } from 'typescript-ioc';
 import { PieChartController, IPieChartDataItem } from '../../media/PieChartController';
 import { buildXrayStatusDirective } from '../../apl/datasources';
 import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
-import { sayJiraTicket } from '../../app/speechUtils';
+import { sayJiraTicket } from '../utils/speechUtils';
 import { TestRunStatus } from '../../endpoint/jira/domain/enum';
 import AppState from '../../app/state/AppState';
 import { HandlerError } from '../error/HandlerError';

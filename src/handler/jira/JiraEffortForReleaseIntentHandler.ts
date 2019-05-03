@@ -6,7 +6,7 @@ import { ProgressBarChartController } from '../../media/ProgressBarChartControll
 import { JiraRelease } from '../../endpoint/jira/domain/JiraRelease';
 import * as dateFormat from 'dateformat';
 import { SwimlaneStatus } from '../../endpoint/jira/domain/enum';
-import { sayAsDate } from '../../app/speechUtils';
+import { sayAsDate } from '../utils/speechUtils';
 import { HandlerError } from '../error/HandlerError';
 
 export default class JiraEffortForReleaseIntentHandler {

@@ -3,7 +3,7 @@ import { Container } from 'typescript-ioc';
 import MailController from '../mail/MailController';
 import AppState from '../app/state/AppState';
 import EmployeeState from '../app/state/EmployeeState';
-import { elicitSlot, ElicitationStatus, confirmSlot, ConfirmationStatus } from './handlerUtils';
+import { elicitSlot, ElicitationStatus, confirmSlot, ConfirmationStatus } from './utils/handlerUtils';
 import { NotificationBuilder } from '../apl/NotificationBuilder';
 import { HandlerError } from './error/HandlerError';
 

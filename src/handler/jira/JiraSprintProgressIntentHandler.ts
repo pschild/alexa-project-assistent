@@ -4,7 +4,7 @@ import { Inject } from 'typescript-ioc';
 import { buildSprintProgressDirective } from '../../apl/datasources';
 import { IssueType, SwimlaneStatus } from '../../endpoint/jira/domain/enum';
 import { JiraIssue } from '../../endpoint/jira/domain/JiraIssue';
-import { sayAsDecimal, sayAsDate } from '../../app/speechUtils';
+import { sayAsDecimal, sayAsDate } from '../utils/speechUtils';
 import { ProgressBarChartController } from '../../media/ProgressBarChartController';
 import * as dateFormat from 'dateformat';
 import { HandlerError } from '../error/HandlerError';

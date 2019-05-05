@@ -13,8 +13,15 @@ import { GitlabJob } from '../endpoint/gitlab/domain/GitlabJob';
 import { JobState } from '../endpoint/gitlab/domain/enum';
 import * as dateFormat from 'dateformat';
 import { HandlerError } from './error/HandlerError';
+import { SonarQubeEndpointController } from '../endpoint/sonarqube/SonarQubeEndpointController';
+import { GitlabMergeRequest } from '../endpoint/gitlab/domain/GitlabMergeRequest';
+import { IssueSeverity, QualityGateStatus } from '../endpoint/sonarqube/domain/enum';
+import AppState from '../app/state/AppState';
 
 export default class TestIntentHandler {
+
+    @Inject
+    private appState: AppState;
 
     @Inject
     private lineChartController: LineChartController;
@@ -34,13 +41,96 @@ export default class TestIntentHandler {
     @Inject
     private gitLabController: GitlabEndpointController;
 
+    @Inject
+    private sonarQubeEndpointController: SonarQubeEndpointController;
+
     public async handle(request, response): Promise<any> {
-        return this.getAllBranchBuildsByProject();
+        return this.sq();
+        // return this.getAllBranchBuildsByProject();
         // return this.getMasterBuildsByProject();
         // return this.getSprintProgress();
         // return this.getVel();
         // return this.getBdc();
         // return this.getXrayStatus();
+    }
+
+    private async generateIssueSeverityChart(projectKeys: string[]): Promise<string> {
+        const results = await Promise.all(projectKeys.map(key => this.sonarQubeEndpointController.getOpenIssuesOfProject(key)));
+        const severitiesCount = {
+            info: 0, minor: 0, major: 0, critical: 0, blocker: 0
+        };
+        results.forEach(result => {
+            result.issues.forEach(issue => {
+                switch (issue.severity) {
+                    case IssueSeverity.INFO:
+                        severitiesCount.info++;
+                        break;
+                    case IssueSeverity.MINOR:
+                        severitiesCount.minor++;
+                        break;
+                    case IssueSeverity.MAJOR:
+                        severitiesCount.major++;
+                        break;
+                    case IssueSeverity.BLOCKER:
+                        severitiesCount.blocker++;
+                        break;
+                    case IssueSeverity.CRITICAL:
+                        severitiesCount.critical++;
+                        break;
+                }
+            });
+        });
+
+        const data: IPieChartDataItem[] = [
+            { label: 'INFO', value: severitiesCount.info },
+            { label: 'MINOR', value: severitiesCount.minor },
+            { label: 'MAJOR', value: severitiesCount.major },
+            { label: 'CRITICAL', value: severitiesCount.critical },
+            { label: 'BLOCKER', value: severitiesCount.blocker }
+        ];
+
+        const chartUrl = await this.pieChartController
+            .setTextColor('#fff')
+            .setColorRange(['#4b9fd5', '#b0d513', '#d4333f', '#901d25', '#460308'])
+            .generateChart(data).catch((e) => {
+                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+            });
+        return chartUrl;
+    }
+
+    private async generateCoverageChart(projectKeys: string[]): Promise<string> {
+        const results = await Promise.all(projectKeys.map(key => this.sonarQubeEndpointController.getMeasuresOfProject(key)));
+        let projectCount = 0;
+        let coverageSum = 0;
+        results.forEach(result => {
+            const coverageMetric = result.measures.find(measure => measure.metric === 'coverage');
+            if (coverageMetric) {
+                projectCount++;
+                coverageSum += +coverageMetric.value;
+            }
+        });
+
+        const percent = (coverageSum / projectCount).toFixed(0);
+        const coverageChartUrl = await this.progressBarChartController.generateChart([
+            { label: `${projectCount > 1 ? 'Ø ' : ''}${percent}%`, percent }
+        ]).catch((e) => {
+            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+        });
+        return coverageChartUrl;
+    }
+
+    private async generateQualityGateStatusIconUrl(projectKey: string): Promise<string> {
+        const result = await this.sonarQubeEndpointController.getQualityGateStatusOfProject(projectKey);
+        return result.status === QualityGateStatus.OK
+            ? this.appState.getBaseUrl() + 'static/success.png'
+            : this.appState.getBaseUrl() + 'static/error.png';
+    }
+
+    private async sq() {
+        const a = await this.generateIssueSeverityChart(['schild:auftragsverwaltung', 'schild:produktsystem', 'schild:ressourcenverwaltung']);
+        const b = await this.generateCoverageChart(['schild:auftragsverwaltung', 'schild:produktsystem', 'schild:ressourcenverwaltung']);
+        const c = await this.generateQualityGateStatusIconUrl('schild:auftragsverwaltung');
+        return c;
     }
 
     private async getAllBranchBuildsByProject() {

@@ -265,6 +265,23 @@
           ]
         },
         {
+          "name": "SonarQubeDashboardIntent",
+          "slots": [
+            {
+              "name": "SonarQubeProjectName",
+              "type": "SonarQubeProject",
+              "samples": [
+                "{SonarQubeProjectName}"
+              ]
+            }
+          ],
+          "samples": [
+            "zeige sonarcube dashboard",
+            "zeige sonar übersicht",
+            "zeige sonarcube übersicht von projekt {SonarQubeProjectName}"
+          ]
+        },
+        {
           "name": "JenkinsBuildsIntent",
           "slots": [],
           "samples": [

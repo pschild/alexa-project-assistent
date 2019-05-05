@@ -90,6 +90,19 @@ export interface IEffortForReleaseDocumentPayload {
     taskProgressImageUrl: string;
 }
 
+export interface ISonarQubeDashboardDocumentPayload {
+    backgroundImageUrl?: string;
+    headline: string;
+    projects: ISonarQubeQualityGateStatus[];
+    issuesImageUrl: string;
+    coverageImageUrl: string;
+}
+
+export interface ISonarQubeQualityGateStatus {
+    name: string;
+    qualityGateIconUrl: string;
+}
+
 export interface INotificationDocumentPayload {
     backgroundImageUrl?: string;
     type: NotificationType;
@@ -201,6 +214,15 @@ export const buildEffortForReleaseDirective = (data: IEffortForReleaseDocumentPa
         type: 'Alexa.Presentation.APL.RenderDocument',
         token: 'effortForReleaseDocument',
         document: require(`@apl/effortForReleaseDocument.json`),
+        datasources: { data }
+    };
+};
+
+export const buildSonarQubeDashboardDirective = (data: ISonarQubeDashboardDocumentPayload) => {
+    return {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'sonarQubeDashboardDocument',
+        document: require(`@apl/sonarQubeDashboardDocument.json`),
         datasources: { data }
     };
 };

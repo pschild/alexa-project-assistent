@@ -36,6 +36,7 @@ import GitLabMergeRequestsIntentHandler from '../handler/gitlab/GitLabMergeReque
 import JiraEffortForReleaseIntentHandler from '../handler/jira/JiraEffortForReleaseIntentHandler';
 import GitlabHelpIntentHandler from '../handler/gitlab/GitLabHelpIntentHandler';
 import SonarQubeHelpIntentHandler from '../handler/sonarqube/SonarQubeHelpIntentHandler';
+import SonarQubeDashboardIntentHandler from '../handler/sonarqube/SonarQubeDashboardIntentHandler';
 
 dotenv.config();
 
@@ -111,6 +112,7 @@ const displayTestIntentHandler: DisplayTestIntentHandler = Container.get(Display
 const projectDashboardIntentHandler: ProjectDashboardIntentHandler = Container.get(ProjectDashboardIntentHandler);
 const gitlabBuildStatusIntentHandler: GitLabBuildStatusIntentHandler = Container.get(GitLabBuildStatusIntentHandler);
 const gitlabMergeRequestsIntentHandler: GitLabMergeRequestsIntentHandler = Container.get(GitLabMergeRequestsIntentHandler);
+const sonarQubeDashboardIntentHandler: SonarQubeDashboardIntentHandler = Container.get(SonarQubeDashboardIntentHandler);
 
 alexaApp.launch(launchIntentHandler.handle.bind(launchIntentHandler));
 
@@ -165,6 +167,9 @@ alexaApp.intent('GitLabBuildStatusIntent', gitlabBuildStatusIntentHandler.handle
 
 // 'starte pm assistent und zeige merge requests'
 alexaApp.intent('GitLabMergeRequestsIntent', gitlabMergeRequestsIntentHandler.handle.bind(gitlabMergeRequestsIntentHandler));
+
+// 'starte pm assistent und zeige sonarcube übersicht von projekt {SonarQubeProjectName}'
+alexaApp.intent('SonarQubeDashboardIntent', sonarQubeDashboardIntentHandler.handle.bind(sonarQubeDashboardIntentHandler));
 
 // 'starte pm assistent und zeige jenkins status'
 alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler);

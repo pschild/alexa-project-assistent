@@ -1,6 +1,10 @@
+import { Type } from 'class-transformer';
+
 export class SonarQubeProject {
     key: string;
     name: string;
-    qualifier: string;
-    project: string;
+    version: string;
+
+    @Type(() => Date)
+    analysisDate: Date;
 }

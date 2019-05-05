@@ -89,7 +89,7 @@ export default class SonarQubeDashboardIntentHandler {
         return coverageChartUrl;
     }
 
-    private async generateQualityGateStatus(projectKey: string): Promise<QualityGateStatus> {
+    private async getQualityGateStatus(projectKey: string): Promise<QualityGateStatus> {
         const result = await this.controller.getQualityGateStatusOfProject(projectKey);
         return result.status;
     }
@@ -105,7 +105,7 @@ export default class SonarQubeDashboardIntentHandler {
 
         const issuesImageUrl = await this.generateIssueSeverityChart(projectKeys);
         const coverageImageUrl = await this.generateCoverageChart(projectKeys);
-        const qualityGatesResults = await Promise.all(projectKeys.map(project => this.generateQualityGateStatus(project)));
+        const qualityGatesResults = await Promise.all(projectKeys.map(project => this.getQualityGateStatus(project)));
 
         const projects = [];
         // tslint:disable-next-line:prefer-for-of

@@ -222,7 +222,9 @@
           "samples": [
             "zeige build status",
             "zeige alle build status",
-            "zeige build status von projekt {GitLabProjectName}"
+            "zeige build status von projekt {GitLabProjectName}",
+            "zeige die pipelines von {GitLabProjectName}",
+            "zeige die jobs von {GitLabProjectName}"
           ]
         },
         {

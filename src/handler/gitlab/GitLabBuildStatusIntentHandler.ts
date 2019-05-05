@@ -37,7 +37,7 @@ export default class GitLabBuildStatusIntentHandler {
             }));
     }
 
-    private async buildMasterBuildOverview(projectId: number) {
+    public async buildMasterBuildOverview(projectId: number) {
         const pipelines = await this.controller.getPipelinesOfProject(projectId, { branchName: 'master' });
 
         const [jobsResult, pipelineDetails] = await Promise.all([
@@ -65,7 +65,7 @@ export default class GitLabBuildStatusIntentHandler {
         return result;
     }
 
-    private async buildProjectsOverview() {
+    public async buildProjectsOverview() {
         const projectIds = GitlabEndpointController.DEMO_PROJECTS.map(project => project.id);
         const [projectDetails, pipelines] = await Promise.all([
             Promise.all(projectIds.map(id => this.controller.getProject(id))),

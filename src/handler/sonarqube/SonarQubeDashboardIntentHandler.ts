@@ -24,7 +24,7 @@ export default class SonarQubeDashboardIntentHandler {
     @Inject
     private progressBarChartController: ProgressBarChartController;
 
-    private async generateIssueSeverityChart(projectKeys: string[]): Promise<string> {
+    public async generateIssueSeverityChart(projectKeys: string[]): Promise<string> {
         const results = await Promise.all(projectKeys.map(key => this.controller.getOpenIssuesOfProject(key)));
         const severitiesCount = {
             info: 0, minor: 0, major: 0, critical: 0, blocker: 0
@@ -68,7 +68,7 @@ export default class SonarQubeDashboardIntentHandler {
         return chartUrl;
     }
 
-    private async generateCoverageChart(projectKeys: string[]): Promise<string> {
+    public async generateCoverageChart(projectKeys: string[]): Promise<string> {
         const results = await Promise.all(projectKeys.map(key => this.controller.getMeasuresOfProject(key)));
         let projectCount = 0;
         let coverageSum = 0;
@@ -89,7 +89,7 @@ export default class SonarQubeDashboardIntentHandler {
         return coverageChartUrl;
     }
 
-    private async getQualityGateStatus(projectKey: string): Promise<QualityGateStatus> {
+    public async getQualityGateStatus(projectKey: string): Promise<QualityGateStatus> {
         const result = await this.controller.getQualityGateStatusOfProject(projectKey);
         return result.status;
     }
@@ -135,7 +135,7 @@ export default class SonarQubeDashboardIntentHandler {
             }));
     }
 
-    private getIconUrlByStatus(status: QualityGateStatus): string {
+    public getIconUrlByStatus(status: QualityGateStatus): string {
         const successIconUrl = this.appState.getBaseUrl() + `static/success.png`;
         const errorIconUrl = this.appState.getBaseUrl() + `static/error.png`;
 

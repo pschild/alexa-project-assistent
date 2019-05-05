@@ -103,6 +103,18 @@ export interface ISonarQubeQualityGateStatus {
     qualityGateIconUrl: string;
 }
 
+export interface IScsDashboardDocumentPayload {
+    backgroundImageUrl?: string;
+    projects: IScsDashboardProject[];
+}
+
+export interface IScsDashboardProject {
+    name: string;
+    latestMasterBuildStatusImageUrl: string;
+    qgStatusImageUrl: string;
+    openMergeRequests: number;
+}
+
 export interface INotificationDocumentPayload {
     backgroundImageUrl?: string;
     type: NotificationType;
@@ -223,6 +235,15 @@ export const buildSonarQubeDashboardDirective = (data: ISonarQubeDashboardDocume
         type: 'Alexa.Presentation.APL.RenderDocument',
         token: 'sonarQubeDashboardDocument',
         document: require(`@apl/sonarQubeDashboardDocument.json`),
+        datasources: { data }
+    };
+};
+
+export const buildScsDashboardDirective = (data: IScsDashboardDocumentPayload) => {
+    return {
+        type: 'Alexa.Presentation.APL.RenderDocument',
+        token: 'scsDashboardDocument',
+        document: require(`@apl/scsDashboardDocument.json`),
         datasources: { data }
     };
 };

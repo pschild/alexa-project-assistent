@@ -1,0 +1,195 @@
+{
+    "type": "APL",
+    "version": "1.0",
+    "theme": "light",
+    "import": [],
+    "resources": [
+        {
+            "description": "Colors dark to light",
+            "colors": {
+                "backgroundColor": "#ececec"
+            }
+        }
+    ],
+    "styles": {},
+    "layouts": {
+        "Background": {
+            "item": [
+                {
+                    "type": "Frame",
+                    "when": "${!payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "backgroundColor": "@backgroundColor",
+                    "position": "absolute"
+                },
+                {
+                    "type": "Image",
+                    "when": "${payload.data.backgroundImageUrl}",
+                    "width": "100vw",
+                    "height": "100vh",
+                    "source": "${payload.data.backgroundImageUrl}",
+                    "scale": "best-fill",
+                    "position": "absolute"
+                }
+            ]
+        },
+        "RowItem": {
+            "parameters": [
+                "name",
+                "latestMasterBuildStatusImageUrl",
+                "qgStatusImageUrl",
+                "openMergeRequests"
+            ],
+            "item": [
+                {
+                    "type": "Container",
+                    "width": "100%",
+                    "alignItems": "center",
+                    "direction": "row",
+                    "spacing": "50",
+                    "item": [
+                        {
+                            "type": "Container",
+                            "width": "100%",
+                            "alignItems": "center",
+                            "direction": "row",
+                            "item": [
+                                {
+                                    "type": "Text",
+                                    "width": "50%",
+                                    "text": "${name}"
+                                },
+                                {
+                                    "type": "Container",
+                                    "width": "20%",
+                                    "alignItems": "center",
+                                    "item": [
+                                        {
+                                            "type": "Image",
+                                            "width": "80",
+                                            "height": "80",
+                                            "paddingLeft": "10",
+                                            "paddingRight": "10",
+                                            "source": "${latestMasterBuildStatusImageUrl}"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Container",
+                                    "width": "15%",
+                                    "alignItems": "center",
+                                    "item": [
+                                        {
+                                            "type": "Image",
+                                            "width": "80",
+                                            "height": "80",
+                                            "paddingLeft": "10",
+                                            "paddingRight": "10",
+                                            "source": "${qgStatusImageUrl}"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Container",
+                                    "width": "15%",
+                                    "alignItems": "center",
+                                    "item": [
+                                        {
+                                            "type": "Text",
+                                            "height": "80",
+                                            "textAlignVertical": "center",
+                                            "text": "${openMergeRequests}"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "width": "100vw",
+                "height": "100vh",
+                "alignItems": "center",
+                "item": [
+                    {
+                        "type": "Background"
+                    },
+                    {
+                        "type": "Text",
+                        "height": "12vh",
+                        "paddingTop": "40",
+                        "text": "Teilprojekte"
+                    },
+                    {
+                        "type": "Container",
+                        "width": "90vw",
+                        "paddingTop": "5vh",
+                        "direction": "row",
+                        "item": [
+                            {
+                                "type": "Frame",
+                                "width": "50%"
+                            },
+                            {
+                                "type": "Text",
+                                "width": "20%",
+                                "textAlign": "center",
+                                "fontSize": "20dp",
+                                "text": " letzter Master",
+                                "alignSelf": "center"
+                            },
+                            {
+                                "type": "Text",
+                                "width": "15%",
+                                "textAlign": "center",
+                                "fontSize": "20dp",
+                                "text": "Quality Gate"
+                            },
+                            {
+                                "type": "Text",
+                                "width": "15%",
+                                "textAlign": "center",
+                                "fontSize": "20dp",
+                                "text": "Offene MRs"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Sequence",
+                        "width": "90vw",
+                        "height": "80vh",
+                        "paddingBottom": "20",
+                        "data": "${payload.data.projects}",
+                        "numbered": true,
+                        "item": [
+                            {
+                                "name": "${data.name}",
+                                "latestMasterBuildFinishedAt": "${data.latestMasterBuildFinishedAt}",
+                                "latestMasterBuildStatusImageUrl": "${data.latestMasterBuildStatusImageUrl}",
+                                "qgStatusImageUrl": "${data.qgStatusImageUrl}",
+                                "openMergeRequests": "${data.openMergeRequests}",
+                                "type": "RowItem",
+                                "finishedAt": "${data.finishedAt}",
+                                "stages": "${data.stages}",
+                                "branchOrProject": "${data.branchOrProject}",
+                                "statusImageUrl": "${data.statusImageUrl}",
+                                "branchName": "${data.branchName}",
+                                "projectName": "${data.projectName}"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

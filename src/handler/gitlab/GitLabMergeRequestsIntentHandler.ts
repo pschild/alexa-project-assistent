@@ -12,6 +12,15 @@ export default class GitLabMergeRequestsIntentHandler {
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         const projectIds = GitlabEndpointController.DEMO_PROJECTS.map(project => project.id);
+        const result = await this.getMergeRequests(projectIds);
+        return response
+            .say(`Es gibt insgesamt ${result.mrCountAll} offene Merge Requests.`)
+            .directive(buildMergeRequestsDirective({
+                projects: result.projects
+            }));
+    }
+
+    public async getMergeRequests(projectIds: number[]): Promise<any> {
         const [openMergeRequests, projectDetails] = await Promise.all([
             this.controller.getAllOpenMergeRequests(),
             Promise.all(projectIds.map(id => this.controller.getProject(id)))
@@ -20,7 +29,7 @@ export default class GitLabMergeRequestsIntentHandler {
         const filteredMrs = openMergeRequests.filter(mr => projectIds.includes(+mr.project_id));
         const groupedMrs = this.controller.groupMergeRequestsByProject(filteredMrs);
         let mrCountAll = 0;
-        const result = [];
+        const projects = [];
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < projectIds.length; i++) {
             const projectId = projectIds[i];
@@ -39,16 +48,15 @@ export default class GitLabMergeRequestsIntentHandler {
                         assigneeName: mr.assignee ? mr.assignee.name : undefined
                     }))
                     .sort(this.compareMergeRequests);
-                result.push({ projectName, mrCount, mergeRequests: mrResult });
+                projects.push({ projectName, mrCount, mergeRequests: mrResult });
             } else {
-                result.push({ projectName, mrCount: 0, mergeRequests: [] });
+                projects.push({ projectName, mrCount: 0, mergeRequests: [] });
             }
         }
-        return response
-            .say(`Es gibt insgesamt ${mrCountAll} offene Merge Requests.`)
-            .directive(buildMergeRequestsDirective({
-                projects: result
-            }));
+        return {
+            projects,
+            mrCountAll
+        };
     }
 
     private compareMergeRequests(a: GitlabMergeRequest, b: GitlabMergeRequest) {

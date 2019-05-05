@@ -17,6 +17,9 @@ import { SonarQubeEndpointController } from '../endpoint/sonarqube/SonarQubeEndp
 import { GitlabMergeRequest } from '../endpoint/gitlab/domain/GitlabMergeRequest';
 import { IssueSeverity, QualityGateStatus } from '../endpoint/sonarqube/domain/enum';
 import AppState from '../app/state/AppState';
+import SonarQubeDashboardIntentHandler from './sonarqube/SonarQubeDashboardIntentHandler';
+import GitLabMergeRequestsIntentHandler from './gitlab/GitLabMergeRequestsIntentHandler';
+import GitLabBuildStatusIntentHandler from './gitlab/GitLabBuildStatusIntentHandler';
 
 export default class TestIntentHandler {
 
@@ -44,14 +47,44 @@ export default class TestIntentHandler {
     @Inject
     private sonarQubeEndpointController: SonarQubeEndpointController;
 
+    @Inject
+    private sonarQubeDashboardIntentHandler: SonarQubeDashboardIntentHandler;
+
+    @Inject
+    private gitLabMergeRequestsIntentHandler: GitLabMergeRequestsIntentHandler;
+
+    @Inject
+    private gitLabBuildStatusIntentHandler: GitLabBuildStatusIntentHandler;
+
     public async handle(request, response): Promise<any> {
-        return this.sq();
+        return this.agg();
         // return this.getAllBranchBuildsByProject();
         // return this.getMasterBuildsByProject();
         // return this.getSprintProgress();
         // return this.getVel();
         // return this.getBdc();
         // return this.getXrayStatus();
+    }
+
+    private async agg() {
+        const sqProjectKeys = SonarQubeEndpointController.DEMO_PROJECTS.map(project => project.name);
+        const glProjectKeys = GitlabEndpointController.DEMO_PROJECTS.map(project => project.id);
+
+        const qgStatus = await Promise.all(sqProjectKeys.map(key => this.sonarQubeDashboardIntentHandler.getQualityGateStatus(key)));
+        const mergeRequests = await this.gitLabMergeRequestsIntentHandler.getMergeRequests(glProjectKeys);
+        const masterBuilds = await Promise.all(glProjectKeys.map(key => this.gitLabBuildStatusIntentHandler.buildMasterBuildOverview(key)));
+        const latestMasterBuilds = masterBuilds.map(builds => builds[0]);
+
+        console.log(qgStatus);
+        console.log(mergeRequests.projects);
+        console.log(latestMasterBuilds);
+
+        for (let i = 0; i < sqProjectKeys.length; i++) {
+            console.log(sqProjectKeys[i]);
+            console.log(qgStatus[i]);
+            console.log(mergeRequests.projects[i].mrCount);
+            console.log(latestMasterBuilds[i].statusImageUrl);
+        }
     }
 
     private async generateIssueSeverityChart(projectKeys: string[]): Promise<string> {

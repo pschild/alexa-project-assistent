@@ -282,6 +282,13 @@
           ]
         },
         {
+          "name": "ScsDashboardIntent",
+          "slots": [],
+          "samples": [
+            "zeige teilsystem dashboard"
+          ]
+        },
+        {
           "name": "JenkinsBuildsIntent",
           "slots": [],
           "samples": [

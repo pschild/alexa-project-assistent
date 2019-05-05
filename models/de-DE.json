@@ -326,26 +326,11 @@
         },
         {
           "name": "GitLabProject",
-          "values": [
-            {
-              "id": "36",
-              "name": {
-                "value": "Auftragsverwaltung"
-              }
-            },
-            {
-              "id": "136",
-              "name": {
-                "value": "MDK Client Workspace"
-              }
-            },
-            {
-              "id": "146",
-              "name": {
-                "value": "Alexa Test"
-              }
-            }
-          ]
+          "values": []
+        },
+        {
+          "name": "SonarQubeProject",
+          "values": []
         },
         {
           "name": "JiraIssueProperty",

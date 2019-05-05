@@ -15,6 +15,13 @@ export class GitlabEndpointController extends EndpointController {
 
     public static API_VERSION: number = 4;
 
+    public static DEMO_GROUP_ID = 5141587;
+    public static DEMO_PROJECTS = [
+        {id: 12168982, name: 'auftragsverwaltung'},
+        {id: 12175385, name: 'ressourcenverwaltung'},
+        {id: 12175407, name: 'produktsystem'}
+    ];
+
     public config(baseUrl?: string, authToken?: string) {
         return super.config(
             baseUrl || process.env.GITLAB_BASE_URL,
@@ -28,7 +35,7 @@ export class GitlabEndpointController extends EndpointController {
 
     public async getProjects(): Promise<GitlabProject[]> {
         const result = await this.get({
-            uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects`
+            uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/groups/${GitlabEndpointController.DEMO_GROUP_ID}/projects`
         });
         return (result as GitlabProject[]).map((project) => plainToClass(GitlabProject, project));
     }
@@ -53,20 +60,13 @@ export class GitlabEndpointController extends EndpointController {
     public async getAllOpenMergeRequests(): Promise<GitlabMergeRequest[]> {
         const result = await this.get({
             uri: [
-                `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/merge_requests`,
-                `?scope=${MergeRequestScope.ALL}`,
+                `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/groups/${GitlabEndpointController.DEMO_GROUP_ID}/`,
+                `merge_requests?scope=${MergeRequestScope.ALL}`,
                 `&state=${MergeRequestState.OPENED}`,
                 `&per_page=500`
             ].join('')
         });
         return (result as GitlabMergeRequest[]).map((mergeRequest) => plainToClass(GitlabMergeRequest, mergeRequest));
-    }
-
-    public async getMergeRequest(projectId: number, mergeRequestId: number): Promise<GitlabMergeRequest> {
-        const result = await this.get({
-            uri: `${this.baseUrl}/api/v${GitlabEndpointController.API_VERSION}/projects/${projectId}/merge_requests/${mergeRequestId}`
-        });
-        return plainToClass(GitlabMergeRequest, result as GitlabMergeRequest);
     }
 
     public async getBranchesOfProject(id: number): Promise<GitlabBranch[]> {

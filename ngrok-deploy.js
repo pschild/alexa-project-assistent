@@ -6,7 +6,8 @@ const editJsonFile = require('edit-json-file');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
-const employeeList = require('@root/employees.json');
+const employeeList = require('@root/demo-data/employees.json');
+const scsList = require('@root/demo-data/scs.json');
 
 const tempSkillFileName = '.temp-skill.json';
 const tempModelFileName = '.temp-model.json';
@@ -34,6 +35,8 @@ const createTempModelJson = async () => {
     console.log(`Generating ${tempModelFileName}...`);
     fs.copyFileSync(`${__dirname}/models/de-DE.json`, `${__dirname}/${tempModelFileName}`);
     let file = editJsonFile(`${__dirname}/${tempModelFileName}`);
+
+    // type EmployeeName
     let employeeNameType = file.get('interactionModel.languageModel.types').find((type) => type.name === 'EmployeeName');
     if (!employeeNameType) {
         throw new Error(`Could not find type "EmployeeName" in model`);
@@ -41,6 +44,25 @@ const createTempModelJson = async () => {
     employeeNameType.values = employeeList.map(employee => {
         return { name: { value: employee.name } };
     });
+
+    // type GitLabProject
+    let gitlabProjectType = file.get('interactionModel.languageModel.types').find((type) => type.name === 'GitLabProject');
+    if (!gitlabProjectType) {
+        throw new Error(`Could not find type "GitLabProject" in model`);
+    }
+    gitlabProjectType.values = scsList.map(scs => {
+        return { id: scs.gitlabId, name: { value: scs.name } };
+    });
+
+    // type SonarQubeProject
+    let sonarQubeProjectType = file.get('interactionModel.languageModel.types').find((type) => type.name === 'SonarQubeProject');
+    if (!sonarQubeProjectType) {
+        throw new Error(`Could not find type "SonarQubeProject" in model`);
+    }
+    sonarQubeProjectType.values = scsList.map(scs => {
+        return { id: scs.sonarqubeKey, name: { value: scs.name } };
+    });
+
     file.save();
     console.log('Done!');
 }

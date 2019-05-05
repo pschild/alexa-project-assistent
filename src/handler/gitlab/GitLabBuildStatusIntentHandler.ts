@@ -66,7 +66,7 @@ export default class GitLabBuildStatusIntentHandler {
     }
 
     private async buildProjectsOverview() {
-        const projectIds = [136, 36, 130];
+        const projectIds = GitlabEndpointController.DEMO_PROJECTS.map(project => project.id);
         const [projectDetails, pipelines] = await Promise.all([
             Promise.all(projectIds.map(id => this.controller.getProject(id))),
             Promise.all(projectIds.map(id => this.controller.getPipelinesOfProject(id, { branchName: 'master', limit: 1 })))

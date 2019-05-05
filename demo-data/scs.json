@@ -1,0 +1,17 @@
+[
+  {
+    "gitlabId": 12168982,
+    "name": "auftragsverwaltung",
+    "sonarqubeKey": "schild:auftragsverwaltung"
+  },
+  {
+    "gitlabId": 12175385,
+    "name": "ressourcenverwaltung",
+    "sonarqubeKey": "schild:ressourcenverwaltung"
+  },
+  {
+    "gitlabId": 12175407,
+    "name": "produktsystem",
+    "sonarqubeKey": "schild:produktsystem"
+  }
+]

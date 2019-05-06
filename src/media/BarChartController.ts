@@ -14,7 +14,7 @@ export class BarChartController extends ChartControllerAbstract {
     private defaultBarColor: string = '#4682b4';
     private yAxisUnit: string = 'h';
 
-    setLineColor(color: string): BarChartController {
+    setBarColor(color: string): BarChartController {
         this.defaultBarColor = color;
         return this;
     }

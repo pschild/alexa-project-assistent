@@ -46,6 +46,7 @@ const appState: AppState = Container.get(AppState);
 const app = express();
 app.use('/static', express.static('media-static'));
 app.use(express.static('media-gen'));
+app.use(express.static('demo-data'));
 app.use((req, res, next) => {
     appState.setHostname(req.hostname);
     return next();
@@ -110,7 +111,6 @@ const jiraSprintProgressIntentHandler: JiraSprintProgressIntentHandler = Contain
 const jiraEffortForReleaseIntentHandler: JiraEffortForReleaseIntentHandler = Container.get(JiraEffortForReleaseIntentHandler);
 const timeoutHandler: TimeoutHandler = Container.get(TimeoutHandler);
 const displayTestIntentHandler: DisplayTestIntentHandler = Container.get(DisplayTestIntentHandler);
-const projectDashboardIntentHandler: ProjectDashboardIntentHandler = Container.get(ProjectDashboardIntentHandler);
 const gitlabBuildStatusIntentHandler: GitLabBuildStatusIntentHandler = Container.get(GitLabBuildStatusIntentHandler);
 const gitlabMergeRequestsIntentHandler: GitLabMergeRequestsIntentHandler = Container.get(GitLabMergeRequestsIntentHandler);
 const sonarQubeDashboardIntentHandler: SonarQubeDashboardIntentHandler = Container.get(SonarQubeDashboardIntentHandler);
@@ -132,13 +132,8 @@ alexaApp.intent('GitlabHelpIntent', gitlabHelpIntentHandler.handle.bind(gitlabHe
 // 'sonarqube hilfe'
 alexaApp.intent('SonarQubeHelpIntent', sonarQubeHelpIntentHandler.handle.bind(sonarQubeHelpIntentHandler));
 
-// TODO: add more HelpIntents
-
 // 'zeige'
 alexaApp.intent('DisplayTestIntent', displayTestIntentHandler.handle.bind(displayTestIntentHandler));
-
-// 'gesamtstatus', 'übersicht', 'dashboard'
-alexaApp.intent('ProjectDashboardIntent', projectDashboardIntentHandler.handle.bind(projectDashboardIntentHandler));
 
 // 'starte projektassistent und öffne jira ticket'
 alexaApp.intent('JiraIssueIntent', jiraIssueIntentHandler.handle.bind(jiraIssueIntentHandler));
@@ -161,9 +156,6 @@ alexaApp.intent('JiraSprintProgressIntent', jiraSprintProgressIntentHandler.hand
 // 'starte projektassistent und zeige den aufwand für das nächste release'
 alexaApp.intent('JiraEffortForReleaseIntent', jiraEffortForReleaseIntentHandler.handle.bind(jiraEffortForReleaseIntentHandler));
 
-// 'starte projektassistent und suche nach offenen jira bugs'
-alexaApp.intent('JiraSearchIssuesIntent', JiraSearchIssuesIntentHandler);
-
 // 'starte projektassistent und zeige build status von projekt {GitLabProjectName}'
 alexaApp.intent('GitLabBuildStatusIntent', gitlabBuildStatusIntentHandler.handle.bind(gitlabBuildStatusIntentHandler));
 
@@ -175,15 +167,6 @@ alexaApp.intent('SonarQubeDashboardIntent', sonarQubeDashboardIntentHandler.hand
 
 // 'starte projektassistent und zeige teilsystem dashboard
 alexaApp.intent('ScsDashboardIntent', scsDashboardIntentHandler.handle.bind(scsDashboardIntentHandler));
-
-// 'starte projektassistent und zeige jenkins status'
-alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler);
-
-// 'starte projektassistent und sende eine mail'
-alexaApp.intent('SendMailIntent', SendMailIntentHandler);
-
-// 'starte projektassistent und gib mir einen aktuellen status'
-alexaApp.intent('AggregateIntent', AggregateIntentHandler);
 
 alexaApp.on('GameEngine.InputHandlerEvent', timeoutHandler.handle.bind(timeoutHandler));
 

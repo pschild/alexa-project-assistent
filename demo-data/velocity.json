@@ -1,0 +1,95 @@
+{
+    "sprints": [
+        {
+            "id": 58,
+            "sequence": 58,
+            "name": "Sprint 28",
+            "state": "CLOSED",
+            "goal": "",
+            "linkedPagesCount": 0
+        },
+        {
+            "id": 55,
+            "sequence": 55,
+            "name": "Sprint 27",
+            "state": "CLOSED",
+            "goal": "Lorem ipsum.",
+            "linkedPagesCount": 0
+        },
+        {
+            "id": 51,
+            "sequence": 51,
+            "name": "Sprint 26",
+            "state": "CLOSED",
+            "goal": "",
+            "linkedPagesCount": 0
+        },
+        {
+            "id": 49,
+            "sequence": 49,
+            "name": "Sprint 25",
+            "state": "CLOSED",
+            "goal": "Lorem ipsum.",
+            "linkedPagesCount": 0
+        },
+        {
+            "id": 45,
+            "sequence": 45,
+            "name": "Sprint 24",
+            "state": "CLOSED",
+            "linkedPagesCount": 0
+        }
+    ],
+    "velocityStatEntries": {
+        "45": {
+            "estimated": {
+                "value": 1591200,
+                "text": "1591200.0"
+            },
+            "completed": {
+                "value": 1360800,
+                "text": "1360800.0"
+            }
+        },
+        "49": {
+            "estimated": {
+                "value": 1123200,
+                "text": "1123200.0"
+            },
+            "completed": {
+                "value": 518400,
+                "text": "518400.0"
+            }
+        },
+        "51": {
+            "estimated": {
+                "value": 1562400,
+                "text": "1562400.0"
+            },
+            "completed": {
+                "value": 684000,
+                "text": "684000.0"
+            }
+        },
+        "55": {
+            "estimated": {
+                "value": 1483200,
+                "text": "1483200.0"
+            },
+            "completed": {
+                "value": 936000,
+                "text": "936000.0"
+            }
+        },
+        "58": {
+            "estimated": {
+                "value": 979200,
+                "text": "979200.0"
+            },
+            "completed": {
+                "value": 417600,
+                "text": "417600.0"
+            }
+        }
+    }
+}

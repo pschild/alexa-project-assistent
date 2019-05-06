@@ -139,8 +139,11 @@ export class JiraEndpointController extends EndpointController {
     }
 
     public async getVelocityData(rapidViewId: number) {
+        // const result = await this.get({
+        //     uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/velocity.json?rapidViewId=${rapidViewId}`
+        // });
         const result = await this.get({
-            uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/velocity.json?rapidViewId=${rapidViewId}`
+            uri: `${this.appState.getBaseUrl()}velocity.json`
         });
         return this.parseVelocityChartData(result, 5);
     }
@@ -167,14 +170,17 @@ export class JiraEndpointController extends EndpointController {
         });
 
         const velocity = completedSum / completedCounter;
-        result.push({ key: 'nächster Sprint', value: velocity, styles: { color: '#bbb' } });
+        result.push({ key: 'nächster Sprint', value: velocity, styles: { color: '#aaa' } });
         return result;
     }
 
     public async getBurndownData(rapidViewId: number, sprintId: number): Promise<any> {
+        // const result = await this.get({
+        //     uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/scopechangeburndownchart.json`
+        //         + `?rapidViewId=${rapidViewId}&sprintId=${sprintId}&statisticFieldId=field_timeestimate`
+        // });
         const result = await this.get({
-            uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/scopechangeburndownchart.json`
-                + `?rapidViewId=${rapidViewId}&sprintId=${sprintId}&statisticFieldId=field_timeestimate`
+            uri: `${this.appState.getBaseUrl()}bdc.json`
         });
 
         return this.parseBurndownChartData(result);

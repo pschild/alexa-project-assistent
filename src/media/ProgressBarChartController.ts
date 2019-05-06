@@ -13,7 +13,7 @@ export class ProgressBarChartController extends ChartControllerAbstract {
     protected chartHeight: number = 100;
 
     private defaultBarColor: string = '#4682b4';
-    private backgroundColor: string = '#ddd';
+    private backgroundColor: string = '#aaa';
 
     setLineColor(color: string): ProgressBarChartController {
         this.defaultBarColor = color;

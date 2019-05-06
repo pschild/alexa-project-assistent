@@ -1,0 +1,1636 @@
+{
+  "changes": {
+    "1534429967000": [
+      {
+        "key": "AX-2168",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1534780954000": [
+      {
+        "key": "AX-2209",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1534781041000": [
+      {
+        "key": "AX-2211",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1534781076000": [
+      {
+        "key": "AX-2212",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1534781143000": [
+      {
+        "key": "AX-2168",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 144000,
+          "changeDate": 1534781143000
+        }
+      }
+    ],
+    "1535985223000": [
+      {
+        "key": "AX-2400",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1536139876000": [
+      {
+        "key": "AX-2414",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1536141626000": [
+      {
+        "key": "AX-2424",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1540295580000": [
+      {
+        "key": "AX-2918",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1540296386000": [
+      {
+        "key": "AX-2919",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1540306009000": [
+      {
+        "key": "AX-2924",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 14400,
+          "changeDate": 1540306009000
+        },
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1542016196000": [
+      {
+        "key": "AX-2400",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 14400,
+          "changeDate": 1542016196000
+        }
+      }
+    ],
+    "1547734862000": [
+      {
+        "key": "AX-2208",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1547734862000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1551099944000": [
+      {
+        "key": "AX-4323",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1551278836000": [
+      {
+        "key": "AX-2414",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 86400,
+          "changeDate": 1551278836000
+        }
+      }
+    ],
+    "1551341729000": [
+      {
+        "key": "AX-4391",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1551980302000": [
+      {
+        "key": "AX-4379",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1551980302000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1552309244000": [
+      {
+        "key": "AX-4378",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1552309244000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1552469028000": [
+      {
+        "key": "AX-4581",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1552469624000": [
+      {
+        "key": "AX-4583",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1552469691000": [
+      {
+        "key": "AX-4585",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1552469754000": [
+      {
+        "key": "AX-4586",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1552584274000": [
+      {
+        "key": "AX-4643",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 14400,
+          "changeDate": 1552584274000
+        },
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1552950440000": [
+      {
+        "key": "AX-4661",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553014380000": [
+      {
+        "key": "AX-2414",
+        "timeC": {
+          "oldEstimate": 86400,
+          "newEstimate": 57600,
+          "timeSpent": 28800,
+          "changeDate": 1553014434000
+        }
+      }
+    ],
+    "1553090886000": [
+      {
+        "key": "AX-2168",
+        "timeC": {
+          "oldEstimate": 144000,
+          "newEstimate": 0,
+          "changeDate": 1553090886000
+        }
+      }
+    ],
+    "1553091602000": [
+      {
+        "key": "AX-4679",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553091889000": [
+      {
+        "key": "AX-4680",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553091916000": [
+      {
+        "key": "AX-2168",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 172800,
+          "changeDate": 1553091916000
+        }
+      }
+    ],
+    "1553244102000": [
+      {
+        "key": "AX-4731",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553244209000": [
+      {
+        "key": "AX-4736",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553244236000": [
+      {
+        "key": "AX-4738",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553244375000": [
+      {
+        "key": "AX-4740",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553244479000": [
+      {
+        "key": "AX-4741",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553245111000": [
+      {
+        "key": "AX-4744",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553245174000": [
+      {
+        "key": "AX-4746",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553249251000": [
+      {
+        "key": "AX-4763",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553249273000": [
+      {
+        "key": "AX-4764",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553249290000": [
+      {
+        "key": "AX-4765",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553249298000": [
+      {
+        "key": "AX-4766",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553249307000": [
+      {
+        "key": "AX-4767",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1553249696000": [
+      {
+        "key": "AX-4581",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 288000,
+          "changeDate": 1553249696000
+        }
+      }
+    ],
+    "1553250993000": [
+      {
+        "key": "AX-4661",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 288000,
+          "changeDate": 1553250993000
+        }
+      }
+    ],
+    "1553773635000": [
+      {
+        "key": "AX-2919",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 14400,
+          "changeDate": 1553773635000
+        }
+      }
+    ],
+    "1553773661000": [
+      {
+        "key": "AX-2918",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 14400,
+          "changeDate": 1553773661000
+        }
+      }
+    ],
+    "1553773681000": [
+      {
+        "key": "AX-4323",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 14400,
+          "changeDate": 1553773681000
+        }
+      }
+    ],
+    "1554119238000": [
+      {
+        "key": "AX-4556",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1554119238000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "6"
+        }
+      }
+    ],
+    "1554119257000": [
+      {
+        "key": "AX-4380",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1554119257000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "6"
+        }
+      }
+    ],
+    "1554119270000": [
+      {
+        "key": "AX-4381",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1554119270000
+        }
+      }
+    ],
+    "1554119286000": [
+      {
+        "key": "AX-4555",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1554119286000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "6"
+        }
+      }
+    ],
+    "1554119326000": [
+      {
+        "key": "AX-4381",
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "6"
+        }
+      }
+    ],
+    "1554136560000": [
+      {
+        "key": "AX-2414",
+        "timeC": {
+          "oldEstimate": 57600,
+          "newEstimate": 28800,
+          "timeSpent": 28800,
+          "changeDate": 1554136589000
+        }
+      }
+    ],
+    "1554378535000": [
+      {
+        "key": "AX-4940",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1554402920000": [
+      {
+        "key": "AX-4940",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 57600,
+          "changeDate": 1554402920000
+        }
+      }
+    ],
+    "1554451380000": [
+      {
+        "key": "AX-2424",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "timeSpent": 28800,
+          "changeDate": 1554710604000
+        }
+      }
+    ],
+    "1554729713000": [
+      {
+        "key": "AX-4391",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 14400,
+          "changeDate": 1554729713000
+        }
+      }
+    ],
+    "1554745824000": [
+      {
+        "key": "AX-4584",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1554745824000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1554745882000": [
+      {
+        "key": "AX-4581",
+        "timeC": {
+          "oldEstimate": 288000,
+          "newEstimate": 259200,
+          "changeDate": 1554745882000
+        }
+      }
+    ],
+    "1554809582000": [
+      {
+        "key": "AX-4582",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1554809582000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "6"
+        }
+      }
+    ],
+    "1554809630000": [
+      {
+        "key": "AX-4581",
+        "timeC": {
+          "oldEstimate": 259200,
+          "newEstimate": 230400,
+          "changeDate": 1554809630000
+        }
+      }
+    ],
+    "1554981351000": [
+      {
+        "key": "AX-4391",
+        "added": true
+      },
+      {
+        "key": "AX-4555",
+        "added": true
+      },
+      {
+        "key": "AX-4556",
+        "added": true
+      },
+      {
+        "key": "AX-4679",
+        "added": true
+      },
+      {
+        "key": "AX-2924",
+        "added": true
+      },
+      {
+        "key": "AX-2209",
+        "added": true
+      },
+      {
+        "key": "AX-2208",
+        "added": true
+      },
+      {
+        "key": "AX-2414",
+        "added": true
+      },
+      {
+        "key": "AX-2212",
+        "added": true
+      },
+      {
+        "key": "AX-2211",
+        "added": true
+      },
+      {
+        "key": "AX-4380",
+        "added": true
+      },
+      {
+        "key": "AX-4381",
+        "added": true
+      },
+      {
+        "key": "AX-4581",
+        "added": true
+      },
+      {
+        "key": "AX-4582",
+        "added": true
+      },
+      {
+        "key": "AX-4583",
+        "added": true
+      },
+      {
+        "key": "AX-4584",
+        "added": true
+      },
+      {
+        "key": "AX-4585",
+        "added": true
+      },
+      {
+        "key": "AX-2919",
+        "added": true
+      },
+      {
+        "key": "AX-4586",
+        "added": true
+      },
+      {
+        "key": "AX-2918",
+        "added": true
+      },
+      {
+        "key": "AX-2168",
+        "added": true
+      },
+      {
+        "key": "AX-4378",
+        "added": true
+      },
+      {
+        "key": "AX-4379",
+        "added": true
+      },
+      {
+        "key": "AX-4680",
+        "added": true
+      },
+      {
+        "key": "AX-4763",
+        "added": true
+      },
+      {
+        "key": "AX-4323",
+        "added": true
+      },
+      {
+        "key": "AX-4764",
+        "added": true
+      },
+      {
+        "key": "AX-4643",
+        "added": true
+      },
+      {
+        "key": "AX-4765",
+        "added": true
+      },
+      {
+        "key": "AX-4766",
+        "added": true
+      },
+      {
+        "key": "AX-4767",
+        "added": true
+      },
+      {
+        "key": "AX-2424",
+        "added": true
+      }
+    ],
+    "1554981987000": [
+      {
+        "key": "AX-4940",
+        "added": true
+      }
+    ],
+    "1554982053000": [
+      {
+        "key": "AX-4661",
+        "added": true
+      },
+      {
+        "key": "AX-4740",
+        "added": true
+      },
+      {
+        "key": "AX-4741",
+        "added": true
+      },
+      {
+        "key": "AX-4744",
+        "added": true
+      },
+      {
+        "key": "AX-4746",
+        "added": true
+      },
+      {
+        "key": "AX-4738",
+        "added": true
+      },
+      {
+        "key": "AX-4731",
+        "added": true
+      },
+      {
+        "key": "AX-4736",
+        "added": true
+      }
+    ],
+    "1555057860000": [
+      {
+        "key": "AX-2414",
+        "timeC": {
+          "oldEstimate": 28800,
+          "newEstimate": 0,
+          "timeSpent": 28800,
+          "changeDate": 1555317121000
+        }
+      }
+    ],
+    "1555317058000": [
+      {
+        "key": "AX-2424",
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "6"
+        }
+      }
+    ],
+    "1555317138000": [
+      {
+        "key": "AX-2414",
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "6"
+        }
+      }
+    ],
+    "1555339946000": [
+      {
+        "key": "AX-2400",
+        "added": true
+      }
+    ],
+    "1555340841000": [
+      {
+        "key": "AX-2400",
+        "added": false
+      }
+    ],
+    "1555401302000": [
+      {
+        "key": "AX-4323",
+        "timeC": {
+          "oldEstimate": 14400,
+          "newEstimate": 0,
+          "changeDate": 1555401302000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1555401501000": [
+      {
+        "key": "AX-4581",
+        "timeC": {
+          "oldEstimate": 230400,
+          "newEstimate": 144000,
+          "changeDate": 1555401501000
+        }
+      }
+    ],
+    "1555407366000": [
+      {
+        "key": "AX-5078",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1555407628000": [
+      {
+        "key": "AX-5080",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1555408558000": [
+      {
+        "key": "AX-5081",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1555409604000": [
+      {
+        "key": "AX-5082",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1555412290000": [
+      {
+        "key": "AX-5086",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1555412307000": [
+      {
+        "key": "AX-5087",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1555413110000": [
+      {
+        "key": "AX-5089",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1555413120000": [
+      {
+        "key": "AX-5090",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1555413130000": [
+      {
+        "key": "AX-5091",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1555413139000": [
+      {
+        "key": "AX-5092",
+        "column": {
+          "notDone": true,
+          "newStatus": "1"
+        }
+      }
+    ],
+    "1555429461000": [
+      {
+        "key": "AX-4765",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1555429461000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1555429474000": [
+      {
+        "key": "AX-4586",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1555429474000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1555433701000": [
+      {
+        "key": "AX-2919",
+        "timeC": {
+          "oldEstimate": 14400,
+          "newEstimate": 0,
+          "changeDate": 1555433701000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1555447830000": [
+      {
+        "key": "AX-2168",
+        "timeC": {
+          "oldEstimate": 172800,
+          "newEstimate": 86400,
+          "changeDate": 1555447830000
+        }
+      }
+    ],
+    "1555500850000": [
+      {
+        "key": "AX-4940",
+        "timeC": {
+          "oldEstimate": 57600,
+          "newEstimate": 43200,
+          "changeDate": 1555500850000
+        }
+      }
+    ],
+    "1555511283000": [
+      {
+        "key": "AX-4680",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1555511283000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1555575718000": [
+      {
+        "key": "AX-5086",
+        "added": true
+      },
+      {
+        "key": "AX-5087",
+        "added": true
+      },
+      {
+        "key": "AX-5089",
+        "added": true
+      },
+      {
+        "key": "AX-5080",
+        "added": true
+      },
+      {
+        "key": "AX-5081",
+        "added": true
+      },
+      {
+        "key": "AX-5082",
+        "added": true
+      },
+      {
+        "key": "AX-5078",
+        "added": true
+      },
+      {
+        "key": "AX-5090",
+        "added": true
+      },
+      {
+        "key": "AX-5091",
+        "added": true
+      },
+      {
+        "key": "AX-5092",
+        "added": true
+      }
+    ],
+    "1555599130000": [
+      {
+        "key": "AX-4763",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1555599130000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1555599156000": [
+      {
+        "key": "AX-4581",
+        "timeC": {
+          "oldEstimate": 144000,
+          "newEstimate": 86400,
+          "changeDate": 1555599156000
+        }
+      }
+    ],
+    "1555601038000": [
+      {
+        "key": "AX-2209",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1555601038000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1555601058000": [
+      {
+        "key": "AX-2211",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1555601058000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1555601100000": [
+      {
+        "key": "AX-2168",
+        "timeC": {
+          "oldEstimate": 86400,
+          "newEstimate": 28800,
+          "timeSpent": 57600,
+          "changeDate": 1555601114000
+        }
+      }
+    ],
+    "1556010317000": [
+      {
+        "key": "AX-4583",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556010317000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "6"
+        }
+      }
+    ],
+    "1556019726000": [
+      {
+        "key": "AX-2212",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556019726000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1556033027000": [
+      {
+        "key": "AX-4767",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556033027000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "6"
+        }
+      }
+    ],
+    "1556097961000": [
+      {
+        "key": "AX-4764",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556097961000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1556097976000": [
+      {
+        "key": "AX-4766",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556097976000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1556098000000": [
+      {
+        "key": "AX-4581",
+        "timeC": {
+          "oldEstimate": 86400,
+          "newEstimate": 14400,
+          "changeDate": 1556098000000
+        }
+      }
+    ],
+    "1556099834000": [
+      {
+        "key": "AX-4391",
+        "timeC": {
+          "oldEstimate": 14400,
+          "newEstimate": 0,
+          "changeDate": 1556099834000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1556172000000": [
+      {
+        "key": "AX-5078",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": -21600,
+          "timeSpent": 21600,
+          "changeDate": 1556537234000
+        }
+      }
+    ],
+    "1556183253000": [
+      {
+        "key": "AX-4585",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556183253000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1556183429000": [
+      {
+        "key": "AX-4581",
+        "timeC": {
+          "oldEstimate": 14400,
+          "newEstimate": 0,
+          "changeDate": 1556183429000
+        },
+        "column": {
+          "notDone": false,
+          "done": true,
+          "newStatus": "5"
+        }
+      }
+    ],
+    "1556194103000": [
+      {
+        "key": "AX-5078",
+        "timeC": {
+          "oldEstimate": -21600,
+          "newEstimate": 93600,
+          "changeDate": 1556194103000
+        }
+      }
+    ],
+    "1556194147000": [
+      {
+        "key": "AX-5078",
+        "timeC": {
+          "oldEstimate": 93600,
+          "newEstimate": 122400,
+          "changeDate": 1556194147000
+        }
+      }
+    ],
+    "1556274539000": [
+      {
+        "key": "AX-5080",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556274539000
+        }
+      }
+    ],
+    "1556274551000": [
+      {
+        "key": "AX-5081",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556274551000
+        }
+      }
+    ],
+    "1556274557000": [
+      {
+        "key": "AX-5082",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556274557000
+        }
+      }
+    ],
+    "1556274563000": [
+      {
+        "key": "AX-5086",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556274563000
+        }
+      }
+    ],
+    "1556286660000": [
+      {
+        "key": "AX-5078",
+        "timeC": {
+          "oldEstimate": 122400,
+          "newEstimate": 93600,
+          "timeSpent": 28800,
+          "changeDate": 1556286696000
+        }
+      }
+    ],
+    "1556477467000": [
+      {
+        "key": "AX-4661",
+        "timeC": {
+          "oldEstimate": 288000,
+          "newEstimate": 201600,
+          "changeDate": 1556477467000
+        }
+      }
+    ],
+    "1556477514000": [
+      {
+        "key": "AX-4940",
+        "timeC": {
+          "oldEstimate": 43200,
+          "newEstimate": 28800,
+          "changeDate": 1556477514000
+        }
+      }
+    ],
+    "1556528613000": [
+      {
+        "key": "AX-5087",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556528613000
+        }
+      }
+    ],
+    "1556544103000": [
+      {
+        "key": "AX-4679",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556544103000
+        }
+      }
+    ],
+    "1556544209000": [
+      {
+        "key": "AX-2168",
+        "timeC": {
+          "oldEstimate": 28800,
+          "newEstimate": 0,
+          "changeDate": 1556544209000
+        }
+      }
+    ],
+    "1556554800000": [
+      {
+        "key": "AX-5078",
+        "timeC": {
+          "oldEstimate": 93600,
+          "newEstimate": 64800,
+          "timeSpent": 28800,
+          "changeDate": 1556554863000
+        }
+      }
+    ],
+    "1556611151000": [
+      {
+        "key": "AX-4661",
+        "timeC": {
+          "oldEstimate": 201600,
+          "newEstimate": 172800,
+          "changeDate": 1556611151000
+        }
+      }
+    ],
+    "1556784600000": [
+      {
+        "key": "AX-5078",
+        "timeC": {
+          "oldEstimate": 64800,
+          "newEstimate": 43200,
+          "timeSpent": 21600,
+          "changeDate": 1556871036000
+        }
+      }
+    ],
+    "1556788462000": [
+      {
+        "key": "AX-5089",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556788462000
+        }
+      }
+    ],
+    "1556871021000": [
+      {
+        "key": "AX-5090",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556871021000
+        }
+      }
+    ],
+    "1556895723000": [
+      {
+        "key": "AX-4736",
+        "timeC": {
+          "oldEstimate": 0,
+          "newEstimate": 0,
+          "changeDate": 1556895723000
+        }
+      }
+    ],
+    "1556895879000": [
+      {
+        "key": "AX-4661",
+        "timeC": {
+          "oldEstimate": 172800,
+          "newEstimate": 144000,
+          "changeDate": 1556895879000
+        }
+      }
+    ]
+  },
+  "startTime": 1554983612551,
+  "endTime": 1556171520000,
+  "completeTime": 1556191911508,
+  "now": 1557155421005,
+  "statisticField": {
+    "typeId": "field",
+    "fieldId": "timeestimate",
+    "id": "field_timeestimate",
+    "name": "Remaining Time Estimate",
+    "isValid": true,
+    "isEnabled": true,
+    "renderer": "duration"
+  },
+  "issueToParentKeys": {
+    "AX-4391": null,
+    "AX-5086": "AX-5078",
+    "AX-5087": "AX-5078",
+    "AX-5089": "AX-5078",
+    "AX-4555": "AX-2414",
+    "AX-4556": "AX-2414",
+    "AX-4679": "AX-2168",
+    "AX-2209": "AX-2168",
+    "AX-2924": null,
+    "AX-2208": "AX-2168",
+    "AX-2414": null,
+    "AX-2212": "AX-2168",
+    "AX-2211": "AX-2168",
+    "AX-5080": "AX-5078",
+    "AX-5081": "AX-5078",
+    "AX-5082": "AX-5078",
+    "AX-4380": "AX-2414",
+    "AX-4381": "AX-2414",
+    "AX-4581": null,
+    "AX-4582": "AX-4581",
+    "AX-4583": "AX-4581",
+    "AX-5078": null,
+    "AX-4584": "AX-4581",
+    "AX-4661": null,
+    "AX-4585": "AX-4581",
+    "AX-2919": null,
+    "AX-4740": "AX-4661",
+    "AX-4586": "AX-4581",
+    "AX-2918": null,
+    "AX-4741": "AX-4661",
+    "AX-4940": null,
+    "AX-4744": "AX-4661",
+    "AX-4746": "AX-4661",
+    "AX-4738": "AX-4661",
+    "AX-2400": null,
+    "AX-2168": null,
+    "AX-4378": "AX-2414",
+    "AX-4379": "AX-2414",
+    "AX-4731": "AX-4661",
+    "AX-4736": "AX-4661",
+    "AX-4680": "AX-2168",
+    "AX-4763": "AX-4581",
+    "AX-4323": null,
+    "AX-4764": "AX-4581",
+    "AX-4643": null,
+    "AX-4765": "AX-4581",
+    "AX-5216": "AX-4661",
+    "AX-4766": "AX-4581",
+    "AX-4767": "AX-4581",
+    "AX-2424": "AX-2414",
+    "AX-5090": "AX-5078",
+    "AX-5091": "AX-5078",
+    "AX-5092": "AX-5078"
+  },
+  "issueToSummary": {
+    "AX-4391": "Lorem ipsum.",
+    "AX-5086": "Lorem ipsum.",
+    "AX-5087": "Lorem ipsum.",
+    "AX-5089": "Lorem ipsum.",
+    "AX-4555": "Lorem ipsum.",
+    "AX-4556": "Lorem ipsum.",
+    "AX-4679": "Lorem ipsum.",
+    "AX-2924": "Lorem ipsum.",
+    "AX-2209": "Lorem ipsum.",
+    "AX-2208": "Lorem ipsum.",
+    "AX-2414": "Lorem ipsum.",
+    "AX-2212": "Lorem ipsum.",
+    "AX-2211": "Lorem ipsum.",
+    "AX-5080": "Lorem ipsum.",
+    "AX-5081": "Lorem ipsum.",
+    "AX-5082": "Lorem ipsum.",
+    "AX-4380": "Lorem ipsum.",
+    "AX-4381": "Lorem ipsum.",
+    "AX-4581": "Lorem ipsum.",
+    "AX-4582": "Lorem ipsum.",
+    "AX-5078": "Lorem ipsum.",
+    "AX-4583": "Lorem ipsum.",
+    "AX-4661": "Lorem ipsum.",
+    "AX-4584": "Lorem ipsum.",
+    "AX-4585": "Lorem ipsum.",
+    "AX-2919": "Lorem ipsum.",
+    "AX-4740": "Lorem ipsum.",
+    "AX-4586": "Lorem ipsum.",
+    "AX-2918": "Lorem ipsum.",
+    "AX-4741": "Lorem ipsum.",
+    "AX-4940": "Lorem ipsum.",
+    "AX-4744": "Lorem ipsum.",
+    "AX-4746": "Lorem ipsum.",
+    "AX-4738": "Lorem ipsum.",
+    "AX-2400": "Lorem ipsum.",
+    "AX-2168": "Lorem ipsum.",
+    "AX-4378": "Lorem ipsum.",
+    "AX-4731": "Lorem ipsum.",
+    "AX-4379": "Lorem ipsum.",
+    "AX-4736": "Lorem ipsum.",
+    "AX-4680": "Lorem ipsum.",
+    "AX-4763": "Lorem ipsum.",
+    "AX-4323": "Lorem ipsum.",
+    "AX-4764": "Lorem ipsum.",
+    "AX-4643": "Lorem ipsum.",
+    "AX-5216": "Lorem ipsum.",
+    "AX-4765": "Lorem ipsum.",
+    "AX-4766": "Lorem ipsum.",
+    "AX-4767": "Lorem ipsum.",
+    "AX-2424": "Lorem ipsum.",
+    "AX-5090": "Lorem ipsum.",
+    "AX-5091": "Lorem ipsum.",
+    "AX-5092": "Lorem ipsum."
+  },
+  "workRateData": {
+    "timezone": "Europe/Berlin",
+    "rates": [
+      {
+        "start": 1554983612551,
+        "end": 1555113600000,
+        "rate": 1
+      },
+      {
+        "start": 1555113600000,
+        "end": 1555286400000,
+        "rate": 0
+      },
+      {
+        "start": 1555286400000,
+        "end": 1555718400000,
+        "rate": 1
+      },
+      {
+        "start": 1555718400000,
+        "end": 1555891200000,
+        "rate": 0
+      },
+      {
+        "start": 1555891200000,
+        "end": 1556191911508,
+        "rate": 1
+      }
+    ]
+  },
+  "openCloseChanges": {
+    "1556191911514": [
+      {
+        "userDisplayNameHtml": "<a class=\"user-hover\" rel=\"jdoe\" id=\"_jdoe\" href=\"/secure/ViewProfile.jspa?name=jdoe\">Doe, John</a>",
+        "operation": "CLOSE"
+      }
+    ]
+  },
+  "lastUserWhoClosedHtml": "<a class=\"user-hover\" rel=\"jdoe\" id=\"_jdoe\" href=\"/secure/ViewProfile.jspa?name=jdoe\">Doe, John</a>"
+}

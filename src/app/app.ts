@@ -10,10 +10,7 @@ import HelpIntentHandler from '../handler/builtin/HelpIntentHandler';
 import JiraIssueIntentHandler from '../handler/jira/JiraIssueIntentHandler';
 import JiraBurndownChartIntentHandler from '../handler/jira/JiraBurndownChartIntentHandler';
 import JiraHelpIntentHandler from '../handler/jira/JiraHelpIntentHandler';
-import JiraSearchIssuesIntentHandler from '../handler/jira/JiraSearchIssuesIntentHandler';
 import DisplayTestIntentHandler from '../handler/DisplayTestIntentHandler';
-import JenkinsBuildsIntentHandler from '../handler/jenkins/JenkinsBuildsIntentHandler';
-import SendMailIntentHandler from '../handler/SendMailIntentHandler';
 import TimeoutHandler from '../handler/TimeoutHandler';
 import AppState from './state/AppState';
 import { Container } from 'typescript-ioc';
@@ -24,8 +21,6 @@ import {
     excludeDisplayDirectives,
     excludeGameEngineDirectives
 } from './appUtils';
-import AggregateIntentHandler from '../handler/AggregateIntentHandler';
-import ProjectDashboardIntentHandler from '../handler/ProjectDashboardIntentHandler';
 import JiraXrayStatusIntentHandler from '../handler/jira/JiraXrayStatusIntentHandler';
 import TestIntentHandler from '../handler/TestIntentHandler';
 import JiraChangeIssueStatusIntentHandler from '../handler/jira/JiraChangeIssueStatusIntentHandler';
@@ -39,6 +34,7 @@ import SonarQubeHelpIntentHandler from '../handler/sonarqube/SonarQubeHelpIntent
 import SonarQubeDashboardIntentHandler from '../handler/sonarqube/SonarQubeDashboardIntentHandler';
 import ScsDashboardIntentHandler from '../handler/dashboard/ScsDashboardIntentHandler';
 import ScsHelpIntentHandler from '../handler/dashboard/ScsHelpIntentHandler';
+import AplUserEventHandler from '../handler/builtin/AplUserEventHandler';
 
 dotenv.config();
 
@@ -117,6 +113,7 @@ const gitlabMergeRequestsIntentHandler: GitLabMergeRequestsIntentHandler = Conta
 const sonarQubeDashboardIntentHandler: SonarQubeDashboardIntentHandler = Container.get(SonarQubeDashboardIntentHandler);
 const scsDashboardIntentHandler: ScsDashboardIntentHandler = Container.get(ScsDashboardIntentHandler);
 const scsHelpIntentHandler: ScsHelpIntentHandler = Container.get(ScsHelpIntentHandler);
+const aplUserEventHandler: AplUserEventHandler = Container.get(AplUserEventHandler);
 
 alexaApp.launch(launchIntentHandler.handle.bind(launchIntentHandler));
 
@@ -175,42 +172,6 @@ alexaApp.intent('ScsDashboardIntent', scsDashboardIntentHandler.handle.bind(scsD
 
 alexaApp.on('GameEngine.InputHandlerEvent', timeoutHandler.handle.bind(timeoutHandler));
 
-alexaApp.on('Alexa.Presentation.APL.UserEvent', (request: alexa.request, response: alexa.response) => {
-    // TODO: move to own handler
-    console.log(`Received TouchEvent, arguments: ${request.data.request.arguments}`);
-    const action = request.data.request.arguments[0];
-    const selectedItemIdentifier = request.data.request.arguments[1];
-    if (action === 'HelpItemSelected') {
-        switch (selectedItemIdentifier) {
-            case 'jira':
-                return request.getRouter().intent('JiraHelpIntent');
-            case 'gitlab':
-                return request.getRouter().intent('GitlabHelpIntent');
-            case 'sonarqube':
-                return request.getRouter().intent('SonarQubeHelpIntent');
-            case 'scs':
-                return request.getRouter().intent('ScsHelpIntent');
-            default:
-                return response.say(`Diese Hilfe ist noch nicht implementiert.`);
-        }
-    } else if (action === 'XRayTestSelected') {
-        return request.getRouter().intent('DisplayTestIntent');
-        // return response
-        //     .directive({
-        //         type: 'Dialog.Delegate',
-        //         updatedIntent: {
-        //             name: 'JiraXRayTestDetailsIntent',
-        //             confirmationStatus: 'NONE',
-        //             slots: {
-        //                 Nummer: {
-        //                     name: 'Nummer',
-        //                     value: '999'
-        //                 }
-        //             }
-        //           }
-        //     })
-        //     .say(`${selectedItemIdentifier} ausgewählt`);
-    }
-});
+alexaApp.on('Alexa.Presentation.APL.UserEvent', aplUserEventHandler.handle.bind(aplUserEventHandler));
 
 app.listen(process.env.ALEXA_APP_PORT, () => console.log(`Listening on port ${process.env.ALEXA_APP_PORT}`));

@@ -8,6 +8,7 @@ import { sayJiraTicket } from '../utils/speechUtils';
 import { TestRunStatus } from '../../endpoint/jira/domain/enum';
 import AppState from '../../app/state/AppState';
 import { HandlerError } from '../error/HandlerError';
+import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
 
 export default class JiraXrayStatusIntentHandler {
 
@@ -21,26 +22,31 @@ export default class JiraXrayStatusIntentHandler {
     private pieChartController: PieChartController;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
-        if (!request.getDialog().isCompleted()) {
-            const updatedIntent = request.data.request.intent;
+        const identifierElicitationResult = elicitSlot(request, 'JiraTicketIdentifier', true);
+        if (identifierElicitationResult.status !== ElicitationStatus.SUCCESS) {
             return response
-                .directive({
-                    type: 'Dialog.Delegate',
-                    updatedIntent
-                })
+                .say(`Welche Bezeichnung hat das Ticket?`)
+                .directive(identifierElicitationResult.directive)
                 .shouldEndSession(false);
         }
 
-        const ticketIdentifierValue = request.slot('JiraTicketIdentifier');
-        const ticketNumberValue = request.slot('JiraTicketNumber');
+        const numberElicitationResult = elicitSlot(request, 'JiraTicketNumber');
+        if (numberElicitationResult.status !== ElicitationStatus.SUCCESS) {
+            return response
+                .say(`Welche Nummer hat das Ticket?`)
+                .directive(numberElicitationResult.directive)
+                .shouldEndSession(false);
+        }
+
+        const ticketIdentifierValue = identifierElicitationResult.value;
+        const ticketNumberValue = numberElicitationResult.value;
         console.log(ticketIdentifierValue, ticketNumberValue);
 
         const issue: JiraIssue = await this.controller.getIssue(`${ticketIdentifierValue}-${ticketNumberValue}`);
-        const testKeys = issue.getTestCoverage().getAllTestKeys();
-        if (!testKeys.length) {
+        if (!issue.getTestCoverage() || !issue.getTestCoverage().getAllTestKeys()) {
             return response.say(`Für ${sayJiraTicket(ticketIdentifierValue, ticketNumberValue)} sind keine Tests vorhanden.`);
         }
-
+        const testKeys = issue.getTestCoverage().getAllTestKeys();
         const finalResult = await Promise.all(testKeys.map(key => this.controller.getLatestTestrunByTestIssue(key)));
 
         const latestStatusMap = [];

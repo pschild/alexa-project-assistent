@@ -45,7 +45,7 @@ export const sayJiraTicket = (ticketIdentifier: string, ticketNumber?: string): 
             interpret: 'characters',
             word: ticketIdentifier
         })
-        .pause('5ms')
+        // .pause('5ms')
         .sayAs({
             interpret: 'digits',
             word: ticketNumber

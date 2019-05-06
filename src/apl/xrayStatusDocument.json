@@ -104,12 +104,15 @@
                     },
                     {
                         "type": "Text",
+                        "paddingTop": "20",
+                        "paddingLeft": "20",
                         "height": "10vh",
                         "text": "${payload.data.ticketId} - ${payload.data.ticketDescription}"
                     },
                     {
                         "type": "Container",
                         "alignItems": "center",
+                        "paddingLeft": "20",
                         "direction": "row",
                         "item": [
                             {

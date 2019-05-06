@@ -12,7 +12,7 @@ export default class SonarQubeHelpIntentHandler {
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         const speech = `Du kannst mich nach Informationen aus ${sayInEnglish('sonarcube')} fragen. Frage zum Beispiel:`
             + `${pause(500)}`
-            + `tbd`;
+            + `Zeige eine Sonarcube Übersicht von Projekt Auftragsverwaltung`;
 
         return response
             .say(speech)
@@ -21,7 +21,8 @@ export default class SonarQubeHelpIntentHandler {
                 backgroundImageUrl: this.appState.getBaseUrl() + 'static/roehren50l.png',
                 imageUrl: this.appState.getBaseUrl() + 'static/sonarqube.png',
                 hints: [
-                    'tbd'
+                    'Zeige SonarQube Dashboard!',
+                    'Zeige SonarQube Übersicht von Projekt Auftragsverwaltung!'
                 ]
             }))
             .shouldEndSession(false);

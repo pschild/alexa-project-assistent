@@ -12,7 +12,7 @@ export default class GitlabHelpIntentHandler {
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         const speech = `Du kannst mich nach Informationen aus ${sayInEnglish('gitlab')} fragen. Frage zum Beispiel:`
             + `${pause(500)}`
-            + `Zeige Build Status von Projekt Alexa Test`;
+            + `Zeige den Build Status von Projekt Auftragsverwaltung`;
 
         return response
             .say(speech)
@@ -21,9 +21,9 @@ export default class GitlabHelpIntentHandler {
                 backgroundImageUrl: this.appState.getBaseUrl() + 'static/roehren50l.png',
                 imageUrl: this.appState.getBaseUrl() + 'static/gitlab.png',
                 hints: [
-                    'Zeige alle Buildstatus',
-                    'Zeige Buildstatus von Projekt Alexa Test',
-                    'Zeige offene Merge Requests'
+                    'Zeige alle Buildstatus!',
+                    'Zeige den Buildstatus von Projekt Auftragsverwaltung!',
+                    'Zeige alle offenen Merge Requests!'
                 ]
             }))
             .shouldEndSession(false);

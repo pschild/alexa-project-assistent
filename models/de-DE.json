@@ -17,7 +17,8 @@
             "jira hilfe",
             "hilfe für jira",
             "öffne jira hilfe",
-            "öffne die hilfe für jira"
+            "öffne die hilfe für jira",
+            "was kann ich jira fragen"
           ]
         },
         {
@@ -26,7 +27,8 @@
             "gitlab hilfe",
             "hilfe für gitlab",
             "öffne gitlab hilfe",
-            "öffne die hilfe für gitlab"
+            "öffne die hilfe für gitlab",
+            "was kann ich gitlab fragen"
           ]
         },
         {
@@ -35,7 +37,8 @@
             "sonar cube hilfe",
             "hilfe für sonar cube",
             "öffne sonar cube hilfe",
-            "öffne die hilfe für sonar cube"
+            "öffne die hilfe für sonar cube",
+            "was kann ich sonar cube fragen"
           ]
         },
         {
@@ -94,45 +97,6 @@
           ]
         },
         {
-          "name": "JiraIssueIntent",
-          "slots": [
-            {
-              "name": "JiraIssueProperty",
-              "type": "JiraIssueProperty",
-              "samples": [
-                "{JiraIssueProperty}"
-              ]
-            },
-            {
-              "name": "JiraTicketIdentifier",
-              "type": "JiraTicketIdentifier",
-              "samples": [
-                "öffne ticket {JiraTicketIdentifier}",
-                "ticket {JiraTicketIdentifier}",
-                "{JiraTicketIdentifier}"
-              ]
-            },
-            {
-              "name": "JiraTicketNumber",
-              "type": "AMAZON.NUMBER",
-              "samples": [
-                "{JiraTicketNumber}"
-              ]
-            }
-          ],
-          "samples": [
-            "öffne ticket",
-            "öffne jira ticket",
-            "öffne ticket {JiraTicketIdentifier} {JiraTicketNumber}",
-            "öffne jira ticket {JiraTicketIdentifier} {JiraTicketNumber}",
-            "{JiraIssueProperty}",
-            "{JiraIssueProperty} jira ticket",
-            "{JiraIssueProperty} jira ticket {JiraTicketIdentifier} {JiraTicketNumber}",
-            "{JiraIssueProperty} {JiraTicketIdentifier} {JiraTicketNumber}",
-            "Gib mir {JiraIssueProperty} von Ticket {JiraTicketIdentifier} {JiraTicketNumber}"
-          ]
-        },
-        {
           "name": "JiraChangeIssueStatusIntent",
           "slots": [
             {
@@ -159,7 +123,11 @@
             }
           ],
           "samples": [
-            "ändere den status von {JiraTicketIdentifier} {JiraTicketNumber} auf {JiraIssueStatus}"
+            "ändere den status",
+            "ändere den ticket status",
+            "ändere den status eines jira tickets",
+            "ändere den status von {JiraTicketIdentifier} {JiraTicketNumber} auf {JiraIssueStatus}",
+            "setze den status von {JiraTicketIdentifier} {JiraTicketNumber} auf {JiraIssueStatus}"
           ]
         },
         {
@@ -183,29 +151,40 @@
             }
           ],
           "samples": [
-            "teststatus",
-            "teststatus {JiraTicketIdentifier} {JiraTicketNumber}"
+            "zeige den teststatus",
+            "zeige den teststatus von {JiraTicketIdentifier} {JiraTicketNumber}",
+            "wie ist der teststatus von {JiraTicketIdentifier} {JiraTicketNumber}",
+            "zeige den xray status von {JiraTicketIdentifier} {JiraTicketNumber}"
           ]
         },
         {
           "name": "JiraVelocityIntent",
           "slots": [],
           "samples": [
-            "zeige die velocity"
+            "zeige die velocity",
+            "wie ist die velocity",
+            "wie viel schaffen wir im nächsten sprint",
+            "berechne den aufwand für den nächsten sprint"
           ]
         },
         {
           "name": "JiraSprintProgressIntent",
           "slots": [],
           "samples": [
-            "zeige den sprint fortschritt"
+            "zeige den sprint fortschritt",
+            "wie ist der sprint fortschritt",
+            "wie viel ist im sprint zu tun",
+            "wie viel haben wir im sprint geschafft",
+            "zeige informationen zum aktuellen sprint"
           ]
         },
         {
           "name": "JiraEffortForReleaseIntent",
           "slots": [],
           "samples": [
-            "zeige den aufwand für das nächste release"
+            "zeige den aufwand für das nächste release",
+            "wann ist das nächste release",
+            "wie groß ist der aufwand für das nächste release"
           ]
         },
         {
@@ -222,9 +201,13 @@
           "samples": [
             "zeige build status",
             "zeige alle build status",
+            "zeige alle pipelines",
+            "zeige alle jobs",
             "zeige build status von projekt {GitLabProjectName}",
             "zeige die pipelines von {GitLabProjectName}",
-            "zeige die jobs von {GitLabProjectName}"
+            "zeige die pipelines von projekt {GitLabProjectName}",
+            "zeige die jobs von {GitLabProjectName}",
+            "zeige die jobs von projekt {GitLabProjectName}"
           ]
         },
         {
@@ -232,7 +215,10 @@
           "slots": [],
           "samples": [
             "zeige merge requests",
-            "zeige offene merge requests"
+            "zeige offene merge requests",
+            "wie viele offene merge requests haben wir",
+            "wie viele offene merge requests gibt es",
+            "wie viele merge requests sind offen"
           ]
         },
         {
@@ -261,7 +247,8 @@
             "zeige burndown chart von sprint {BurndownChartSprintNumber}",
             "zeige mir das burndown chart von sprint {BurndownChartSprintNumber}",
             "zeige mir das {BurndownChartSprintType} burndown chart",
-            "zeige mir das burndown chart vom {BurndownChartSprintType} sprint"
+            "zeige mir das burndown chart vom {BurndownChartSprintType} sprint",
+            "wie sieht das {BurndownChartSprintType} burndown chart aus"
           ]
         },
         {
@@ -278,14 +265,20 @@
           "samples": [
             "zeige sonarcube dashboard",
             "zeige sonar übersicht",
-            "zeige sonarcube übersicht von projekt {SonarQubeProjectName}"
+            "zeige sonarcube übersicht von projekt {SonarQubeProjectName}",
+            "wie ist die qualität von projekt {SonarQubeProjectName}",
+            "welche fehler gibt es im projekt {SonarQubeProjectName}"
           ]
         },
         {
           "name": "ScsDashboardIntent",
           "slots": [],
           "samples": [
-            "zeige teilsystem dashboard"
+            "zeige teilsystem dashboard",
+            "zeige health check",
+            "zeige gesundheitsstatus",
+            "wie sehen unsere systeme aus",
+            "laufen unsere systeme"
           ]
         },
         {
@@ -359,31 +352,6 @@
           "values": []
         },
         {
-          "name": "JiraIssueProperty",
-          "values": [
-            {
-              "name": {
-                "value": "Bearbeiter"
-              }
-            },
-            {
-              "name": {
-                "value": "Titel"
-              }
-            },
-            {
-              "name": {
-                "value": "Zeit"
-              }
-            },
-            {
-              "name": {
-                "value": "Zusammenfassung"
-              }
-            }
-          ]
-        },
-        {
           "name": "JiraTicketIdentifier",
           "values": [
             {
@@ -410,7 +378,7 @@
               "id": "close",
               "name": {
                 "value": "schließe",
-                "synonyms": ["schließen", "geschlossen", "erledigt", "erledige", "fertig", "done"]
+                "synonyms": ["schließen", "geschlossen", "erledigt", "erledige", "fertig", "done", "als erledigt markieren"]
               }
             },
             {
@@ -446,50 +414,6 @@
     "dialog": {
       "intents": [
         {
-          "name": "JiraIssueIntent",
-          "slots": [
-            {
-              "name": "JiraIssueProperty",
-              "type": "JiraIssueProperty",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "JiraIssueProperty.Elicit.1"
-              },
-              "validations": [
-                {
-                  "type": "hasEntityResolutionMatch",
-                  "prompt": "JiraIssueProperty.Validation.1"
-                }
-              ]
-            },
-            {
-              "name": "JiraTicketIdentifier",
-              "type": "JiraTicketIdentifier",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "JiraTicketIdentifier.Elicit.1"
-              },
-              "validations": [
-                {
-                  "type": "hasEntityResolutionMatch",
-                  "prompt": "JiraTicketIdentifier.Validation.1"
-                }
-              ]
-            },
-            {
-              "name": "JiraTicketNumber",
-              "type": "AMAZON.NUMBER",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "JiraTicketNumber.Elicit.1"
-              }
-            }
-          ]
-        },
-        {
           "name": "JiraXrayStatusIntent",
           "slots": [
             {
@@ -517,32 +441,10 @@
               }
             }
           ]
-        },
-        {
-          "name": "SendMailIntent",
-          "slots": [
-            {
-              "name": "MailContent",
-              "type": "AMAZON.SearchQuery"
-            },
-            {
-              "name": "MailRecipient",
-              "type": "EmployeeName"
-            }
-          ]
         }
       ]
     },
     "prompts": [
-      {
-        "id": "JiraIssueProperty.Elicit.1",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Welche Info soll ich dir geben?"
-          }
-        ]
-      },
       {
         "id": "JiraTicketIdentifier.Elicit.1",
         "variations": [
@@ -558,15 +460,6 @@
           {
             "type": "PlainText",
             "value": "Welche Nummer hat das Ticket?"
-          }
-        ]
-      },
-      {
-        "id": "JiraIssueProperty.Validation.1",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "{JiraIssueProperty} verstehe ich nicht."
           }
         ]
       },

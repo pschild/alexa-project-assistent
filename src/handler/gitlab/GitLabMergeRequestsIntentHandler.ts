@@ -18,7 +18,7 @@ export default class GitLabMergeRequestsIntentHandler {
         const projectIds = GitlabEndpointController.DEMO_PROJECTS.map(project => project.id);
         const result = await this.getMergeRequests(projectIds);
         return response
-            .say(`Es gibt insgesamt ${result.mrCountAll} offene Merge Requests.`)
+            .say(`In allen Teilprojekten gibt es derzeit ${result.mrCountAll} offene Merge Requests.`)
             .directive(buildMergeRequestsDirective({
                 backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                 projects: result.projects

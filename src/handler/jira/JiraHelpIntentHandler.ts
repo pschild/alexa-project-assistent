@@ -1,6 +1,6 @@
 import { Inject } from 'typescript-ioc';
 import * as alexa from 'alexa-app';
-import { sayJiraTicket, sayInEnglish, pause } from '../utils/speechUtils';
+import { sayInEnglish, pause } from '../utils/speechUtils';
 import { buildHelpDetailDirective } from '../../apl/datasources';
 import AppState from '../../app/state/AppState';
 
@@ -10,9 +10,9 @@ export default class JiraHelpIntentHandler {
     private appState: AppState;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
-        const speech = `Du kannst mich nach Informationen aus ${sayInEnglish('jira')} Tickets fragen. Frage zum Beispiel:`
+        const speech = `Du kannst mich nach Informationen aus ${sayInEnglish('jira')} fragen. Frage zum Beispiel:`
             + `${pause(500)}`
-            + `Gib mir eine Zusammenfassung von Ticket ${sayJiraTicket('MDK', '2871')}`;
+            + `Zeige mir das aktuelle Burn Down Chart!`;
 
         return response
             .say(speech)
@@ -23,8 +23,8 @@ export default class JiraHelpIntentHandler {
                 hints: [
                     'Andere den Status von AX-2 auf geschlossen!',
                     'Zeige den Aufwand für das nächste Release!',
-                    'Zeige den Sprint Fortschritt!',
-                    'Zeige mir das Burn Down Chart!'
+                    'Wie ist der Fortschritt im Sprint?',
+                    'Zeige mir das aktuelle Burn Down Chart!'
                 ]
             }))
             .shouldEndSession(false);

@@ -82,7 +82,7 @@ export default class JiraChangeIssueStatusIntentHandler {
             return response
                 .say(
                     `In welchen Status soll ich ${sayJiraTicket(this.identifierValue, this.numberValue)} setzen? `
-                    + `Ich kann Tickets schließen oder in Bearbeitung setzen.`
+                    + `Ich kann Tickets als erledigt markieren oder in Bearbeitung setzen.`
                 )
                 .directive(this.newStatusElicitationResult.directive)
                 .shouldEndSession(false);
@@ -106,8 +106,8 @@ export default class JiraChangeIssueStatusIntentHandler {
                 return response
                     .say(
                         subtasks.length === 1
-                            ? `Auch das Unterticket ${sayJiraTicket(subtasks[0].key)}?`
-                            : `Auch alle ${subtasks.length} Untertickets?`
+                            ? `Soll ich auch den Status des Untertickets ${sayJiraTicket(subtasks[0].key)} anpassen?`
+                            : `Soll ich die Änderung auch für alle ${subtasks.length} Untertickets übernehmen?`
                     )
                     .directive(subtaskConfirmation.directive)
                     .shouldEndSession(false);
@@ -116,7 +116,7 @@ export default class JiraChangeIssueStatusIntentHandler {
                 if (this.intentConfirmationResult.status === ConfirmationStatus.NONE) { // intent confirmation?
                     return response
                         .say(`Ich schließe ${sayJiraTicket(this.identifierValue, this.numberValue)} und die Untertickets.`)
-                        .say(`Sicher?`)
+                        .say(`Bist du sicher?`)
                         .directive(this.intentConfirmationResult.directive)
                         .shouldEndSession(false);
                 } else if (this.intentConfirmationResult.status === ConfirmationStatus.CONFIRMED) { // intent confirmed!
@@ -124,7 +124,7 @@ export default class JiraChangeIssueStatusIntentHandler {
                     await this.changeStatusOfIssues(this.issueKeysToChange, IssueTransitionStatus.DONE);
                     return response
                         .say(
-                            `OK, ich habe ${sayJiraTicket(this.identifierValue, this.numberValue)} `
+                            `Alles klar, ich habe ${sayJiraTicket(this.identifierValue, this.numberValue)} `
                             + `und ${subtasks.length} Unteraufgaben geschlossen`
                         )
                         .directive(
@@ -133,26 +133,26 @@ export default class JiraChangeIssueStatusIntentHandler {
                             )
                         );
                 } else { // intent denied
-                    return response.say(`OK, dann nicht`);
+                    return response.say(`OK, ich werde nichts ändern.`);
                 }
             }
         }
 
         if (this.intentConfirmationResult.status === ConfirmationStatus.NONE) { // without subtasks, intent confirmation?
             return response
-                .say(`Ich schließe nur ${sayJiraTicket(this.identifierValue, this.numberValue)}.`)
-                .say(`Sicher?`)
+                .say(`Ich schließe das Ticket ${sayJiraTicket(this.identifierValue, this.numberValue)}.`)
+                .say(`Ist das OK?`)
                 .directive(this.intentConfirmationResult.directive)
                 .shouldEndSession(false);
         } else if (this.intentConfirmationResult.status === ConfirmationStatus.CONFIRMED) { // intent confirmed!
             await this.changeStatusOfIssues(this.issueKeysToChange, IssueTransitionStatus.DONE);
             return response
-                .say(`OK, ich habe ticket geschlossen`)
+                .say(`Gut, ich habe das Ticket ${sayJiraTicket(this.identifierValue, this.numberValue)} geschlossen.`)
                 .directive(
                     this.notificationBuilder.buildSuccessNotification(`${this.identifierValue}-${this.numberValue} geschlossen!`)
                 );
         } else { // intent denied
-            return response.say(`OK, dann nicht`);
+            return response.say(`OK, ich werde nichts ändern.`);
         }
     }
 
@@ -162,7 +162,7 @@ export default class JiraChangeIssueStatusIntentHandler {
             const parentConfirmation = confirmSlot(request, 'JiraIssueStatus');
             if (parentConfirmation.status === ConfirmationStatus.NONE) { // including parent?
                 return response
-                    .say(`Auch das übergeordnete Ticket ${sayJiraTicket(parent.key)}?`)
+                    .say(`Soll ich die Änderung auch für das übergeordnete Ticket ${sayJiraTicket(parent.key)} übernehmen?`)
                     .directive(parentConfirmation.directive)
                     .shouldEndSession(false);
 
@@ -172,7 +172,7 @@ export default class JiraChangeIssueStatusIntentHandler {
                         .say(
                             `Ich nehme ${sayJiraTicket(this.identifierValue, this.numberValue)} `
                             + `und das übergeordnete Ticket ${sayJiraTicket(parent.key)} in Bearbeitung. `
-                            + `Sicher?`
+                            + `Bist du sicher?`
                         )
                         .directive(this.intentConfirmationResult.directive)
                         .shouldEndSession(false);
@@ -190,7 +190,7 @@ export default class JiraChangeIssueStatusIntentHandler {
                             )
                         );
                 } else { // intent denied
-                    return response.say(`OK, dann nicht`);
+                    return response.say(`OK, ich werde nichts ändern.`);
                 }
             }
         }
@@ -198,7 +198,7 @@ export default class JiraChangeIssueStatusIntentHandler {
         if (this.intentConfirmationResult.status === ConfirmationStatus.NONE) { // without parent, intent confirmation?
             return response
                 .say(`Ich nehme ${sayJiraTicket(this.identifierValue, this.numberValue)} in Bearbeitung.`)
-                .say(`Sicher?`)
+                .say(`Einverstanden?`)
                 .directive(this.intentConfirmationResult.directive)
                 .shouldEndSession(false);
         } else if (this.intentConfirmationResult.status === ConfirmationStatus.CONFIRMED) { // intent confirmed
@@ -211,7 +211,7 @@ export default class JiraChangeIssueStatusIntentHandler {
                     )
                 );
         } else { // intent denied
-            return response.say(`OK, dann nicht`);
+            return response.say(`Na gut, ich werde nichts ändern.`);
         }
     }
 

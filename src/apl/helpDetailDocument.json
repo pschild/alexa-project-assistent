@@ -42,8 +42,11 @@
                 {
                     "type": "Text",
                     "width": "100%",
+                    "textAlign": "center",
+                    "fontStyle": "italic",
                     "fontSize": "30dp",
-                    "text": "${text}"
+                    "text": "\"${text}\"",
+                    "spacing": "20"
                 }
             ]
         }

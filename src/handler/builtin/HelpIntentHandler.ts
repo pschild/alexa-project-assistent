@@ -10,9 +10,10 @@ export default class HelpIntentHandler {
     private appState: AppState;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
-        const speech = `Du kannst mir Fragen zu folgenden Systemen stellen: `
-            + `${sayInEnglish('jira')}, ${sayInEnglish('gitlab')} und ${sayInEnglish('sonarcube')}. `
-            + `Für eine detaillierte Hilfe zu einem System sage zum Beispiel Hilfe für ${sayInEnglish('jira')}. `;
+        const speech = `Du kannst mir Fragen zu den Systemen `
+            + `${sayInEnglish('jira')}, ${sayInEnglish('gitlab')} und ${sayInEnglish('sonarcube')} stellen. `
+            + `Um eine detaillierte Hilfe zu einem System zu öffnen sage zum Beispiel Hilfe für ${sayInEnglish('jira')}. `
+            + `Für einen Health Check der Teilsysteme kann ich dir auch ein Dashboard anzeigen.`;
         const reprompt = `Du kannst auch auf das jeweilige Logo tippen, um Hilfe zu einem System zu erhalten.`;
 
         return response
@@ -24,19 +25,25 @@ export default class HelpIntentHandler {
                     {
                         title: 'Jira',
                         identifier: 'jira',
-                        hints: ['Status von Tickets ändern', 'Burn Down Charts generieren', 'Sprintfortschritt anzeigen', '...'],
+                        hints: ['Status von Tickets ändern', 'Burn Down Charts', 'Sprintfortschritt', '...'],
                         imageUrl: this.appState.getBaseUrl() + 'static/jira.png'
                     },
                     {
                         title: 'Gitlab',
                         identifier: 'gitlab',
-                        hints: ['Offene Merge Requests anzeigen', 'Buildstatus aller Projekt-Pipelines anzeigen', '...'],
+                        hints: ['Offene Merge Requests', 'Buildstatus aller Pipelines', '...'],
                         imageUrl: this.appState.getBaseUrl() + 'static/gitlab.png'
                     },
                     {
                         title: 'SonarQube',
                         identifier: 'sonarqube',
-                        hints: ['tbd', '...'],
+                        hints: ['Quality Gate Status', 'Testabdeckung', '...'],
+                        imageUrl: this.appState.getBaseUrl() + 'static/sonarqube.png'
+                    },
+                    {
+                        title: 'Health Check',
+                        identifier: 'scs',
+                        hints: ['Dashboard für Teilsysteme'],
                         imageUrl: this.appState.getBaseUrl() + 'static/sonarqube.png'
                     }
                 ]

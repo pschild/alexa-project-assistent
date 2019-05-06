@@ -13,13 +13,12 @@ export default class LaunchIntentHandler {
         let speech: string;
         if (this.appState.isFirstStart()) {
             this.appState.setFirstStart(false);
-            // speech = `Hallo und willkommen. Du kannst mir Fragen zu folgenden Systemen stellen: `
-            // + `${sayInEnglish('jira')}, ${sayInEnglish('confluence')}, ${sayInEnglish('gitlab')} und ${sayInEnglish('sonarcube')}. `
-            //     + `Um die allgemeine Hilfe zu öffnen, sage: Hilfe. `
-            //     + `Für eine detaillierte Hilfe, sage zum Beispiel Hilfe für ${sayInEnglish('jira')}. `;
-            speech = 'Was tun?';
+            speech = `Hallo und willkommen. Ich bin hier, um dir Informationen zum Projekt zu geben. `
+                + `Du kannst mir Fragen zu ${sayInEnglish('jira')}, ${sayInEnglish('gitlab')} oder ${sayInEnglish('sonarcube')} stellen `
+                + `oder dir einen allgemeinen Health Check anzeigen lassen. `
+                + `Wenn du mal nicht weiter weißt, sage jederzeit: Hilfe. `;
         } else {
-            speech = `Willkommen zurück! Wobei kann ich dir behilflich sein?`;
+            speech = `Freut mich, dich wiederzusehen! Wobei kann ich dir behilflich sein?`;
         }
 
         return response

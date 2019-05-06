@@ -8,7 +8,6 @@
 2. `npm install`
 3. Copy `.env.template` to `.env` and provide credentials, urls etc.
    * The value for `NGROK_AUTHTOKEN` can be found in the file `C:\Users\%USERNAME%\.ngrok2\ngrok.yml`
-4. Create file `employees.json` and provide employees for your project.
 
 # Development
 * `npm run deploy:ngrok` deploys the skill to Amazon and runs ngrok server
@@ -30,4 +29,3 @@
 * https://github.com/motdotla/dotenv
 * https://github.com/bubenshchykov/ngrok
 * https://github.com/EvanHahn/HumanizeDuration.js
-* https://github.com/sindresorhus/pageres

@@ -6,8 +6,12 @@ import { SonarQubeEndpointController } from '../../endpoint/sonarqube/SonarQubeE
 import SonarQubeDashboardIntentHandler from '../sonarqube/SonarQubeDashboardIntentHandler';
 import GitLabMergeRequestsIntentHandler from '../gitlab/GitLabMergeRequestsIntentHandler';
 import GitLabBuildStatusIntentHandler from '../gitlab/GitLabBuildStatusIntentHandler';
+import AppState from '../../app/state/AppState';
 
 export default class ScsDashboardIntentHandler {
+
+    @Inject
+    private appState: AppState;
 
     @Inject
     private sonarQubeDashboardIntentHandler: SonarQubeDashboardIntentHandler;
@@ -40,6 +44,7 @@ export default class ScsDashboardIntentHandler {
         return response
             .say('Hier ist eine Übersicht über alle Teilprojekte.')
             .directive(buildScsDashboardDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                 projects
             }));
     }

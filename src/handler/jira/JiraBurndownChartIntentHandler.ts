@@ -6,8 +6,12 @@ import { JiraSprint } from '../../endpoint/jira/domain/JiraSprint';
 import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
 import { ILineChartDataItem, LineChartController } from '../../media/LineChartController';
 import { HandlerError } from '../error/HandlerError';
+import AppState from '../../app/state/AppState';
 
 export default class JiraBurndownChartIntentHandler {
+
+    @Inject
+    protected appState: AppState;
 
     @Inject
     private controller: JiraEndpointController;
@@ -68,6 +72,7 @@ export default class JiraBurndownChartIntentHandler {
             response
                 .say(`Hier ist das Burndown Chart von Sprint ${loadedSprint.getSprintNumber()}.`)
                 .directive(buildImageDirective({
+                    backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                     title: `Burndownchart von Sprint ${loadedSprint.getSprintNumber()}`,
                     imageUrl: lineChartUrl
                 })

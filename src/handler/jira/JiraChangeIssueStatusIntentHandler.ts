@@ -15,8 +15,12 @@ import {
 import { IssueTransitionStatus } from '../../endpoint/jira/domain/enum';
 import { NotificationBuilder } from '../../apl/NotificationBuilder';
 import { HandlerError } from '../error/HandlerError';
+import AppState from '../../app/state/AppState';
 
 export default class JiraChangeIssueStatusIntentHandler {
+
+    @Inject
+    protected appState: AppState;
 
     @Inject
     private notificationBuilder: NotificationBuilder;

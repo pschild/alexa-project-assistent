@@ -19,6 +19,7 @@ export default class HelpIntentHandler {
             .say(speech)
             .reprompt(reprompt)
             .directive(buildHelpDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/roehren50l.png',
                 items: [
                     {
                         title: 'Jira',

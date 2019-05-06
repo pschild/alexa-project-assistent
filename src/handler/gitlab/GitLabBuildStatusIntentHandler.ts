@@ -32,6 +32,7 @@ export default class GitLabBuildStatusIntentHandler {
         return response
             .say(`Hier ist eine Übersicht der aktuellsten master builds.`)
             .directive(buildBuildStatusDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                 projectName: projectDetails ? projectDetails.name_with_namespace : undefined,
                 pipelines: result
             }));

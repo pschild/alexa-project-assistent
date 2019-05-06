@@ -5,8 +5,12 @@ import { buildImageDirective } from '../../apl/datasources';
 import { BarChartController, IBarChartDataItem } from '../../media/BarChartController';
 import { sayInEnglish, sayAsDecimal } from '../utils/speechUtils';
 import { HandlerError } from '../error/HandlerError';
+import AppState from '../../app/state/AppState';
 
 export default class JiraVelocityIntentHandler {
+
+    @Inject
+    protected appState: AppState;
 
     @Inject
     private controller: JiraEndpointController;
@@ -30,6 +34,7 @@ export default class JiraVelocityIntentHandler {
                 + `Dieser Wert kann als Grundlage für die Planung des nächsten Sprints verwendet werden.`
             )
             .directive(buildImageDirective({
+                    backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                     title: ``,
                     imageUrl: chartUrl
                 })

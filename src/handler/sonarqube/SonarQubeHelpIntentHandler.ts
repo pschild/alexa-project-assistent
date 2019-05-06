@@ -18,6 +18,7 @@ export default class SonarQubeHelpIntentHandler {
             .say(speech)
             .reprompt(speech)
             .directive(buildHelpDetailDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/roehren50l.png',
                 imageUrl: this.appState.getBaseUrl() + 'static/sonarqube.png',
                 hints: [
                     'tbd'

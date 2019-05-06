@@ -22,7 +22,7 @@ export class NotificationBuilder {
 
     public buildNotification(type: NotificationType, text: string) {
         return buildNotificationDirective({
-            backgroundImageUrl: '',
+            backgroundImageUrl: this.appState.getBaseUrl() + 'static/birnen60l.png',
             type,
             iconUrl: this.getIconUrlByType(type),
             text

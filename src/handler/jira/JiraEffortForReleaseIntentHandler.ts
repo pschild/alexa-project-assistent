@@ -8,8 +8,12 @@ import * as dateFormat from 'dateformat';
 import { SwimlaneStatus } from '../../endpoint/jira/domain/enum';
 import { sayAsDate } from '../utils/speechUtils';
 import { HandlerError } from '../error/HandlerError';
+import AppState from '../../app/state/AppState';
 
 export default class JiraEffortForReleaseIntentHandler {
+
+    @Inject
+    protected appState: AppState;
 
     @Inject
     private controller: JiraEndpointController;
@@ -58,6 +62,7 @@ export default class JiraEffortForReleaseIntentHandler {
                 + `mit einem Restaufwand von circa ${remainingPt} P.T. zu erledigen.`
             )
             .directive(buildEffortForReleaseDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                 releaseName,
                 epicCount: epicsOfRelease.total,
                 doneEpicCount,

@@ -128,6 +128,7 @@ export default class SonarQubeDashboardIntentHandler {
                 anyQualityGateFailed ? `${pause(100)}Achtung, mindestens eins der Quality Gates ist fehlgeschlagen.` : ''
             )
             .directive(buildSonarQubeDashboardDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                 headline: projectKeys.length > 1 ? 'Alle Projekte' : projectKeys[0],
                 coverageImageUrl,
                 issuesImageUrl,

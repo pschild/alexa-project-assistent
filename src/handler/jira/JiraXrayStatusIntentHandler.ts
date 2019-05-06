@@ -80,6 +80,7 @@ export default class JiraXrayStatusIntentHandler {
 
         return response
             .directive(buildXrayStatusDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                 imageUrl: chartUrl,
                 globalStateIconUrl: this.getIconUrlByStatus(globalState),
                 ticketId: issue.key,

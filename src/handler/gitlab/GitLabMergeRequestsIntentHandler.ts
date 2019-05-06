@@ -4,8 +4,12 @@ import { GitlabEndpointController } from '../../endpoint/gitlab/GitlabEndpointCo
 import { buildMergeRequestsDirective } from '../../apl/datasources';
 import { GitlabMergeRequest } from '../../endpoint/gitlab/domain/GitlabMergeRequest';
 import * as humanizeDuration from 'humanize-duration';
+import AppState from '../../app/state/AppState';
 
 export default class GitLabMergeRequestsIntentHandler {
+
+    @Inject
+    protected appState: AppState;
 
     @Inject
     private controller: GitlabEndpointController;
@@ -16,6 +20,7 @@ export default class GitLabMergeRequestsIntentHandler {
         return response
             .say(`Es gibt insgesamt ${result.mrCountAll} offene Merge Requests.`)
             .directive(buildMergeRequestsDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                 projects: result.projects
             }));
     }

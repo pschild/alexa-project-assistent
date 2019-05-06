@@ -8,8 +8,12 @@ import { sayAsDecimal, sayAsDate } from '../utils/speechUtils';
 import { ProgressBarChartController } from '../../media/ProgressBarChartController';
 import * as dateFormat from 'dateformat';
 import { HandlerError } from '../error/HandlerError';
+import AppState from '../../app/state/AppState';
 
 export default class JiraSprintProgressIntentHandler {
+
+    @Inject
+    protected appState: AppState;
 
     @Inject
     private controller: JiraEndpointController;
@@ -69,6 +73,7 @@ export default class JiraSprintProgressIntentHandler {
                 + `${sayAsDecimal(taskTimeProgress)} Prozent des Aufwands erledigt worden.`
             )
             .directive(buildSprintProgressDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                 sprintName: activeSprint.name,
                 sprintGoal: activeSprint.goal,
                 sprintFrom: dateFormat(activeSprint.startDate, 'dd.mm.yyyy HH:MM'),

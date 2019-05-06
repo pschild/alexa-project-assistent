@@ -18,6 +18,7 @@ export default class GitlabHelpIntentHandler {
             .say(speech)
             .reprompt(speech)
             .directive(buildHelpDetailDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/roehren50l.png',
                 imageUrl: this.appState.getBaseUrl() + 'static/gitlab.png',
                 hints: [
                     'Zeige alle Buildstatus',

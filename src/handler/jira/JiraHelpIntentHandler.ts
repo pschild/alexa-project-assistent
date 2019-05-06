@@ -18,6 +18,7 @@ export default class JiraHelpIntentHandler {
             .say(speech)
             .reprompt(speech)
             .directive(buildHelpDetailDirective({
+                backgroundImageUrl: this.appState.getBaseUrl() + 'static/roehren50l.png',
                 imageUrl: this.appState.getBaseUrl() + 'static/jira.png',
                 hints: [
                     'Andere den Status von AX-2 auf geschlossen!',

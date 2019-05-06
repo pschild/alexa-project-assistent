@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "p. m. assistent",
+      "invocationName": "projektassistent",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -263,11 +263,11 @@
             }
           ],
           "samples": [
-            "zeige sonarcube dashboard",
-            "zeige sonar übersicht",
-            "zeige sonarcube übersicht von projekt {SonarQubeProjectName}",
-            "wie ist die qualität von projekt {SonarQubeProjectName}",
-            "welche fehler gibt es im projekt {SonarQubeProjectName}"
+              "zeige sonarcube dashboard",
+              "zeige sonar übersicht",
+              "zeige sonarcube übersicht von projekt {SonarQubeProjectName}",
+              "wie ist die qualität von projekt {SonarQubeProjectName}",
+              "welche fehler gibt es im projekt {SonarQubeProjectName}"
           ]
         },
         {

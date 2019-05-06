@@ -140,49 +140,49 @@ alexaApp.intent('DisplayTestIntent', displayTestIntentHandler.handle.bind(displa
 // 'gesamtstatus', 'übersicht', 'dashboard'
 alexaApp.intent('ProjectDashboardIntent', projectDashboardIntentHandler.handle.bind(projectDashboardIntentHandler));
 
-// 'starte pm assistent und öffne jira ticket'
+// 'starte projektassistent und öffne jira ticket'
 alexaApp.intent('JiraIssueIntent', jiraIssueIntentHandler.handle.bind(jiraIssueIntentHandler));
 
-// 'starte pm assistent und schließe jira ticket'
+// 'starte projektassistent und schließe jira ticket'
 alexaApp.intent('JiraChangeIssueStatusIntent', jiraChangeIssueStatusIntentHandler.handle.bind(jiraChangeIssueStatusIntentHandler));
 
-// 'starte pm assistent und teststatus INK 42'
+// 'starte projektassistent und teststatus INK 42'
 alexaApp.intent('JiraXrayStatusIntent', jiraXrayStatusIntentHandler.handle.bind(jiraXrayStatusIntentHandler));
 
-// 'starte pm assistent und zeige burndown chart'
+// 'starte projektassistent und zeige burndown chart'
 alexaApp.intent('JiraBurndownChartIntent', jiraBurndownChartIntentHandler.handle.bind(jiraBurndownChartIntentHandler));
 
-// 'starte pm assistent und zeige die velocity'
+// 'starte projektassistent und zeige die velocity'
 alexaApp.intent('JiraVelocityIntent', jiraVelocityIntentHandler.handle.bind(jiraVelocityIntentHandler));
 
-// 'starte pm assistent und zeige den sprint fortschritt'
+// 'starte projektassistent und zeige den sprint fortschritt'
 alexaApp.intent('JiraSprintProgressIntent', jiraSprintProgressIntentHandler.handle.bind(jiraSprintProgressIntentHandler));
 
-// 'starte pm assistent und zeige den aufwand für das nächste release'
+// 'starte projektassistent und zeige den aufwand für das nächste release'
 alexaApp.intent('JiraEffortForReleaseIntent', jiraEffortForReleaseIntentHandler.handle.bind(jiraEffortForReleaseIntentHandler));
 
-// 'starte pm assistent und suche nach offenen jira bugs'
+// 'starte projektassistent und suche nach offenen jira bugs'
 alexaApp.intent('JiraSearchIssuesIntent', JiraSearchIssuesIntentHandler);
 
-// 'starte pm assistent und zeige build status von projekt {GitLabProjectName}'
+// 'starte projektassistent und zeige build status von projekt {GitLabProjectName}'
 alexaApp.intent('GitLabBuildStatusIntent', gitlabBuildStatusIntentHandler.handle.bind(gitlabBuildStatusIntentHandler));
 
-// 'starte pm assistent und zeige merge requests'
+// 'starte projektassistent und zeige merge requests'
 alexaApp.intent('GitLabMergeRequestsIntent', gitlabMergeRequestsIntentHandler.handle.bind(gitlabMergeRequestsIntentHandler));
 
-// 'starte pm assistent und zeige sonarcube übersicht von projekt {SonarQubeProjectName}'
+// 'starte projektassistent und zeige sonarcube übersicht von projekt {SonarQubeProjectName}'
 alexaApp.intent('SonarQubeDashboardIntent', sonarQubeDashboardIntentHandler.handle.bind(sonarQubeDashboardIntentHandler));
 
-// 'starte pm assistent und zeige teilsystem dashboard
+// 'starte projektassistent und zeige teilsystem dashboard
 alexaApp.intent('ScsDashboardIntent', scsDashboardIntentHandler.handle.bind(scsDashboardIntentHandler));
 
-// 'starte pm assistent und zeige jenkins status'
+// 'starte projektassistent und zeige jenkins status'
 alexaApp.intent('JenkinsBuildsIntent', JenkinsBuildsIntentHandler);
 
-// 'starte pm assistent und sende eine mail'
+// 'starte projektassistent und sende eine mail'
 alexaApp.intent('SendMailIntent', SendMailIntentHandler);
 
-// 'starte pm assistent und gib mir einen aktuellen status'
+// 'starte projektassistent und gib mir einen aktuellen status'
 alexaApp.intent('AggregateIntent', AggregateIntentHandler);
 
 alexaApp.on('GameEngine.InputHandlerEvent', timeoutHandler.handle.bind(timeoutHandler));

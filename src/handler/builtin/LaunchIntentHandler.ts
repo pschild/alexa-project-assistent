@@ -9,6 +9,13 @@ export default class LaunchIntentHandler {
     @Inject
     private appState: AppState;
 
+    private randomCommands: string[] = [
+        'Wie viele Merge Requests sind offen?',
+        'Wann ist das nächste Release?',
+        'Zeige mir das aktuelle Burn Down Chart!',
+        'Zeige das SonarQube Dashboard!'
+    ];
+
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         let speech: string;
         if (this.appState.isFirstStart()) {
@@ -27,7 +34,7 @@ export default class LaunchIntentHandler {
             .directive(buildHomeScreenDirective({
                 backgroundImageUrl: this.appState.getBaseUrl() + 'static/birnen70.png',
                 logoUrl: this.appState.getBaseUrl() + 'static/logo.png',
-                randomCommand: 'test'
+                randomCommand: this.randomCommands[Math.floor(Math.random() * this.randomCommands.length)]
             }))
             .shouldEndSession(false);
     }

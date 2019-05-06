@@ -5,11 +5,10 @@
         "de-DE": {
           "summary": "Fasst Informationen aus verschiedenen Systemen eines IT-Projektes zusammen",
           "examplePhrases": [
-            "Alexa, öffne PM Assistent",
-            "Alexa, öffne PM Assistent und schreibe eine Mail",
-            "Alexa, frage PM Assistent nach einer Zusammenfassung vom Jira Ticket"
+            "Alexa, öffne Projektassistent",
+            "Alexa, frage Projektassistent nach dem nächsten Release"
           ],
-          "name": "PM Assistent",
+          "name": "Projektassistent",
           "description": "Fasst Informationen aus verschiedenen Systemen eines IT-Projektes zusammen"
         }
       },

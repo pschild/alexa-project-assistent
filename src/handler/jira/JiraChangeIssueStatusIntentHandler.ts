@@ -133,14 +133,14 @@ export default class JiraChangeIssueStatusIntentHandler {
                             )
                         );
                 } else { // intent denied
-                    return response.say(`OK, ich werde nichts ändern.`);
+                    return response.say(`Na gut, dann werde ich nichts ändern.`);
                 }
             }
         }
 
         if (this.intentConfirmationResult.status === ConfirmationStatus.NONE) { // without subtasks, intent confirmation?
             return response
-                .say(`Ich schließe das Ticket ${sayJiraTicket(this.identifierValue, this.numberValue)}.`)
+                .say(`Ich schließe nur das Ticket ${sayJiraTicket(this.identifierValue, this.numberValue)}.`)
                 .say(`Ist das OK?`)
                 .directive(this.intentConfirmationResult.directive)
                 .shouldEndSession(false);
@@ -152,7 +152,7 @@ export default class JiraChangeIssueStatusIntentHandler {
                     this.notificationBuilder.buildSuccessNotification(`${this.identifierValue}-${this.numberValue} geschlossen!`)
                 );
         } else { // intent denied
-            return response.say(`OK, ich werde nichts ändern.`);
+            return response.say(`Alles klar, dann werde ich nichts ändern.`);
         }
     }
 
@@ -190,14 +190,14 @@ export default class JiraChangeIssueStatusIntentHandler {
                             )
                         );
                 } else { // intent denied
-                    return response.say(`OK, ich werde nichts ändern.`);
+                    return response.say(`OK, dann werde ich nichts ändern.`);
                 }
             }
         }
 
         if (this.intentConfirmationResult.status === ConfirmationStatus.NONE) { // without parent, intent confirmation?
             return response
-                .say(`Ich nehme ${sayJiraTicket(this.identifierValue, this.numberValue)} in Bearbeitung.`)
+                .say(`Ich nehme nur ${sayJiraTicket(this.identifierValue, this.numberValue)} in Bearbeitung.`)
                 .say(`Einverstanden?`)
                 .directive(this.intentConfirmationResult.directive)
                 .shouldEndSession(false);
@@ -211,7 +211,7 @@ export default class JiraChangeIssueStatusIntentHandler {
                     )
                 );
         } else { // intent denied
-            return response.say(`Na gut, ich werde nichts ändern.`);
+            return response.say(`Na gut, dann werde ich nichts ändern.`);
         }
     }
 

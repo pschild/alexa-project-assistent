@@ -21,8 +21,8 @@ export default class SonarQubeHelpIntentHandler {
                 backgroundImageUrl: this.appState.getBaseUrl() + 'static/roehren50l.png',
                 imageUrl: this.appState.getBaseUrl() + 'static/sonarqube.png',
                 hints: [
-                    'Zeige SonarQube Dashboard!',
-                    'Zeige SonarQube Übersicht von Projekt Auftragsverwaltung!'
+                    'Zeige das SonarQube Dashboard!',
+                    'Wie ist die Qualität vom Projekt Auftragsverwaltung?'
                 ]
             }))
             .shouldEndSession(false);

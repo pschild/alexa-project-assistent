@@ -21,8 +21,8 @@ export default class JiraHelpIntentHandler {
                 backgroundImageUrl: this.appState.getBaseUrl() + 'static/roehren50l.png',
                 imageUrl: this.appState.getBaseUrl() + 'static/jira.png',
                 hints: [
-                    'Andere den Status von AX-2 auf geschlossen!',
-                    'Zeige den Aufwand für das nächste Release!',
+                    'Ändere den Status von AX-2 auf erledigt!',
+                    'Wann ist das nächste Release?',
                     'Wie ist der Fortschritt im Sprint?',
                     'Zeige mir das aktuelle Burn Down Chart!'
                 ]

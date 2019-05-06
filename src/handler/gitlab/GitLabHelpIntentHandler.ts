@@ -21,9 +21,9 @@ export default class GitlabHelpIntentHandler {
                 backgroundImageUrl: this.appState.getBaseUrl() + 'static/roehren50l.png',
                 imageUrl: this.appState.getBaseUrl() + 'static/gitlab.png',
                 hints: [
-                    'Zeige alle Buildstatus!',
+                    'Zeige alle Pipelines!',
                     'Zeige den Buildstatus von Projekt Auftragsverwaltung!',
-                    'Zeige alle offenen Merge Requests!'
+                    'Wie viele Merge Requests sind offen?'
                 ]
             }))
             .shouldEndSession(false);

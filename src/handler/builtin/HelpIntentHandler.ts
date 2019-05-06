@@ -44,7 +44,7 @@ export default class HelpIntentHandler {
                         title: 'Health Check',
                         identifier: 'scs',
                         hints: ['Dashboard für Teilsysteme'],
-                        imageUrl: this.appState.getBaseUrl() + 'static/sonarqube.png'
+                        imageUrl: this.appState.getBaseUrl() + 'static/heart.png'
                     }
                 ]
             }))

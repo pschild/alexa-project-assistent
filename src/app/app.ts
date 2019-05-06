@@ -38,6 +38,7 @@ import GitlabHelpIntentHandler from '../handler/gitlab/GitLabHelpIntentHandler';
 import SonarQubeHelpIntentHandler from '../handler/sonarqube/SonarQubeHelpIntentHandler';
 import SonarQubeDashboardIntentHandler from '../handler/sonarqube/SonarQubeDashboardIntentHandler';
 import ScsDashboardIntentHandler from '../handler/dashboard/ScsDashboardIntentHandler';
+import ScsHelpIntentHandler from '../handler/dashboard/ScsHelpIntentHandler';
 
 dotenv.config();
 
@@ -115,6 +116,7 @@ const gitlabBuildStatusIntentHandler: GitLabBuildStatusIntentHandler = Container
 const gitlabMergeRequestsIntentHandler: GitLabMergeRequestsIntentHandler = Container.get(GitLabMergeRequestsIntentHandler);
 const sonarQubeDashboardIntentHandler: SonarQubeDashboardIntentHandler = Container.get(SonarQubeDashboardIntentHandler);
 const scsDashboardIntentHandler: ScsDashboardIntentHandler = Container.get(ScsDashboardIntentHandler);
+const scsHelpIntentHandler: ScsHelpIntentHandler = Container.get(ScsHelpIntentHandler);
 
 alexaApp.launch(launchIntentHandler.handle.bind(launchIntentHandler));
 
@@ -131,6 +133,9 @@ alexaApp.intent('GitlabHelpIntent', gitlabHelpIntentHandler.handle.bind(gitlabHe
 
 // 'sonarqube hilfe'
 alexaApp.intent('SonarQubeHelpIntent', sonarQubeHelpIntentHandler.handle.bind(sonarQubeHelpIntentHandler));
+
+// 'health check hilfe'
+alexaApp.intent('ScsHelpIntent', scsHelpIntentHandler.handle.bind(scsHelpIntentHandler));
 
 // 'zeige'
 alexaApp.intent('DisplayTestIntent', displayTestIntentHandler.handle.bind(displayTestIntentHandler));
@@ -183,6 +188,8 @@ alexaApp.on('Alexa.Presentation.APL.UserEvent', (request: alexa.request, respons
                 return request.getRouter().intent('GitlabHelpIntent');
             case 'sonarqube':
                 return request.getRouter().intent('SonarQubeHelpIntent');
+            case 'scs':
+                return request.getRouter().intent('ScsHelpIntent');
             default:
                 return response.say(`Diese Hilfe ist noch nicht implementiert.`);
         }

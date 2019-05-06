@@ -52,11 +52,11 @@ export default class SonarQubeDashboardIntentHandler {
         });
 
         const data: IPieChartDataItem[] = [
-            { label: 'INFO', value: severitiesCount.info },
-            { label: 'MINOR', value: severitiesCount.minor },
-            { label: 'MAJOR', value: severitiesCount.major },
-            { label: 'CRITICAL', value: severitiesCount.critical },
-            { label: 'BLOCKER', value: severitiesCount.blocker }
+            { label: `INFO (${severitiesCount.info})`, value: severitiesCount.info },
+            { label: `MINOR (${severitiesCount.minor})`, value: severitiesCount.minor },
+            { label: `MAJOR (${severitiesCount.major})`, value: severitiesCount.major },
+            { label: `CRITICAL (${severitiesCount.critical})`, value: severitiesCount.critical },
+            { label: `BLOCKER (${severitiesCount.blocker})`, value: severitiesCount.blocker }
         ];
 
         const chartUrl = await this.pieChartController

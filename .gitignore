@@ -5,7 +5,6 @@ dist/
 media-gen/
 
 .env
-employees.json
 
 npm-debug.log
 access.log

@@ -280,69 +280,9 @@
             "wie sehen unsere systeme aus",
             "laufen unsere systeme"
           ]
-        },
-        {
-          "name": "JenkinsBuildsIntent",
-          "slots": [],
-          "samples": [
-            "zeige jenkins status"
-          ]
-        },
-        {
-          "name": "SendMailIntent",
-          "slots": [
-            {
-              "name": "MailContent",
-              "type": "AMAZON.SearchQuery",
-              "samples": [
-                "{MailContent}"
-              ]
-            },
-            {
-              "name": "MailRecipient",
-              "type": "EmployeeName",
-              "samples": [
-                "{MailRecipient}",
-                "an {MailRecipient}"
-              ]
-            }
-          ],
-          "samples": [
-            "sende eine Mail",
-            "schicke eine Mail",
-            "sende eine Mail mit dem Inhalt {MailContent}",
-            "schicke eine Mail mit dem Inhalt {MailContent}",
-            "sende eine Erinnerung"
-          ]
-        },
-        {
-          "name": "JiraSearchIssuesIntent",
-          "samples": [
-            "suche nach offenen jira bugs"
-          ]
-        },
-        {
-          "name": "AggregateIntent",
-          "samples": [
-            "gib mir einen aktuellen status",
-            "gib mir einen statusbericht"
-          ]
-        },
-        {
-          "name": "ProjectDashboardIntent",
-          "slots": [],
-          "samples": [
-            "dashboard",
-            "übersicht",
-            "gesamtstatus"
-          ]
         }
       ],
       "types": [
-        {
-          "name": "EmployeeName",
-          "values": []
-        },
         {
           "name": "GitLabProject",
           "values": []
@@ -414,64 +354,10 @@
     "dialog": {
       "intents": [
         {
-          "name": "JiraXrayStatusIntent",
-          "slots": [
-            {
-              "name": "JiraTicketIdentifier",
-              "type": "JiraTicketIdentifier",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "JiraTicketIdentifier.Elicit.1"
-              },
-              "validations": [
-                {
-                  "type": "hasEntityResolutionMatch",
-                  "prompt": "JiraTicketIdentifier.Validation.1"
-                }
-              ]
-            },
-            {
-              "name": "JiraTicketNumber",
-              "type": "AMAZON.NUMBER",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "JiraTicketNumber.Elicit.1"
-              }
-            }
-          ]
+          "name": "JiraChangeIssueStatusIntent",
+          "slots": []
         }
       ]
-    },
-    "prompts": [
-      {
-        "id": "JiraTicketIdentifier.Elicit.1",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Welche Bezeichnung hat das Ticket?"
-          }
-        ]
-      },
-      {
-        "id": "JiraTicketNumber.Elicit.1",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Welche Nummer hat das Ticket?"
-          }
-        ]
-      },
-      {
-        "id": "JiraTicketIdentifier.Validation.1",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Den Bezeichner {JiraTicketIdentifier} kenne ich nicht."
-          }
-        ]
-      }
-    ]
+    }
   }
 }

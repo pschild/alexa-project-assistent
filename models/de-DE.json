@@ -42,6 +42,18 @@
           ]
         },
         {
+          "name": "ScsHelpIntent",
+          "samples": [
+            "health check hilfe",
+            "dashboard hilfe",
+            "hilfe für health check",
+            "hilfe für dashboard",
+            "öffne health check hilfe",
+            "öffne die hilfe für den health check",
+            "was zeigt mir der health check"
+          ]
+        },
+        {
           "name": "AMAZON.StopIntent",
           "samples": []
         },
@@ -274,9 +286,9 @@
           "name": "ScsDashboardIntent",
           "slots": [],
           "samples": [
-            "zeige teilsystem dashboard",
-            "zeige health check",
-            "zeige gesundheitsstatus",
+            "zeige das teilsystem dashboard",
+            "zeige das teilprojekt dashboard",
+            "zeige den gesundheitsstatus",
             "wie sehen unsere systeme aus",
             "laufen unsere systeme"
           ]

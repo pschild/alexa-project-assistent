@@ -1,4 +1,3 @@
-import { createTransport, SendMailOptions, Transporter } from 'nodemailer';
 import { AutoWired, Singleton } from 'typescript-ioc';
 
 @AutoWired

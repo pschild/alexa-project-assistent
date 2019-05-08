@@ -1,7 +1,8 @@
 # Prerequisites
 * Install Node including npm. Tested with node 10.15.3 and npm 6.4.1
 * Install Python. Ensure it's added to your PATH. Tested with Python 2.7, which was included in `windows-build-tools` via `npm install -g --production windows-build-tools` (Admin Terminal)
-* Install ASK-CLI: `npm install -g ask-cli`, followed by `ask init`. The connection to an AWS profile can be skipped by answering the question with n/no. For further information, follow the official [documentation](https://developer.amazon.com/de/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html#step-3-install-and-initialize-ask-cli)
+* Install ASK-CLI: `npm install -g ask-cli`
+* Call `ask init` to initialize the CLI. You need to have a developer account for Amazon. The connection to an AWS profile can be skipped by answering the question with n/no. For further information, follow the official [documentation](https://developer.amazon.com/de/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html#step-3-install-and-initialize-ask-cli)
 
 # Installation
 1. `git clone https://github.com/pschild/pm-info-aggregator.git`

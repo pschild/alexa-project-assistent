@@ -41,9 +41,11 @@ export class JiraIssue {
                 return SwimlaneStatus.IN_PROGRESS;
             case IssueStatus.CLOSED:
             case IssueStatus.RESOLVED:
+            case IssueStatus.ERLEDIGT:
+            case IssueStatus.DONE:
                 return SwimlaneStatus.DONE;
             default:
-                throw new Error(`Unknwon status of jira ticket ${this.key}: ${this.fields.status.name}`);
+                throw new Error(`Unknown status of jira ticket ${this.key}: ${this.fields.status.name}`);
         }
     }
 

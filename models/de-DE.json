@@ -219,7 +219,11 @@
             "zeige die pipelines von {GitLabProjectName}",
             "zeige die pipelines von projekt {GitLabProjectName}",
             "zeige die jobs von {GitLabProjectName}",
-            "zeige die jobs von projekt {GitLabProjectName}"
+            "zeige die jobs von projekt {GitLabProjectName}",
+            "wie ist der build status für s. c. s. {GitLabProjectName}",
+            "laufen zur zeit master builds",
+            "laufen zur zeit master builds im projekt {GitLabProjectName}",
+            "zeige den build status der s. c. s."
           ]
         },
         {
@@ -230,7 +234,8 @@
             "zeige offene merge requests",
             "wie viele offene merge requests haben wir",
             "wie viele offene merge requests gibt es",
-            "wie viele merge requests sind offen"
+            "wie viele merge requests sind offen",
+            "wie viele m. r.s sind offen"
           ]
         },
         {
@@ -290,7 +295,9 @@
             "zeige das teilprojekt dashboard",
             "zeige den gesundheitsstatus",
             "wie sehen unsere systeme aus",
-            "laufen unsere systeme"
+            "laufen unsere systeme",
+            "gib mir eine morgendliche zusammenfassung",
+            "ist alles okay im projekt"
           ]
         }
       ],
@@ -330,7 +337,7 @@
               "id": "close",
               "name": {
                 "value": "schließe",
-                "synonyms": ["schließen", "geschlossen", "erledigt", "erledige", "fertig", "done", "als erledigt markieren"]
+                "synonyms": ["schließen", "geschlossen", "erledigt", "erledige", "fertig", "done", "als erledigt markieren", "gelöst"]
               }
             },
             {

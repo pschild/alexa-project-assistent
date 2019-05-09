@@ -77,7 +77,7 @@ export default class JiraXrayStatusIntentHandler {
 
         let globalStateText;
         if (globalState === TestRunStatus.EXECUTING) {
-            globalStateText = 'Es werden momentan noch Tests für das Ticket ausgeführt.';
+            globalStateText = `Es werden momentan noch Tests ausgeführt.`;
         } else if (globalState === TestRunStatus.FAIL) {
             globalStateText = 'Die Tests sind nicht in Ordnung, da es mindestens einen fehlgeschlagenen Test gibt.';
         } else {

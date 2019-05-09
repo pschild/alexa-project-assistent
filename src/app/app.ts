@@ -99,6 +99,7 @@ const helpIntentHandler: HelpIntentHandler = Container.get(HelpIntentHandler);
 const jiraHelpIntentHandler: JiraHelpIntentHandler = Container.get(JiraHelpIntentHandler);
 const gitlabHelpIntentHandler: GitlabHelpIntentHandler = Container.get(GitlabHelpIntentHandler);
 const sonarQubeHelpIntentHandler: SonarQubeHelpIntentHandler = Container.get(SonarQubeHelpIntentHandler);
+const scsHelpIntentHandler: ScsHelpIntentHandler = Container.get(ScsHelpIntentHandler);
 const jiraIssueIntentHandler: JiraIssueIntentHandler = Container.get(JiraIssueIntentHandler);
 const jiraChangeIssueStatusIntentHandler: JiraChangeIssueStatusIntentHandler = Container.get(JiraChangeIssueStatusIntentHandler);
 const jiraXrayStatusIntentHandler: JiraXrayStatusIntentHandler = Container.get(JiraXrayStatusIntentHandler);
@@ -112,7 +113,6 @@ const gitlabBuildStatusIntentHandler: GitLabBuildStatusIntentHandler = Container
 const gitlabMergeRequestsIntentHandler: GitLabMergeRequestsIntentHandler = Container.get(GitLabMergeRequestsIntentHandler);
 const sonarQubeDashboardIntentHandler: SonarQubeDashboardIntentHandler = Container.get(SonarQubeDashboardIntentHandler);
 const scsDashboardIntentHandler: ScsDashboardIntentHandler = Container.get(ScsDashboardIntentHandler);
-const scsHelpIntentHandler: ScsHelpIntentHandler = Container.get(ScsHelpIntentHandler);
 const aplUserEventHandler: AplUserEventHandler = Container.get(AplUserEventHandler);
 
 alexaApp.launch(launchIntentHandler.handle.bind(launchIntentHandler));

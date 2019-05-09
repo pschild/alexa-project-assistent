@@ -5,8 +5,9 @@ import { buildMergeRequestsDirective } from '../../apl/datasources';
 import { GitlabMergeRequest } from '../../endpoint/gitlab/domain/GitlabMergeRequest';
 import * as humanizeDuration from 'humanize-duration';
 import AppState from '../../app/state/AppState';
+import IIntentHandler from '../IIntentHandler';
 
-export default class GitLabMergeRequestsIntentHandler {
+export default class GitLabMergeRequestsIntentHandler implements IIntentHandler {
 
     @Inject
     protected appState: AppState;

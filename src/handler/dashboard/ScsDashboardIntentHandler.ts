@@ -7,8 +7,9 @@ import SonarQubeDashboardIntentHandler from '../sonarqube/SonarQubeDashboardInte
 import GitLabMergeRequestsIntentHandler from '../gitlab/GitLabMergeRequestsIntentHandler';
 import GitLabBuildStatusIntentHandler from '../gitlab/GitLabBuildStatusIntentHandler';
 import AppState from '../../app/state/AppState';
+import IIntentHandler from '../IIntentHandler';
 
-export default class ScsDashboardIntentHandler {
+export default class ScsDashboardIntentHandler implements IIntentHandler {
 
     @Inject
     private appState: AppState;

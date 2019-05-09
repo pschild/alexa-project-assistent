@@ -5,8 +5,9 @@ import { Inject } from 'typescript-ioc';
 import { sayJiraTicket, pause, sayAsDuration } from '../utils/speechUtils';
 import { NotificationBuilder } from '../../apl/NotificationBuilder';
 import { HandlerError } from '../error/HandlerError';
+import IIntentHandler from '../IIntentHandler';
 
-export default class JiraIssueIntentHandler {
+export default class JiraIssueIntentHandler implements IIntentHandler {
 
     @Inject
     private notificationBuilder: NotificationBuilder;

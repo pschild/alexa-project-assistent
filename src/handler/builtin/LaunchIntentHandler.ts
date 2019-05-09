@@ -3,8 +3,9 @@ import * as alexa from 'alexa-app';
 import AppState from '../../app/state/AppState';
 import { buildHomeScreenDirective } from '../../apl/datasources';
 import { sayInEnglish } from '../utils/speechUtils';
+import IIntentHandler from '../IIntentHandler';
 
-export default class LaunchIntentHandler {
+export default class LaunchIntentHandler implements IIntentHandler {
 
     @Inject
     private appState: AppState;

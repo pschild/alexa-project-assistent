@@ -9,8 +9,9 @@ import { SwimlaneStatus } from '../../endpoint/jira/domain/enum';
 import { sayAsDate } from '../utils/speechUtils';
 import { HandlerError } from '../error/HandlerError';
 import AppState from '../../app/state/AppState';
+import IIntentHandler from '../IIntentHandler';
 
-export default class JiraEffortForReleaseIntentHandler {
+export default class JiraEffortForReleaseIntentHandler implements IIntentHandler {
 
     @Inject
     protected appState: AppState;

@@ -6,8 +6,9 @@ import { BarChartController, IBarChartDataItem } from '../../media/BarChartContr
 import { sayInEnglish, sayAsDecimal } from '../utils/speechUtils';
 import { HandlerError } from '../error/HandlerError';
 import AppState from '../../app/state/AppState';
+import IIntentHandler from '../IIntentHandler';
 
-export default class JiraVelocityIntentHandler {
+export default class JiraVelocityIntentHandler implements IIntentHandler {
 
     @Inject
     protected appState: AppState;

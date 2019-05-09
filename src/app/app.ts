@@ -95,6 +95,7 @@ alexaApp.post = (request: alexa.request, response: alexa.response, type: string,
 };
 
 const launchIntentHandler: LaunchIntentHandler = Container.get(LaunchIntentHandler);
+const stopIntentHandler: StopIntentHandler = Container.get(StopIntentHandler);
 const helpIntentHandler: HelpIntentHandler = Container.get(HelpIntentHandler);
 const jiraHelpIntentHandler: JiraHelpIntentHandler = Container.get(JiraHelpIntentHandler);
 const gitlabHelpIntentHandler: GitlabHelpIntentHandler = Container.get(GitlabHelpIntentHandler);
@@ -117,7 +118,7 @@ const aplUserEventHandler: AplUserEventHandler = Container.get(AplUserEventHandl
 
 alexaApp.launch(launchIntentHandler.handle.bind(launchIntentHandler));
 
-alexaApp.intent('AMAZON.StopIntent', StopIntentHandler);
+alexaApp.intent('AMAZON.StopIntent', stopIntentHandler.handle.bind(stopIntentHandler));
 
 // 'hilfe'
 alexaApp.intent('AMAZON.HelpIntent', helpIntentHandler.handle.bind(helpIntentHandler));

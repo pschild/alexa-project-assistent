@@ -11,8 +11,9 @@ import AppState from '../app/state/AppState';
 import * as humanizeDuration from 'humanize-duration';
 import { GitlabEndpointController } from '../endpoint/gitlab/GitlabEndpointController';
 import { GitlabMergeRequest } from '../endpoint/gitlab/domain/GitlabMergeRequest';
+import IIntentHandler from './IIntentHandler';
 
-export default class DisplayTestIntentHandler {
+export default class DisplayTestIntentHandler implements IIntentHandler {
 
     @Inject
     private appState: AppState;

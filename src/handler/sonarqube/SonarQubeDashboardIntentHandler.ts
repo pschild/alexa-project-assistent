@@ -9,8 +9,9 @@ import { ProgressBarChartController } from '../../media/ProgressBarChartControll
 import { buildSonarQubeDashboardDirective } from '../../apl/datasources';
 import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
 import { pause } from '../utils/speechUtils';
+import IIntentHandler from '../IIntentHandler';
 
-export default class SonarQubeDashboardIntentHandler {
+export default class SonarQubeDashboardIntentHandler implements IIntentHandler {
 
     @Inject
     private appState: AppState;

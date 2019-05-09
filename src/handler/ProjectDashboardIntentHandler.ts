@@ -6,8 +6,9 @@ import { PieChartController, IPieChartDataItem } from '../media/PieChartControll
 import { IBarChartDataItem, BarChartController } from '../media/BarChartController';
 import { LineChartController, ILineChartDataItem, ILineChartDataValueItem } from '../media/LineChartController';
 import { HandlerError } from './error/HandlerError';
+import IIntentHandler from './IIntentHandler';
 
-export default class ProjectDashboardIntentHandler {
+export default class ProjectDashboardIntentHandler implements IIntentHandler {
 
     @Inject
     private pieChartController: PieChartController;

@@ -9,8 +9,9 @@ import { TestRunStatus } from '../../endpoint/jira/domain/enum';
 import AppState from '../../app/state/AppState';
 import { HandlerError } from '../error/HandlerError';
 import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
+import IIntentHandler from '../IIntentHandler';
 
-export default class JiraXrayStatusIntentHandler {
+export default class JiraXrayStatusIntentHandler implements IIntentHandler {
 
     @Inject
     protected appState: AppState;

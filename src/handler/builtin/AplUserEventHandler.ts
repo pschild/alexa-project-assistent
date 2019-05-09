@@ -1,6 +1,7 @@
 import * as alexa from 'alexa-app';
+import IIntentHandler from '../IIntentHandler';
 
-export default class AplUserEventHandler {
+export default class AplUserEventHandler implements IIntentHandler {
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         console.log(`Received TouchEvent, arguments: ${request.data.request.arguments}`);

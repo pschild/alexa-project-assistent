@@ -3,8 +3,9 @@ import * as alexa from 'alexa-app';
 import { sayInEnglish, pause } from '../utils/speechUtils';
 import { buildHelpDetailDirective } from '../../apl/datasources';
 import AppState from '../../app/state/AppState';
+import IIntentHandler from '../IIntentHandler';
 
-export default class JiraHelpIntentHandler {
+export default class JiraHelpIntentHandler implements IIntentHandler {
 
     @Inject
     private appState: AppState;

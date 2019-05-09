@@ -7,8 +7,9 @@ import { JobState, PipelineState } from '../../endpoint/gitlab/domain/enum';
 import { GitlabJob } from '../../endpoint/gitlab/domain/GitlabJob';
 import * as dateFormat from 'dateformat';
 import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
+import IIntentHandler from '../IIntentHandler';
 
-export default class GitLabBuildStatusIntentHandler {
+export default class GitLabBuildStatusIntentHandler implements IIntentHandler {
 
     @Inject
     private appState: AppState;

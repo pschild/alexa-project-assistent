@@ -3,8 +3,9 @@ import { buildHelpDirective } from '../../apl/datasources';
 import { Inject } from 'typescript-ioc';
 import AppState from '../../app/state/AppState';
 import { sayInEnglish } from '../utils/speechUtils';
+import IIntentHandler from '../IIntentHandler';
 
-export default class HelpIntentHandler {
+export default class HelpIntentHandler implements IIntentHandler {
 
     @Inject
     private appState: AppState;

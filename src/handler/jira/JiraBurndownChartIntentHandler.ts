@@ -7,8 +7,9 @@ import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
 import { ILineChartDataItem, LineChartController } from '../../media/LineChartController';
 import { HandlerError } from '../error/HandlerError';
 import AppState from '../../app/state/AppState';
+import IIntentHandler from '../IIntentHandler';
 
-export default class JiraBurndownChartIntentHandler {
+export default class JiraBurndownChartIntentHandler implements IIntentHandler {
 
     @Inject
     protected appState: AppState;

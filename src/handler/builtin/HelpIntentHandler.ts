@@ -11,10 +11,16 @@ export default class HelpIntentHandler implements IIntentHandler {
     private appState: AppState;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
-        const speech = `Du kannst mir Fragen zu den Systemen `
-            + `${sayInEnglish('jira')}, ${sayInEnglish('gitlab')} und ${sayInEnglish('sonarcube')} stellen. `
-            + `Um eine detaillierte Hilfe zu einem System zu öffnen sage zum Beispiel Hilfe für ${sayInEnglish('jira')}. `
-            + `Für einen Health Check der Teilsysteme kann ich dir auch ein Dashboard anzeigen.`;
+        let speech;
+        if (this.appState.isFirstHelpCall()) {
+            this.appState.setFirstHelpCall(false);
+            speech = `Du kannst mir Fragen zu den Systemen `
+                + `${sayInEnglish('jira')}, ${sayInEnglish('gitlab')} und ${sayInEnglish('sonarcube')} stellen. `
+                + `Um eine detaillierte Hilfe zu einem System zu öffnen sage zum Beispiel Hilfe für ${sayInEnglish('jira')}. `
+                + `Für einen Health Check der Teilsysteme kann ich dir auch ein Dashboard anzeigen.`;
+        } else {
+            speech = `Wobei kann ich dir helfen?`;
+        }
         const reprompt = `Du kannst auch auf das jeweilige Logo tippen, um Hilfe zu einem System zu erhalten.`;
 
         return response

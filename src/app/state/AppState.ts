@@ -16,6 +16,7 @@ export default class AppState {
     private hostname: string;
 
     private firstStart: boolean = true;
+    private firstHelpCall: boolean = true;
 
     getDeviceState(): DeviceState {
         return this.deviceState;
@@ -39,6 +40,14 @@ export default class AppState {
 
     isFirstStart(): boolean {
         return this.firstStart;
+    }
+
+    setFirstHelpCall(firstHelpCall: boolean) {
+        this.firstHelpCall = firstHelpCall;
+    }
+
+    isFirstHelpCall(): boolean {
+        return this.firstHelpCall;
     }
 
 }

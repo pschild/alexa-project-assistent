@@ -8,7 +8,7 @@ import { sayJiraTicket } from '../utils/speechUtils';
 import { TestRunStatus } from '../../endpoint/jira/domain/enum';
 import AppState from '../../app/state/AppState';
 import { HandlerError } from '../error/HandlerError';
-import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
+import { elicitSlot, ElicitationStatus, sendProgressiveResponse } from '../utils/handlerUtils';
 import IIntentHandler from '../IIntentHandler';
 
 export default class JiraXrayStatusIntentHandler implements IIntentHandler {
@@ -47,6 +47,9 @@ export default class JiraXrayStatusIntentHandler implements IIntentHandler {
         if (!issue.getTestCoverage() || !issue.getTestCoverage().getAllTestKeys()) {
             return response.say(`Für ${sayJiraTicket(ticketIdentifierValue, ticketNumberValue)} sind keine Tests vorhanden.`);
         }
+
+        sendProgressiveResponse(request, 'Alles klar, ich erstelle eine Übersicht.');
+
         const testKeys = issue.getTestCoverage().getAllTestKeys();
         const finalResult = await Promise.all(testKeys.map(key => this.controller.getLatestTestrunByTestIssue(key)));
 
@@ -99,7 +102,7 @@ export default class JiraXrayStatusIntentHandler implements IIntentHandler {
                     };
                 })
             }))
-            .say(`Hier sind die aktuellen Testergebnisse für ${sayJiraTicket(ticketIdentifierValue, ticketNumberValue)}.`)
+            .say(`So, hier sind die aktuellen Testergebnisse für ${sayJiraTicket(ticketIdentifierValue, ticketNumberValue)}.`)
             .say(globalStateText);
     }
 

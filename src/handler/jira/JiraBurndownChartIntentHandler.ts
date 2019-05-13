@@ -3,7 +3,7 @@ import { JiraEndpointController } from '../../endpoint/jira/JiraEndpointControll
 import { Inject } from 'typescript-ioc';
 import { buildImageDirective } from '../../apl/datasources';
 import { JiraSprint } from '../../endpoint/jira/domain/JiraSprint';
-import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
+import { elicitSlot, ElicitationStatus, sendProgressiveResponse } from '../utils/handlerUtils';
 import { ILineChartDataItem, LineChartController } from '../../media/LineChartController';
 import { HandlerError } from '../error/HandlerError';
 import AppState from '../../app/state/AppState';
@@ -21,6 +21,7 @@ export default class JiraBurndownChartIntentHandler implements IIntentHandler {
     private lineChartController: LineChartController;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
+        sendProgressiveResponse(request, 'Ok, ich erstelle das Burndown Chart vom aktuellen Sprint.');
         // const currentSprint: JiraSprint = await this.controller.getCurrentSprint();
 
         // const sprintNumberElicitationResult = elicitSlot(request, 'BurndownChartSprintNumber');
@@ -72,7 +73,7 @@ export default class JiraBurndownChartIntentHandler implements IIntentHandler {
                 });
             response
                 // .say(`Hier ist das Burndown Chart von Sprint ${loadedSprint.getSprintNumber()}.`)
-                .say(`Hier ist das Burndown Chart vom aktuellen Sprint.`)
+                .say(`Hier ist es.`)
                 .directive(buildImageDirective({
                     backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                     // title: `Burndownchart von Sprint ${loadedSprint.getSprintNumber()}`,

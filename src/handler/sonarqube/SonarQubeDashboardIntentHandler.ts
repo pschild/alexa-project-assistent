@@ -7,7 +7,7 @@ import { IssueSeverity, QualityGateStatus } from '../../endpoint/sonarqube/domai
 import { SonarQubeEndpointController } from '../../endpoint/sonarqube/SonarQubeEndpointController';
 import { ProgressBarChartController } from '../../media/ProgressBarChartController';
 import { buildSonarQubeDashboardDirective } from '../../apl/datasources';
-import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
+import { elicitSlot, ElicitationStatus, sendProgressiveResponse } from '../utils/handlerUtils';
 import { pause } from '../utils/speechUtils';
 import IIntentHandler from '../IIntentHandler';
 
@@ -103,6 +103,8 @@ export default class SonarQubeDashboardIntentHandler implements IIntentHandler {
         } else {
             projectKeys = SonarQubeEndpointController.DEMO_PROJECTS.map(project => project.name);
         }
+
+        sendProgressiveResponse(request, 'Ok, warte kurz.');
 
         const issuesImageUrl = await this.generateIssueSeverityChart(projectKeys);
         const coverageImageUrl = await this.generateCoverageChart(projectKeys);

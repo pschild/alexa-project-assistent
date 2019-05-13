@@ -10,6 +10,7 @@ import * as dateFormat from 'dateformat';
 import { HandlerError } from '../error/HandlerError';
 import AppState from '../../app/state/AppState';
 import IIntentHandler from '../IIntentHandler';
+import { sendProgressiveResponse } from '../utils/handlerUtils';
 
 export default class JiraSprintProgressIntentHandler implements IIntentHandler {
 
@@ -23,6 +24,7 @@ export default class JiraSprintProgressIntentHandler implements IIntentHandler {
     private progressBarChartController: ProgressBarChartController;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
+        sendProgressiveResponse(request, 'Ok, ich erstelle eine Übersicht vom aktuellen Sprint.');
         const activeSprint = await this.controller.getCurrentSprint();
         const issuesOfSprint = await this.controller.getIssuesOfSprint(activeSprint.id);
 

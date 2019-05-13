@@ -10,6 +10,7 @@ import { sayAsDate } from '../utils/speechUtils';
 import { HandlerError } from '../error/HandlerError';
 import AppState from '../../app/state/AppState';
 import IIntentHandler from '../IIntentHandler';
+import { sendProgressiveResponse } from '../utils/handlerUtils';
 
 export default class JiraEffortForReleaseIntentHandler implements IIntentHandler {
 
@@ -23,6 +24,7 @@ export default class JiraEffortForReleaseIntentHandler implements IIntentHandler
     private progressBarChartController: ProgressBarChartController;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
+        sendProgressiveResponse(request, 'Ok, Moment.');
         const releaseName = 'Testrelease';
 
         const releasesOfProjects: JiraRelease[] = await this.controller.getProjectVersions('AX');

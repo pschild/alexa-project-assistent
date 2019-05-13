@@ -8,6 +8,7 @@ import GitLabMergeRequestsIntentHandler from '../gitlab/GitLabMergeRequestsInten
 import GitLabBuildStatusIntentHandler from '../gitlab/GitLabBuildStatusIntentHandler';
 import AppState from '../../app/state/AppState';
 import IIntentHandler from '../IIntentHandler';
+import { sendProgressiveResponse } from '../utils/handlerUtils';
 
 export default class ScsDashboardIntentHandler implements IIntentHandler {
 
@@ -24,6 +25,8 @@ export default class ScsDashboardIntentHandler implements IIntentHandler {
     private gitLabBuildStatusIntentHandler: GitLabBuildStatusIntentHandler;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
+        sendProgressiveResponse(request, 'Gut. Moment, ich sammle alle nötigen Infos.');
+
         const sqProjectKeys = SonarQubeEndpointController.DEMO_PROJECTS.map(project => project.name);
         const glProjectKeys = GitlabEndpointController.DEMO_PROJECTS.map(project => project.id);
 

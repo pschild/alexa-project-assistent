@@ -6,7 +6,7 @@ import AppState from '../../app/state/AppState';
 import { JobState, PipelineState } from '../../endpoint/gitlab/domain/enum';
 import { GitlabJob } from '../../endpoint/gitlab/domain/GitlabJob';
 import * as dateFormat from 'dateformat';
-import { elicitSlot, ElicitationStatus } from '../utils/handlerUtils';
+import { elicitSlot, ElicitationStatus, sendProgressiveResponse } from '../utils/handlerUtils';
 import IIntentHandler from '../IIntentHandler';
 
 export default class GitLabBuildStatusIntentHandler implements IIntentHandler {
@@ -18,6 +18,7 @@ export default class GitLabBuildStatusIntentHandler implements IIntentHandler {
     private controller: GitlabEndpointController;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
+        sendProgressiveResponse(request, 'Einen Augenblick, ich schaue nach.');
         let projectDetails;
         let result;
 

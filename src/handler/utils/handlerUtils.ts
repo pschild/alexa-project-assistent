@@ -1,4 +1,5 @@
 import * as alexa from 'alexa-app';
+import { post } from 'request-promise';
 
 export enum ElicitationStatus {
     SUCCESS = 'success',
@@ -131,4 +132,27 @@ export const confirmIntent = (request: alexa.request): IIntentConfirmationResult
             };
         }
     }
+};
+
+export const sendProgressiveResponse = (request: alexa.request, speech: string): void => {
+    // tslint:disable-next-line:no-string-literal
+    const token = request.data.context.System['apiAccessToken'];
+    const endpoint = request.data.context.System.apiEndpoint;
+    const requestId = request.data.request.requestId;
+    post({
+        uri: `${endpoint}/v1/directives`,
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        body: {
+            header: {
+                requestId
+            },
+            directive: {
+                type: 'VoicePlayer.Speak',
+                speech
+            }
+        },
+        json: true
+    });
 };

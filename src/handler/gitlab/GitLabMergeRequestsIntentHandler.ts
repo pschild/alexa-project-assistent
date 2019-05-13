@@ -6,6 +6,7 @@ import { GitlabMergeRequest } from '../../endpoint/gitlab/domain/GitlabMergeRequ
 import * as humanizeDuration from 'humanize-duration';
 import AppState from '../../app/state/AppState';
 import IIntentHandler from '../IIntentHandler';
+import { sendProgressiveResponse } from '../utils/handlerUtils';
 
 export default class GitLabMergeRequestsIntentHandler implements IIntentHandler {
 
@@ -16,6 +17,7 @@ export default class GitLabMergeRequestsIntentHandler implements IIntentHandler 
     private controller: GitlabEndpointController;
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
+        sendProgressiveResponse(request, 'Gut, einen Moment eben.');
         const projectIds = GitlabEndpointController.DEMO_PROJECTS.map(project => project.id);
         const result = await this.getMergeRequests(projectIds);
         return response

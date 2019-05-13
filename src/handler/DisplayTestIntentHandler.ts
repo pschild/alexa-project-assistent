@@ -12,6 +12,7 @@ import * as humanizeDuration from 'humanize-duration';
 import { GitlabEndpointController } from '../endpoint/gitlab/GitlabEndpointController';
 import { GitlabMergeRequest } from '../endpoint/gitlab/domain/GitlabMergeRequest';
 import IIntentHandler from './IIntentHandler';
+import { sendProgressiveResponse } from './utils/handlerUtils';
 
 export default class DisplayTestIntentHandler implements IIntentHandler {
 
@@ -60,6 +61,16 @@ export default class DisplayTestIntentHandler implements IIntentHandler {
         //     }))
         //     .say('Triggered DisplayTestIntent');
 
+        sendProgressiveResponse(request, 'laber nicht');
+        await this.wait();
         return response.say('jjasd').directive(this.notificationBuilder.buildWarningNotification('cool!'));
+    }
+
+    private async wait() {
+        return new Promise((res, rej) => {
+            setTimeout(() => {
+                res();
+            }, 5000);
+        });
     }
 }

@@ -68,13 +68,16 @@ export default class JiraSprintProgressIntentHandler implements IIntentHandler {
             throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
         });
 
+        let progressInfo;
+        if (+sprintTimeProgress > +taskTimeProgress) {
+            progressInfo = `Momentan liegt ihr mit den Aufgaben etwas zurück. Wenn ihr euch beeilt, schafft ihr es vielleicht!`;
+        } else {
+            progressInfo = `Super! Ihr liegt aktuell gut in der Zeit! Weiter so!`;
+        }
+
         return response
-            .say(
-                `Der aktuelle Sprint läuft bis zum ${sayAsDate(activeSprint.endDate)}. `
-                + `${doneWorkableIssues} von ${workableIssues.length} Aufgaben wurden bereits erledigt. `
-                + `Es sind bisher ${sayAsDecimal(sprintTimeProgress)} Prozent der Zeit verstrichen und `
-                + `${sayAsDecimal(taskTimeProgress)} Prozent des Aufwands erledigt worden.`
-            )
+            .say(`Der aktuelle Sprint läuft bis zum ${sayAsDate(activeSprint.endDate)}.`)
+            .say(progressInfo)
             .directive(buildSprintProgressDirective({
                 backgroundImageUrl: this.appState.getBaseUrl() + 'static/neon60l.png',
                 sprintName: activeSprint.name,

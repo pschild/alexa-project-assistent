@@ -24,7 +24,9 @@ export default class LaunchIntentHandler implements IIntentHandler {
             speech = `Hallo und willkommen. Ich bin hier, um dir Informationen zum Projekt zu geben. `
                 + `Du kannst mir Fragen zu ${sayInEnglish('jira')}, ${sayInEnglish('gitlab')} oder ${sayInEnglish('sonarcube')} stellen `
                 + `oder dir einen allgemeinen Health Check anzeigen lassen. `
-                + `Wenn du mal nicht weiter weißt, sage jederzeit: Hilfe. `;
+                + `Wenn du mal nicht weiter weißt, sage jederzeit: Hilfe. `
+                + `Hier noch ein Tipp: Du kannst auch die Touchfunktion des Bildschirms nutzen. `
+                + `Was möchtest du wissen? `;
         } else {
             speech = `Freut mich, dich wiederzusehen! Wobei kann ich dir behilflich sein?`;
         }

@@ -49,8 +49,9 @@
             "hilfe für health check",
             "hilfe für dashboard",
             "öffne health check hilfe",
+            "öffne dashboard hilfe",
             "öffne die hilfe für den health check",
-            "was zeigt mir der health check"
+            "öffne die hilfe für das dashboard"
           ]
         },
         {
@@ -163,10 +164,10 @@
             }
           ],
           "samples": [
-            "zeige den teststatus",
-            "zeige den teststatus von {JiraTicketIdentifier} {JiraTicketNumber}",
-            "wie ist der teststatus von {JiraTicketIdentifier} {JiraTicketNumber}",
-            "zeige den xray status von {JiraTicketIdentifier} {JiraTicketNumber}"
+            "zeige die tests",
+            "zeige die tests von {JiraTicketIdentifier} {JiraTicketNumber}",
+            "zeige die xray tests",
+            "zeige die xray tests von {JiraTicketIdentifier} {JiraTicketNumber}"
           ]
         },
         {
@@ -195,8 +196,8 @@
           "slots": [],
           "samples": [
             "zeige den aufwand für das nächste release",
-            "wann ist das nächste release",
-            "wie groß ist der aufwand für das nächste release"
+            "wie groß ist der aufwand für das nächste release",
+            "wann ist das nächste release"
           ]
         },
         {
@@ -211,19 +212,19 @@
             }
           ],
           "samples": [
-            "zeige build status",
-            "zeige alle build status",
+            "zeige builds",
+            "zeige alle builds",
             "zeige alle pipelines",
             "zeige alle jobs",
-            "zeige build status von projekt {GitLabProjectName}",
+            "zeige builds von {GitLabProjectName}",
+            "zeige builds von s. c. s. {GitLabProjectName}",
             "zeige die pipelines von {GitLabProjectName}",
-            "zeige die pipelines von projekt {GitLabProjectName}",
+            "zeige die pipelines von s. c. s. {GitLabProjectName}",
             "zeige die jobs von {GitLabProjectName}",
-            "zeige die jobs von projekt {GitLabProjectName}",
-            "wie ist der build status für s. c. s. {GitLabProjectName}",
+            "zeige die jobs von s. c. s. {GitLabProjectName}",
             "laufen zur zeit master builds",
-            "laufen zur zeit master builds im projekt {GitLabProjectName}",
-            "zeige den build status der s. c. s."
+            "laufen zur zeit master builds im s. c. s. {GitLabProjectName}",
+            "zeige die builds der s. c. s."
           ]
         },
         {
@@ -280,11 +281,11 @@
             }
           ],
           "samples": [
-              "zeige sonarcube dashboard",
-              "zeige sonar übersicht",
-              "zeige sonarcube übersicht von projekt {SonarQubeProjectName}",
-              "wie ist die qualität von projekt {SonarQubeProjectName}",
-              "welche fehler gibt es im projekt {SonarQubeProjectName}"
+            "zeige sonarcube ansicht",
+            "zeige sonar übersicht",
+            "zeige sonarcube übersicht von {SonarQubeProjectName}",
+            "wie ist die qualität von {SonarQubeProjectName}",
+            "welche fehler gibt es bei {SonarQubeProjectName}"
           ]
         },
         {
@@ -293,11 +294,12 @@
           "samples": [
             "zeige das teilsystem dashboard",
             "zeige das teilprojekt dashboard",
+            "zeige das s. c. s. dashboard",
             "zeige den gesundheitsstatus",
+            "zeige den health check",
             "wie sehen unsere systeme aus",
             "laufen unsere systeme",
-            "gib mir eine morgendliche zusammenfassung",
-            "ist alles okay im projekt"
+            "gib mir eine morgendliche zusammenfassung"
           ]
         }
       ],
@@ -337,14 +339,29 @@
               "id": "close",
               "name": {
                 "value": "schließe",
-                "synonyms": ["schließen", "geschlossen", "erledigt", "erledige", "fertig", "done", "als erledigt markieren", "gelöst"]
+                "synonyms": [
+                  "schließen",
+                  "geschlossen",
+                  "erledigt",
+                  "erledige",
+                  "fertig",
+                  "done",
+                  "als erledigt markieren",
+                  "gelöst"
+                ]
               }
             },
             {
               "id": "in_progress",
               "name": {
                 "value": "starte",
-                "synonyms": ["bearbeite", "in arbeit setzen", "starte die arbeit", "nimm in bearbeitung", "in bearbeitung"]
+                "synonyms": [
+                  "bearbeite",
+                  "in arbeit setzen",
+                  "starte die arbeit",
+                  "nimm in bearbeitung",
+                  "in bearbeitung"
+                ]
               }
             }
           ]
@@ -356,14 +373,26 @@
               "id": "current",
               "name": {
                 "value": "aktuell",
-                "synonyms": ["aktuelle", "aktuellen", "derzeitige", "derzeitigen", "laufenden", "aktive", "aktiven"]
+                "synonyms": [
+                  "aktuelle",
+                  "aktuellen",
+                  "derzeitige",
+                  "derzeitigen",
+                  "laufenden",
+                  "aktive",
+                  "aktiven"
+                ]
               }
             },
             {
               "id": "last",
               "name": {
                 "value": "letzte",
-                "synonyms": ["letzten", "vorherigen", "vergangenen"]
+                "synonyms": [
+                  "letzten",
+                  "vorherigen",
+                  "vergangenen"
+                ]
               }
             }
           ]

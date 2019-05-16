@@ -6,7 +6,7 @@ import { HandlerError } from '../handler/error/HandlerError';
 export class NotificationBuilder {
 
     @Inject
-    protected appState: AppState;
+    private appState: AppState;
 
     public buildSuccessNotification(text: string) {
         return this.buildNotification(NotificationType.SUCCESS, text);

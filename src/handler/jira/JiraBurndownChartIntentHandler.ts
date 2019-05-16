@@ -12,7 +12,7 @@ import IIntentHandler from '../IIntentHandler';
 export default class JiraBurndownChartIntentHandler implements IIntentHandler {
 
     @Inject
-    protected appState: AppState;
+    private appState: AppState;
 
     @Inject
     private controller: JiraEndpointController;

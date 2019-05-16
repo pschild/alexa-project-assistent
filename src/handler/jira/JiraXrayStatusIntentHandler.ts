@@ -14,7 +14,7 @@ import IIntentHandler from '../IIntentHandler';
 export default class JiraXrayStatusIntentHandler implements IIntentHandler {
 
     @Inject
-    protected appState: AppState;
+    private appState: AppState;
 
     @Inject
     private controller: JiraEndpointController;
@@ -48,7 +48,7 @@ export default class JiraXrayStatusIntentHandler implements IIntentHandler {
             return response.say(`Für ${sayJiraTicket(ticketIdentifierValue, ticketNumberValue)} sind keine Tests vorhanden.`);
         }
 
-        sendProgressiveResponse(request, 'Alles klar, ich erstelle eine Übersicht.');
+        sendProgressiveResponse(request, `Alles klar, ich erstelle eine Übersicht.`);
 
         const testKeys = issue.getTestCoverage().getAllTestKeys();
         const finalResult = await Promise.all(testKeys.map(key => this.controller.getLatestTestrunByTestIssue(key)));

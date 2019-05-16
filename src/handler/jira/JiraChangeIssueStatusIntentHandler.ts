@@ -21,7 +21,7 @@ import IIntentHandler from '../IIntentHandler';
 export default class JiraChangeIssueStatusIntentHandler implements IIntentHandler {
 
     @Inject
-    protected appState: AppState;
+    private appState: AppState;
 
     @Inject
     private notificationBuilder: NotificationBuilder;

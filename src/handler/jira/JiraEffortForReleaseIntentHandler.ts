@@ -15,7 +15,7 @@ import { sendProgressiveResponse } from '../utils/handlerUtils';
 export default class JiraEffortForReleaseIntentHandler implements IIntentHandler {
 
     @Inject
-    protected appState: AppState;
+    private appState: AppState;
 
     @Inject
     private controller: JiraEndpointController;

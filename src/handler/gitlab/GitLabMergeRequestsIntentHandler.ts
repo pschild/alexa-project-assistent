@@ -11,7 +11,7 @@ import { sendProgressiveResponse } from '../utils/handlerUtils';
 export default class GitLabMergeRequestsIntentHandler implements IIntentHandler {
 
     @Inject
-    protected appState: AppState;
+    private appState: AppState;
 
     @Inject
     private controller: GitlabEndpointController;

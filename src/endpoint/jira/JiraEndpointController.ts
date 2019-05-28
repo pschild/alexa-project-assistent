@@ -138,10 +138,13 @@ export class JiraEndpointController extends EndpointController {
         const result = await this.get({
             uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/velocity.json?rapidViewId=${rapidViewId}`
         });
-        // for demo only:
-        // const result = await this.get({
-        //     uri: `${this.appState.getBaseUrl()}velocity.json`
-        // });
+        return this.parseVelocityChartData(result, 5);
+    }
+
+    public async getDemoVelocityData() {
+        const result = await this.get({
+            uri: `http://localhost:4242/velocity.json`
+        });
         return this.parseVelocityChartData(result, 5);
     }
 
@@ -176,11 +179,13 @@ export class JiraEndpointController extends EndpointController {
             uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/scopechangeburndownchart.json`
                 + `?rapidViewId=${rapidViewId}&sprintId=${sprintId}&statisticFieldId=field_timeestimate`
         });
-        // for demo only:
-        // const result = await this.get({
-        //     uri: `${this.appState.getBaseUrl()}bdc.json`
-        // });
+        return this.parseBurndownChartData(result);
+    }
 
+    public async getDemoBurndownData(): Promise<any> {
+        const result = await this.get({
+            uri: `http://localhost:4242/bdc.json`
+        });
         return this.parseBurndownChartData(result);
     }
 

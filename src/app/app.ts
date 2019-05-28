@@ -31,6 +31,7 @@ import SonarQubeDashboardIntentHandler from '../handler/sonarqube/SonarQubeDashb
 import ScsDashboardIntentHandler from '../handler/dashboard/ScsDashboardIntentHandler';
 import ScsHelpIntentHandler from '../handler/dashboard/ScsHelpIntentHandler';
 import AplUserEventHandler from '../handler/builtin/AplUserEventHandler';
+import Demo from '../Demo';
 
 dotenv.config();
 
@@ -43,6 +44,22 @@ app.use(express.static('demo-data'));
 app.use((req, res, next) => {
     appState.setHostname(req.hostname);
     return next();
+});
+
+// demo for chart generation
+app.get('/demo/burndownchart', async (req, res) => {
+    const demo: Demo = Container.get(Demo);
+    demo.generateBurndownChart().then(result => {
+        res.send(`<img src="${result}"/>`);
+    });
+});
+
+// demo for chart generation
+app.get('/demo/velocity', async (req, res) => {
+    const demo: Demo = Container.get(Demo);
+    demo.generateVelocityChart().then(result => {
+        res.send(`<img src="${result}"/>`);
+    });
 });
 
 const alexaApp = new alexa.app(process.env.ALEXA_SKILL_NAME);

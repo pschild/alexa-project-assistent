@@ -3,10 +3,11 @@
 * Install Python. Ensure it's added to your PATH. Tested with Python 2.7, which was included in `windows-build-tools` via `npm install -g --production windows-build-tools` (Admin Terminal)
 * Install ASK-CLI: `npm install -g ask-cli`
 * Call `ask init` to initialize the CLI. You need to have a developer account for Amazon. The connection to an AWS profile can be skipped by answering the question with `n`/`no`. For further information, follow the official [documentation](https://developer.amazon.com/de/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html#step-3-install-and-initialize-ask-cli)
+* Make sure you have access to Jira, GitLab and SonarQube.
 
 # Installation
 1. `npm install`
-2. Copy `.env.template` to `.env` and provide credentials, urls etc.
+2. Copy `.env.template` to `.env` and provide credentials, URLs etc.
    * The value for `NGROK_AUTHTOKEN` can be found in the file `C:\Users\%USERNAME%\.ngrok2\ngrok.yml` (on Windows)
 
 # Development & Deployment
@@ -36,6 +37,14 @@
 * Health Check
   * `ScsHelpIntent`: Opens the help for Health Check
   * `ScsDashboardIntent`: Shows information/status from multiple systems in one dashboard
+
+# Demo
+An Echo device as well as access to the systems Jira, GitLab and SonarQube will be needed to use the app, so a real demo without any of those cannot be provided.  
+However, you can test the generation of some charts, based on demo data:
+1. Run `npm run dev` or `npm run server:start`
+2. Generate a...
+   * Burndown Chart, by calling `http://localhost:4242/demo/burndownchart`
+   * Velocity Chart, by calling `http://localhost:4242/demo/velocity`
 
 # Links to libraries
 * https://github.com/alexa-js/alexa-app

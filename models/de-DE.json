@@ -103,13 +103,6 @@
           "samples": []
         },
         {
-          "name": "DisplayTestIntent",
-          "slots": [],
-          "samples": [
-            "zeigen"
-          ]
-        },
-        {
           "name": "JiraChangeIssueStatusIntent",
           "slots": [
             {
@@ -315,16 +308,6 @@
         {
           "name": "JiraTicketIdentifier",
           "values": [
-            {
-              "name": {
-                "value": "MDK"
-              }
-            },
-            {
-              "name": {
-                "value": "INK"
-              }
-            },
             {
               "name": {
                 "value": "AX"

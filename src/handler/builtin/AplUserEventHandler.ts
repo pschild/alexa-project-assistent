@@ -4,7 +4,6 @@ import IIntentHandler from '../IIntentHandler';
 export default class AplUserEventHandler implements IIntentHandler {
 
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
-        console.log(`Received TouchEvent, arguments: ${request.data.request.arguments}`);
         const action = request.data.request.arguments[0];
         const selectedItemIdentifier = request.data.request.arguments[1];
         if (action === 'HelpItemSelected') {

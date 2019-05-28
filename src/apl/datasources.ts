@@ -25,14 +25,6 @@ export interface IXrayStatusDocumentPayload {
     listData: Array<{label: string; iconUrl: string}>;
 }
 
-export interface IDashboardDocumentPayload {
-    backgroundImageUrl?: string;
-    q1: { bugs: number; progress: string; };
-    q2: { imageUrl: string; };
-    q3: { imageUrl: string; };
-    q4: { imageUrl: string; };
-}
-
 export interface ISprintProgressDocumentPayload {
     backgroundImageUrl?: string;
     sprintName: string;
@@ -181,15 +173,6 @@ export const buildXrayStatusDirective = (data: IXrayStatusDocumentPayload) => {
         type: 'Alexa.Presentation.APL.RenderDocument',
         token: 'xrayStatusDocument',
         document: require(`@apl/xrayStatusDocument.json`),
-        datasources: { data }
-    };
-};
-
-export const buildDashboardDirective = (data: IDashboardDocumentPayload) => {
-    return {
-        type: 'Alexa.Presentation.APL.RenderDocument',
-        token: 'dashboardDocument',
-        document: require(`@apl/dashboardDocument.json`),
         datasources: { data }
     };
 };

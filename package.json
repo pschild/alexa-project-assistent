@@ -1,7 +1,7 @@
 {
-  "name": "pm-info-aggregator",
+  "name": "alexa-projektassistent",
   "version": "0.0.1",
-  "description": "Alexa Skill for my master thesis",
+  "description": "Alexa skill that supports an IT-team by communicating with the APIs of Jira, GitLab and SonarQube",
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
@@ -15,8 +15,7 @@
   "license": "MIT",
   "_moduleAliases": {
     "@root": ".",
-    "@apl": "./src/apl",
-    "@mockData": "./test/mockData"
+    "@apl": "./src/apl"
   },
   "dependencies": {
     "alexa-app": "^4.2.3",

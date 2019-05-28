@@ -41,7 +41,6 @@ export default class JiraXrayStatusIntentHandler implements IIntentHandler {
 
         const ticketIdentifierValue = identifierElicitationResult.value;
         const ticketNumberValue = numberElicitationResult.value;
-        console.log(ticketIdentifierValue, ticketNumberValue);
 
         const issue: JiraIssue = await this.controller.getIssue(`${ticketIdentifierValue}-${ticketNumberValue}`);
         if (!issue.getTestCoverage() || !issue.getTestCoverage().getAllTestKeys()) {
@@ -57,7 +56,6 @@ export default class JiraXrayStatusIntentHandler implements IIntentHandler {
         for (let i = 0; i < testKeys.length; i++) {
             latestStatusMap.push({ key: testKeys[i], status: finalResult[i] ? finalResult[i].status : TestRunStatus.TODO });
         }
-        console.log(latestStatusMap);
         const globalState = this.calculateGlobalStatus(latestStatusMap);
 
         const data: IPieChartDataItem[] = [

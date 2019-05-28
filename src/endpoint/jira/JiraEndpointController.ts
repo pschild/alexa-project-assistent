@@ -70,7 +70,7 @@ export class JiraEndpointController extends EndpointController {
     }
 
     public async getSprintBySprintNumber(sprintNo: number): Promise<JiraSprint> {
-        const sprintsOfBoard = await this.getSprintsOfBoard(36); // TODO: constant
+        const sprintsOfBoard = await this.getSprintsOfBoard(36);
         if (sprintsOfBoard) {
             const pattern = new RegExp(`sprint ${sprintNo}`, 'i');
             return sprintsOfBoard.find((sprint: JiraSprint) => sprint.name.search(pattern) >= 0);
@@ -78,7 +78,7 @@ export class JiraEndpointController extends EndpointController {
     }
 
     public async getCurrentSprint(): Promise<JiraSprint> {
-        const activeSprints = await this.getSprintsOfBoard(55, [SprintStatus.ACTIVE]); // TODO: constant
+        const activeSprints = await this.getSprintsOfBoard(55, [SprintStatus.ACTIVE]);
         if (activeSprints.length > 1) {
             throw new Error(`Expected to have one active sprint, but found ${activeSprints.length} active ones`);
         }
@@ -86,7 +86,7 @@ export class JiraEndpointController extends EndpointController {
     }
 
     public async getPreviousSprint(): Promise<JiraSprint> {
-        const sprints = await this.getSprintsOfBoard(36); // TODO: constant
+        const sprints = await this.getSprintsOfBoard(36);
         const activeIndex = sprints.findIndex((sprint: JiraSprint) => sprint.state === SprintStatus.ACTIVE);
         if (activeIndex < 0) {
             throw new Error(`Could not find an active sprint`);
@@ -135,12 +135,13 @@ export class JiraEndpointController extends EndpointController {
     }
 
     public async getVelocityData(rapidViewId: number) {
-        // const result = await this.get({
-        //     uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/velocity.json?rapidViewId=${rapidViewId}`
-        // });
         const result = await this.get({
-            uri: `${this.appState.getBaseUrl()}velocity.json`
+            uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/velocity.json?rapidViewId=${rapidViewId}`
         });
+        // for demo only:
+        // const result = await this.get({
+        //     uri: `${this.appState.getBaseUrl()}velocity.json`
+        // });
         return this.parseVelocityChartData(result, 5);
     }
 
@@ -171,13 +172,14 @@ export class JiraEndpointController extends EndpointController {
     }
 
     public async getBurndownData(rapidViewId: number, sprintId: number): Promise<any> {
-        // const result = await this.get({
-        //     uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/scopechangeburndownchart.json`
-        //         + `?rapidViewId=${rapidViewId}&sprintId=${sprintId}&statisticFieldId=field_timeestimate`
-        // });
         const result = await this.get({
-            uri: `${this.appState.getBaseUrl()}bdc.json`
+            uri: `${this.baseUrl}rest/greenhopper/1.0/rapid/charts/scopechangeburndownchart.json`
+                + `?rapidViewId=${rapidViewId}&sprintId=${sprintId}&statisticFieldId=field_timeestimate`
         });
+        // for demo only:
+        // const result = await this.get({
+        //     uri: `${this.appState.getBaseUrl()}bdc.json`
+        // });
 
         return this.parseBurndownChartData(result);
     }
@@ -208,7 +210,6 @@ export class JiraEndpointController extends EndpointController {
                 }
             });
         }
-        // console.log(keyTimeMap);
 
         const burndownData = [];
         let rte = 0;
@@ -218,12 +219,10 @@ export class JiraEndpointController extends EndpointController {
         let afterComplete = false;
         for (const ts of Object.keys(data.changes)) {
             if (+ts >= sprintStartTs && !afterStart) {
-                console.log('SPRINT START');
                 afterStart = true;
                 sprintStartRte = rte;
                 burndownData.push({ key: sprintStartTs, value: rte });
             } else if (+ts >= sprintCompleteTs && !afterComplete) {
-                console.log('SPRINT COMPLETE');
                 afterComplete = true;
                 sprintCompleteRte = rte;
                 burndownData.push({ key: sprintCompleteTs, value: rte });
@@ -238,14 +237,12 @@ export class JiraEndpointController extends EndpointController {
                         if (afterStart && !afterComplete) {
                             burndownData.push({ key: +ts, value: rte });
                         }
-                        console.log(`added ${entry.key} to sprint: ${fromMap.time}\trte=${rte}`);
                     } else if (entry.added === false && fromMap.added === true) {
                         rte -= fromMap.time;
                         fromMap.added = false;
                         if (afterStart && !afterComplete) {
                             burndownData.push({ key: +ts, value: rte });
                         }
-                        console.log(`removed ${entry.key} from sprint: -${fromMap.time}\trte=${rte}`);
                     } else if (entry.timeC) {
                         const newEstimate = entry.timeC.newEstimate || 0;
                         const oldEstimate = entry.timeC.oldEstimate || 0;
@@ -255,12 +252,10 @@ export class JiraEndpointController extends EndpointController {
                             if (afterStart && !afterComplete) {
                                 burndownData.push({ key: +ts, value: rte });
                             }
-                            console.log(`changed ${entry.key}: ${diff}\trte=${rte}`);
                         }
                         fromMap.time = newEstimate;
                     }
                 } else {
-                    console.log(`added ${entry.key} AFTER sprint started`);
                     if (entry.timeC) {
                         const time = entry.timeC.newEstimate || 0;
                         let isAdded = false;
@@ -270,7 +265,6 @@ export class JiraEndpointController extends EndpointController {
                             if (afterStart && !afterComplete) {
                                 burndownData.push({ key: +ts, value: rte });
                             }
-                            console.log(`added ${entry.key} to sprint: ${time}\trte=${rte}`);
                         }
                         keyTimeMap.push({
                             key: entry.key,

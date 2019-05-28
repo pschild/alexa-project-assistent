@@ -28,7 +28,7 @@ export default class JiraVelocityIntentHandler implements IIntentHandler {
         const chartUrl = await this.barChartController
             .setYAxisUnit('PT')
             .generateChart(chartData).catch((e) => {
-                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
             });
 
         const velocity = chartData[chartData.length - 1].value;

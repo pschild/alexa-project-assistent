@@ -44,13 +44,13 @@ export default class ProjectDashboardIntentHandler implements IIntentHandler {
         const lineData: ILineChartDataItem[] = [{ name: 'test', values: seriesData }];
 
         const pieChartUrl = this.pieChartController.generateChart(pieData).catch((e) => {
-            throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
+            throw new HandlerError(`Ich konnte das Diagramm nicht finden. Bitte versuche es erneut.`);
         });
         const barChartUrl = this.barChartController.generateChart(barData).catch((e) => {
-            throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
+            throw new HandlerError(`Ich konnte das Diagramm nicht finden. Bitte versuche es erneut.`);
         });
         const lineChartUrl = this.lineChartController.generateChart(lineData).catch((e) => {
-            throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
+            throw new HandlerError(`Ich konnte das Diagramm nicht finden. Bitte versuche es erneut.`);
         });
 
         const finalResult = await Promise.all([pieChartUrl, barChartUrl, lineChartUrl]);

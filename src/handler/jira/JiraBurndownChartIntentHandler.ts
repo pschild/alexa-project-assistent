@@ -69,7 +69,7 @@ export default class JiraBurndownChartIntentHandler implements IIntentHandler {
             const lineChartUrl = await this.lineChartController
                 .setLineColors(['#d04437', '#999'])
                 .generateChart(chartData).catch((e) => {
-                    throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
+                    throw new HandlerError(`Ich konnte das Diagramm nicht finden. Bitte versuche es erneut.`);
                 });
             response
                 // .say(`Hier ist das Burndown Chart von Sprint ${loadedSprint.getSprintNumber()}.`)

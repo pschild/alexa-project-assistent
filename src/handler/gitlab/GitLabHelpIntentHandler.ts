@@ -23,7 +23,7 @@ export default class GitlabHelpIntentHandler implements IIntentHandler {
                 imageUrl: this.appState.getBaseUrl() + 'static/gitlab.png',
                 hints: [
                     'Zeige alle Pipelines!',
-                    'Zeige den Buildstatus von Projekt Auftragsverwaltung!',
+                    'Zeige die Builds von Projekt Auftragsverwaltung!',
                     'Wie viele Merge Requests sind offen?'
                 ]
             }))

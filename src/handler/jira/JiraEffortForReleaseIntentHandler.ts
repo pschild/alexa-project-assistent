@@ -51,7 +51,7 @@ export default class JiraEffortForReleaseIntentHandler implements IIntentHandler
         const taskProgressChartUrl = await this.progressBarChartController.generateChart([
             { label: `${taskTimeProgress}%`, percent: taskTimeProgress }
         ]).catch((e) => {
-            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
         });
 
         const remainingPt = (remainingSecondsSum / 3600 / 8).toFixed(0);

@@ -71,7 +71,7 @@ export default class JiraXrayStatusIntentHandler implements IIntentHandler {
             .setTextColor('#fff')
             .setColorRange(['#95C160', '#D45D52', '#A2A6AE', '#F1E069', '#111111'])
             .generateChart(data).catch((e) => {
-                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
             });
 
         let ticketDescription = issue.fields.summary;

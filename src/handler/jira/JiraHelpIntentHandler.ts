@@ -24,7 +24,7 @@ export default class JiraHelpIntentHandler implements IIntentHandler {
                 hints: [
                     'Ändere den Status von AX-2 auf erledigt!',
                     'Wann ist das nächste Release?',
-                    'Wie ist der Fortschritt im Sprint?',
+                    'Wie ist der Sprint-Fortschritt?',
                     'Zeige mir das aktuelle Burn Down Chart!'
                 ]
             }))

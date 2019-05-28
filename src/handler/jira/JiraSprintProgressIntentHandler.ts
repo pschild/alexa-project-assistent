@@ -53,19 +53,19 @@ export default class JiraSprintProgressIntentHandler implements IIntentHandler {
         const workableIssuesProgressChartUrl = await this.progressBarChartController.generateChart([
             { label: `${doneWorkableIssues}/${workableIssues.length}`, percent: sprintTaskProgress }
         ]).catch((e) => {
-            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
         });
 
         const timeProgressChartUrl = await this.progressBarChartController.generateChart([
             { label: `${sprintTimeProgress}%`, percent: sprintTimeProgress }
         ]).catch((e) => {
-            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
         });
 
         const taskProgressChartUrl = await this.progressBarChartController.generateChart([
             { label: `${taskTimeProgress}%`, percent: taskTimeProgress }
         ]).catch((e) => {
-            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
         });
 
         let progressInfo;

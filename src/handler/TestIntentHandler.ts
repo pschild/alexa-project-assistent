@@ -126,7 +126,7 @@ export default class TestIntentHandler {
             .setTextColor('#fff')
             .setColorRange(['#4b9fd5', '#b0d513', '#d4333f', '#901d25', '#460308'])
             .generateChart(data).catch((e) => {
-                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
             });
         return chartUrl;
     }
@@ -147,7 +147,7 @@ export default class TestIntentHandler {
         const coverageChartUrl = await this.progressBarChartController.generateChart([
             { label: `${projectCount > 1 ? 'Ø ' : ''}${percent}%`, percent }
         ]).catch((e) => {
-            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
         });
         return coverageChartUrl;
     }
@@ -304,7 +304,7 @@ export default class TestIntentHandler {
         const chartUrl = await this.barChartController
             .setYAxisUnit('PT')
             .generateChart(chartData).catch((e) => {
-                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
             });
         return chartUrl;
     }
@@ -322,7 +322,7 @@ export default class TestIntentHandler {
         const chartUrl = await this.lineChartController
             .setLineColors(['#d04437', '#999'])
             .generateChart(chartData).catch((e) => {
-                throw new HandlerError(`Ich konnte das Diagramm nicht finden.`);
+                throw new HandlerError(`Ich konnte das Diagramm nicht finden. Bitte versuche es erneut.`);
             });
         return chartUrl;
     }
@@ -357,7 +357,7 @@ export default class TestIntentHandler {
             .setTextColor('#fff')
             .setColorRange(['#95C160', '#D45D52', '#A2A6AE', '#F1E069', '#111111'])
             .generateChart(data).catch((e) => {
-                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
             });
         console.log(chartUrl);
         return chartUrl;

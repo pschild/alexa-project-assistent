@@ -64,7 +64,7 @@ export default class SonarQubeDashboardIntentHandler implements IIntentHandler {
             .setTextColor('#fff')
             .setColorRange(['#4b9fd5', '#b0d513', '#d4333f', '#901d25', '#460308'])
             .generateChart(data).catch((e) => {
-                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+                throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
             });
         return chartUrl;
     }
@@ -85,7 +85,7 @@ export default class SonarQubeDashboardIntentHandler implements IIntentHandler {
         const coverageChartUrl = await this.progressBarChartController.generateChart([
             { label: `${projectCount > 1 ? 'Ø ' : ''}${percent}%`, percent }
         ]).catch((e) => {
-            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen.`);
+            throw new HandlerError(`Ich konnte das Diagramm nicht erstellen. Bitte versuche es erneut.`);
         });
         return coverageChartUrl;
     }

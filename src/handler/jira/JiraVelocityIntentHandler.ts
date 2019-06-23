@@ -23,7 +23,7 @@ export default class JiraVelocityIntentHandler implements IIntentHandler {
     public async handle(request: alexa.request, response: alexa.response): Promise<alexa.response> {
         sendProgressiveResponse(request, 'Alles klar.');
 
-        const data: IBarChartDataItem[] = await this.controller.getVelocityData(48);
+        const data: IBarChartDataItem[] = await this.controller.getVelocityData(55);
         const chartData = data.map(bar => ({ key: bar.key, value: (+bar.value / 3600 / 8), styles: bar.styles}));
         const chartUrl = await this.barChartController
             .setYAxisUnit('PT')

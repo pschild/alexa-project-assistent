@@ -57,7 +57,7 @@ export default class JiraBurndownChartIntentHandler implements IIntentHandler {
 
         if (loadedSprint) {
             sendProgressiveResponse(request, 'Ok, einen Moment.');
-            let { burndownData, idealData } = await this.controller.getBurndownData(48, 58);
+            let { burndownData, idealData } = await this.controller.getBurndownData(55, 81);
             burndownData = burndownData.map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
             idealData = idealData.map(row => ({ key: new Date(row.key), value: row.value / 3600 }));
 

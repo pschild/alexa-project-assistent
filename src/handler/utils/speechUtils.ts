@@ -19,7 +19,7 @@ export const sayAsDecimal = (decNumber: number | string): string => {
     if (typeof decNumber === 'string') {
         decNumber = +decNumber;
     }
-    return decNumber.toString().replace('.', ',');
+    return decNumber.toFixed(2).toString().replace('.', ',');
 };
 
 export const sayAsDuration = (seconds: number): string => {

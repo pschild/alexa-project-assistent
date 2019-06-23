@@ -13,7 +13,6 @@ import { SonarQubeQualityGateStatus } from './domain/SonarQubeQualityGateStatus'
 @Singleton
 export class SonarQubeEndpointController extends EndpointController {
 
-    public static DEMO_ORGANIZATION_NAME = 'pschild-github';
     public static DEMO_PROJECTS = [
         {name: 'schild:auftragsverwaltung'},
         {name: 'schild:ressourcenverwaltung'},
